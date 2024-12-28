@@ -74,6 +74,13 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `about-me`,
+        path: path.resolve(__dirname, "./about"),
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `content`,
         path: path.resolve(__dirname, "./content"),
       },

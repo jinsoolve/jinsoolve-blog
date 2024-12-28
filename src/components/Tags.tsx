@@ -13,7 +13,7 @@ export default function Tags({ currentTag }: TagsProps) {
   const data = useStaticQuery(graphql`
     query Tags {
       allMdx(
-        filter: { frontmatter: { title: { nin: "정현수 포트폴리오" }, locale: { eq: null } } }
+        filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }, locale: { eq: null } } }
       ) {
         group(field: { frontmatter: { tags: SELECT } }) {
           tagPostCount: totalCount

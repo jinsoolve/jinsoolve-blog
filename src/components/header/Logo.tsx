@@ -16,7 +16,7 @@ const Logo = () => {
         padding={1}
         _active={{ bg: "transparent" }}
       >
-        June.
+        Jinsoolve.
       </Text>
     </Link>
   );

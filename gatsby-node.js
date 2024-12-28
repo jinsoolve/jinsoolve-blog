@@ -23,7 +23,7 @@ exports.onCreateWebpackConfig = ({ actions, plugins, reporter }) => {
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const result = await graphql(`
     query {
-      allPosts: allMdx(filter: { frontmatter: { title: { nin: "정현수 포트폴리오" } } }) {
+      allPosts: allMdx(filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] } } }) {
         nodes {
           id
           body
@@ -47,7 +47,18 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         }
       }
 
-      portfolio: mdx(frontmatter: { title: { eq: "정현수 포트폴리오" } }) {
+      portfolio: mdx(frontmatter: { title: { eq: "김진수 포트폴리오" } }) {
+        id
+        body
+        frontmatter {
+          slug
+        }
+        internal {
+          contentFilePath
+        }
+      }
+      
+      about_me: mdx(frontmatter: { title: { eq: "김진수에 대하여" } }) {
         id
         body
         frontmatter {
@@ -136,6 +147,19 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
       slug: portfolio.frontmatter.slug,
       id: portfolio.id,
       readingTime: readingTime(result.data.portfolio.body, { wordsPerMinute: WORDS_PER_MINUTE }),
+    },
+  });
+
+  // about 페이지 생성
+  const about_me = result.data.about_me;
+
+  createPage({
+    path: `/about`,
+    component: `${PortfolioPageTemplate}?__contentFilePath=${about_me.internal.contentFilePath}`,
+    context: {
+      slug: about_me.frontmatter.slug,
+      id: about_me.id,
+      readingTime: readingTime(result.data.about_me.body, { wordsPerMinute: WORDS_PER_MINUTE }),
     },
   });
 };

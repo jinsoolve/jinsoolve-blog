@@ -43,7 +43,7 @@ export const query = graphql`
       gatsbyImageData
     }
 
-    profileImage: imageSharp(fluid: { originalName: { eq: "profile.png" } }) {
+    profileImage: imageSharp(fluid: { originalName: { eq: "profile.jpg" } }) {
       gatsbyImageData
     }
   }

@@ -5,33 +5,34 @@ export default function MousePointerContainer() {
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const onHover = (e: PointerEvent) => {
-      if (e.pointerType === "touch") {
-        return;
-      }
-
-      if (!ref.current) {
-        return;
-      }
-
-      ref.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-
-      const elements = document.querySelectorAll(":hover");
-      const circleElement = ref.current.children[0] as HTMLDivElement;
-      const topElement: Element | null = elements[elements.length - 1] ?? null;
-
-      if (topElement && getComputedStyle(topElement).cursor === "pointer") {
-        circleElement.style.transform = "scale(2)";
-      } else {
-        circleElement.style.transform = "scale(1)";
-      }
-    };
-
-    document.addEventListener("pointermove", onHover);
-
-    return () => {
-      document.removeEventListener("pointermove", onHover);
-    };
+    // const onHover = (e: PointerEvent) => {
+    //   if (e.pointerType === "touch") {
+    //     return;
+    //   }
+    //
+    //   if (!ref.current) {
+    //     return;
+    //   }
+    //
+    //   ref.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    //
+    //   const elements = document.querySelectorAll(":hover");
+    //   const circleElement = ref.current.children[0] as HTMLDivElement;
+    //   const topElement: Element | null = elements[elements.length - 1] ?? null;
+    //
+    //   if (topElement && getComputedStyle(topElement).cursor === "pointer") {
+    //     circleElement.style.transform = "scale(2)";
+    //   } else {
+    //     circleElement.style.transform = "scale(1)";
+    //   }
+    // };
+    //
+    // document.addEventListener("pointermove", onHover);
+    //
+    // return () => {
+    //   document.removeEventListener("pointermove", onHover);
+    // };
+    return () => {}
   }, []);
 
   return (
