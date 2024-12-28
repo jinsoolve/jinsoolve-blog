@@ -111,8 +111,8 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
   const locale = data.post?.frontmatter?.locale! || "ko";
   const title =
     locale === "ko"
-      ? `${data.post?.frontmatter?.title!} - 정현수 기술 블로그`
-      : `${data.post?.frontmatter?.title!} - Junghyeonsu Tech Blog`;
+      ? `${data.post?.frontmatter?.title!} - Jinsoolve 블로그`
+      : `${data.post?.frontmatter?.title!} - Jinsoolve Blog`;
   const description = data.post?.frontmatter?.description!;
   const ogimage = data.post?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!;
   const metaLocale = locale === "ko" ? "ko_KR" : "en_US";
