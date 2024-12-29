@@ -61,53 +61,69 @@ export default function Tags({ currentTag }: TagsProps) {
       </motion.div>
 
       {/* Tag List */}
-      <Flex
-        as="nav"
-        columnGap="10px"
-        rowGap="10px"
-        flexWrap="wrap"
-        marginTop="40px"
-        padding={{ base: "0 20px", md: "0px" }}
-        width="100%"
-        maxWidth="600px"
-      >
-        <Link to="/tags/">
-          <Flex justifyContent="center" alignItems="flex-start">
-            <Text
-              fontSize={{ base: "14px", md: "18px" }}
-              fontWeight={currentTag === ALL_POSTS_TAG_NAME ? 700 : 400}
-              _hover={{ textDecoration: "underline" }}
-            >
-              AllTags.
-            </Text>
-            <Text fontSize="12px" fontWeight={currentTag === ALL_POSTS_TAG_NAME ? 700 : 300}>
-              ({data.allMdx.allPostCount})
-            </Text>
-          </Flex>
-        </Link>
-        {Object.values(data.allMdx.group).map((group) => {
-          const { tag, tagPostCount } = group as {
-            tag: string;
-            tagPostCount: number;
-          };
-          return (
-            <Link key={tag} to={`/tags/${tag}`}>
-              <Flex justifyContent="center" alignItems="flex-start">
-                <Text
-                  fontSize={{ base: "14px", md: "18px" }}
-                  fontWeight={currentTag === tag ? 700 : 400}
-                  _hover={{ textDecoration: "underline" }}
-                >
-                  {koreanTagNames[tag!] || tag}
-                </Text>
-                <Text fontSize="12px" fontWeight={currentTag === tag ? 700 : 300}>
-                  ({tagPostCount})
-                </Text>
-              </Flex>
-            </Link>
-          );
-        })}
+      <Flex direction="column">
+        <Flex
+          as="nav"
+          columnGap="10px"
+          rowGap="10px"
+          flexWrap="wrap"
+          marginTop="40px"
+          padding={{ base: "0 20px", md: "0px" }}
+          width="100%"
+          maxWidth="600px"
+          justifyContent="center"
+        >
+          <Link to="/tags/">
+            <Flex justifyContent="center" alignItems="flex-start">
+              <Text
+                fontSize={{ base: "14px", md: "18px" }}
+                fontWeight={currentTag === ALL_POSTS_TAG_NAME ? 700 : 400}
+                _hover={{ textDecoration: "underline" }}
+              >
+                All TAGS.
+              </Text>
+              <Text fontSize="12px" fontWeight={currentTag === ALL_POSTS_TAG_NAME ? 700 : 300}>
+                ({data.allMdx.allPostCount})
+              </Text>
+            </Flex>
+          </Link>
+        </Flex>
+        <Flex
+          as="nav"
+          columnGap="10px"
+          rowGap="10px"
+          flexWrap="wrap"
+          marginTop="10px"
+          padding={{ base: "0 20px", md: "0px" }}
+          width="100%"
+          maxWidth="600px"
+          justifyContent="center"
+        >
+          {Object.values(data.allMdx.group).map((group) => {
+            const { tag, tagPostCount } = group as {
+              tag: string;
+              tagPostCount: number;
+            };
+            return (
+              <Link key={tag} to={`/tags/${tag}`}>
+                <Flex justifyContent="center" alignItems="flex-start">
+                  <Text
+                    fontSize={{ base: "14px", md: "18px" }}
+                    fontWeight={currentTag === tag ? 700 : 400}
+                    _hover={{ textDecoration: "underline" }}
+                  >
+                    {koreanTagNames[tag!] || tag}
+                  </Text>
+                  <Text fontSize="12px" fontWeight={currentTag === tag ? 700 : 300}>
+                    ({tagPostCount})
+                  </Text>
+                </Flex>
+              </Link>
+            );
+          })}
+        </Flex>
       </Flex>
+
     </Flex>
   );
 }

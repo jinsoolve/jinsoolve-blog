@@ -9,7 +9,7 @@ import Pagenation from "../components/Pagenation";
 import PostGrid from "../components/PostGrid";
 import Profile from "../components/Profile";
 import ShortPostSection from "../components/ShortPostSection";
-import Categories from "../components/Categories";
+import Categories from "../components/DefaultCategories";
 import { ALL_POSTS_NAME, DOMAIN } from "../constants";
 
 export const query = graphql`
