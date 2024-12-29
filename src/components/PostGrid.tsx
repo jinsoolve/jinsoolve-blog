@@ -27,7 +27,7 @@ const PostGrid = ({ posts }: PostGridProps) => {
             thumbnail: posts.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!,
             createdAt: posts.frontmatter?.createdAt!,
             updatedAt: posts.frontmatter?.updatedAt!,
-            tags: posts.frontmatter?.tags!,
+            categories: posts.frontmatter?.categories!,
           };
 
           return (

@@ -134,7 +134,7 @@ const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
                     title={post.frontmatter?.title!}
                     slug={post.frontmatter?.slug!}
                     updatedAt={post.frontmatter?.updatedAt!}
-                    tags={post.frontmatter?.tags!}
+                    categories={post.frontmatter?.categories!}
                     thumbnail={post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!}
                   />
                 </motion.div>

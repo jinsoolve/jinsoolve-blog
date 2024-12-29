@@ -9,6 +9,7 @@ import Pagenation from "../components/Pagenation";
 import PostGrid from "../components/PostGrid";
 import Profile from "../components/Profile";
 import ShortPostSection from "../components/ShortPostSection";
+import Categories from "../components/Categories";
 import Tags from "../components/Tags";
 import { ALL_POSTS_TAG_NAME, DOMAIN } from "../constants";
 
@@ -25,6 +26,7 @@ export const query = graphql`
       createdAt
       description
       slug
+      categories
       tags
     }
   }
@@ -35,7 +37,7 @@ export const query = graphql`
       filter: {
         frontmatter: {
           title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }
-          tags: { nin: "short" }
+          categories: { nin: "short" }
           locale: { eq: null }
         }
       }
@@ -64,7 +66,7 @@ export const query = graphql`
 
     # locale은 null인것만 가져옴 (ko)
     shortPosts: allMdx(
-      filter: { frontmatter: { tags: { in: "short" }, locale: { eq: null } } }
+      filter: { frontmatter: { categories: { in: "short" }, locale: { eq: null } } }
       sort: { frontmatter: { createdAt: DESC } }
       limit: 15
     ) {
@@ -74,6 +76,7 @@ export const query = graphql`
           updatedAt
           createdAt
           slug
+          tags
         }
       }
     }
@@ -102,7 +105,7 @@ export default function AllPostPageTemplate({ data }: AllPostPageTemplateProps) 
 
   return (
     <MainLayout>
-      <Tags currentTag={ALL_POSTS_TAG_NAME} />
+      <Categories currentTag={ALL_POSTS_TAG_NAME} />
 
       <Flex
         width="100%"
@@ -129,18 +132,18 @@ export const Head: HeadFC<Queries.AllPostPageTemplateQuery> = ({ data }) => {
 
   return (
     <>
-      {/* HTML Meta Tags */}
+      {/* HTML Meta categories */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      {/* Facebook Meta Tags */}
+      {/* Facebook Meta categories */}
       <meta property="og:url" content={DOMAIN} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={title} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={getSrc(ogimage)} />
-      {/*  Twitter Meta Tags  */}
+      {/*  Twitter Meta categories  */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="junghyeonsu.com" />
       <meta property="twitter:url" content={DOMAIN} />

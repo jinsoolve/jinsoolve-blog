@@ -45,7 +45,7 @@ const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
                 thumbnail={post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!}
                 createdAt={post.frontmatter?.createdAt!}
                 updatedAt={post.frontmatter?.updatedAt!}
-                tags={post.frontmatter?.tags!}
+                categories={post.frontmatter?.categories!}
               />
             </GridItem>
           ))}

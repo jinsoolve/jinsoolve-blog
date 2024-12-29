@@ -23,7 +23,7 @@ export const query = graphql`
         description
         createdAt
         updatedAt
-        tags
+        categories
         locale
         thumbnail {
           childImageSharp {
@@ -76,11 +76,11 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
 
   return (
     <>
-      {/* HTML Meta Tags */}
+      {/* HTML Meta categories */}
       <title>{title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      {/* Facebook Meta Tags */}
+      {/* Facebook Meta categories */}
       <meta property="og:url" content={`${DOMAIN}/${data.post?.frontmatter?.slug}`} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={title} />
@@ -89,7 +89,7 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
       <meta property="og:image" content={getSrc(ogimage)} />
       <meta property="og:locale" content={metaLocale} />
 
-      {/*  Twitter Meta Tags  */}
+      {/*  Twitter Meta categories  */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="junghyeonsu.com" />
       <meta property="twitter:url" content={`${DOMAIN}/${data.post?.frontmatter?.slug}`} />

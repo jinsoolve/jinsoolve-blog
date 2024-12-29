@@ -6,14 +6,14 @@ import MainLayout from "../components/MainLayout";
 import Pagenation from "../components/Pagenation";
 import PostGrid from "../components/PostGrid";
 import Profile from "../components/Profile";
-import Tags from "../components/Tags";
+import Categories from "../components/Categories";
 import { DOMAIN } from "../constants";
 
 export const query = graphql`
-  query TagPageTemplate($tag: String!, $limit: Int, $skip: Int) {
+  query CategoryPageTemplate($category: String!, $limit: Int, $skip: Int) {
     allMdx(
       sort: { frontmatter: { createdAt: DESC } }
-      filter: { frontmatter: { tags: { in: [$tag] }, locale: { eq: null } } }
+      filter: { frontmatter: { categories: { in: [$category] }, locale: { eq: null } } }
       limit: $limit
       skip: $skip
     ) {
@@ -30,7 +30,7 @@ export const query = graphql`
           createdAt
           description
           slug
-          tags
+          categories
         }
       }
 
@@ -49,19 +49,19 @@ export const query = graphql`
   }
 `;
 
-interface TagsProps {
+interface CategoriesProps {
   pageContext: {
-    tag: string;
+    category: string;
   };
-  data: GatsbyTypes.TagPageTemplateQuery;
+  data: GatsbyTypes.CategoryPageTemplateQuery;
 }
 
-export default function TagsTemplate({ pageContext, data }: TagsProps) {
+export default function CategoriesTemplate({ pageContext, data }: CategoriesProps) {
   const currentPage = data.allMdx.pageInfo.currentPage;
   const pageCount = data.allMdx.pageInfo.pageCount;
   return (
     <MainLayout>
-      <Tags currentTag={pageContext.tag} />
+      <Categories currentCategory={pageContext.category} />
       <PostGrid posts={data.allMdx.nodes} />
       {pageCount > 1 && <Pagenation currentPage={currentPage} pageCount={pageCount} />}
       <Profile />
@@ -69,31 +69,31 @@ export default function TagsTemplate({ pageContext, data }: TagsProps) {
   );
 }
 
-export const Head: HeadFC<Queries.TagPageTemplateQuery, TagsProps["pageContext"]> = ({
+export const Head: HeadFC<Queries.CategoryPageTemplateQuery, CategoriesProps["pageContext"]> = ({
   data,
   pageContext,
 }) => {
   const ogimage = data.ogimage?.gatsbyImageData!;
   const description = "머신러닝과 알고리즘을 공부하는 김진수입니다.";
   const title = "Jinsoolve 블로그";
-  const tag = pageContext.tag;
+  const category = pageContext.category;
 
   return (
     <>
-      {/* HTML Meta tags */}
+      {/* HTML Meta categories */}
       <title>
-        {title} - {tag}
+        {title} - {category}
       </title>
       <meta name="description" content={description} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      {/* Facebook Meta tags */}
+      {/* Facebook Meta categories */}
       <meta property="og:url" content={DOMAIN} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={title} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={getSrc(ogimage)} />
-      {/*  Twitter Meta tags  */}
+      {/*  Twitter Meta categories  */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="junghyeonsu.com" />
       <meta property="twitter:url" content={DOMAIN} />

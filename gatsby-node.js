@@ -3,6 +3,7 @@ const readingTime = require(`reading-time`);
 
 const PostPageTemplate = path.resolve(`./src/templates/PostPage.tsx`);
 const TagPageTemplate = path.resolve(`./src/templates/TagPage.tsx`);
+const CategoryPageTemplate = path.resolve(`./src/templates/CategoryPage.tsx`);
 const PortfolioPageTemplate = path.resolve(`./src/templates/PortfolioPage.tsx`);
 const AllPostPageTemplate = path.resolve(`./src/templates/AllPostPage.tsx`);
 
@@ -29,11 +30,21 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
           body
           frontmatter {
             slug
+            categories
             tags
             locale
           }
           internal {
             contentFilePath
+          }
+        }
+      }
+      
+      allCategories: allMdx {
+        group(field: { frontmatter: { categories: SELECT } }) {
+          category: fieldValue
+          nodes {
+            id
           }
         }
       }
@@ -73,7 +84,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
 
   // TODO: 현재 문제점
   // 메인(pages/index.tsx) 페이지랑 태그 템플릿 페이지가 역할이 겹침
-  // tags/all-posts로 만들고
+  // Categories/all-posts로 만들고
   // 메인 페이지는 진짜 메인 느낌나도록 따로 만들까 고민중
 
   const POST_PER_PAGE = 10;
@@ -94,6 +105,27 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         numPages: allPostsNumPages,
         currentPage: i + 1,
       },
+    });
+  });
+
+  // Categories 페이지네이션 생성
+  const categories = result.data.allCategories.group;
+  categories.forEach(({ category, nodes }) => {
+    const allCategoriesNumPages = Math.ceil(nodes.length / POST_PER_PAGE);
+
+    // 각 태그별로 페이지네이션 해줘야 함
+    Array.from({ length: allCategoriesNumPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? `/categories/${category}` : `/categories/${category}/${i + 1}`,
+        component: CategoryPageTemplate,
+        context: {
+          limit: POST_PER_PAGE,
+          skip: i * POST_PER_PAGE,
+          numPages: allCategoriesNumPages,
+          currentPage: i + 1,
+          category,
+        },
+      });
     });
   });
 
@@ -129,6 +161,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
       path,
       component: `${PostPageTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
       context: {
+        categories: node.frontmatter.categories,
         tags: node.frontmatter.tags,
         slug: node.frontmatter.slug,
         id: node.id,

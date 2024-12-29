@@ -17,13 +17,14 @@ import { DOMAIN } from "../constants";
 import { fadeInFromLeft } from "../framer-motions";
 
 export const query = graphql`
-  query PostPage($id: String!, $tags: [String!]!, $slug: String!) {
+  query PostPage($id: String!, $categories: [String!]!, $slug: String!) {
     post: mdx(id: { eq: $id }) {
       frontmatter {
         slug
         title
         locale
         description
+        categories
         tags
         createdAt
         updatedAt
@@ -44,7 +45,7 @@ export const query = graphql`
       }
     }
     relatedPosts: allMdx(
-      filter: { frontmatter: { tags: { in: $tags }, locale: { eq: null } }, id: { ne: $id } }
+      filter: { frontmatter: { categories: { in: $categories }, locale: { eq: null } }, id: { ne: $id } }
       sort: { frontmatter: { createdAt: DESC } }
       limit: 4
     ) {
@@ -53,6 +54,7 @@ export const query = graphql`
           slug
           title
           description
+          categories
           tags
           createdAt
           updatedAt
@@ -120,11 +122,11 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
 
   return (
     <>
-      {/* HTML Meta Tags */}
+      {/* HTML Meta categories */}
       <title>{title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      {/* Facebook Meta Tags */}
+      {/* Facebook Meta categories */}
       <meta property="og:url" content={`${DOMAIN}/posts/${data.post?.frontmatter?.slug}`} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={title} />
@@ -133,7 +135,7 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
       <meta property="og:image" content={getSrc(ogimage)} />
       <meta property="og:locale" content={metaLocale} />
 
-      {/*  Twitter Meta Tags  */}
+      {/*  Twitter Meta categories  */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="junghyeonsu.com" />
       <meta property="twitter:url" content={`${DOMAIN}/posts/${data.post?.frontmatter?.slug}`} />
@@ -141,7 +143,8 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={getSrc(ogimage)}></meta>
       <meta name="twitter:label1" content="Category" />
-      <meta name="twitter:data1" content={`${devCategory} | ${data.post?.frontmatter?.tags![0]}`} />
+      <meta name="twitter:data1" content={`${devCategory} | ${data.post?.frontmatter?.categories![0]}`} />
+      {/*<meta name="twitter:data1" content={`${devCategory} | ${data.post?.frontmatter?.tags![0]}`} />*/}
       <meta
         name="article:published_time"
         content={`${data.post?.frontmatter?.createdAt?.replace(/[/]/g, "-")}T09:00:00.000Z`}
@@ -150,3 +153,4 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
   );
 };
 export default PostTemplate;
+

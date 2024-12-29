@@ -13,7 +13,7 @@ const ShortPostSection = ({ posts }: ShortPostSectionProps) => {
       direction="column"
     >
       <Heading fontStyle="italic" _hover={{ textDecoration: "underline" }}>
-        <Link to="/tags/short">Shorts.</Link>
+        <Link to="/categories/short">Shorts.</Link>
       </Heading>
       <Flex
         direction="column"

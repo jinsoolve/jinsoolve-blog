@@ -1,5 +1,6 @@
 // NOTE: blog-development -> BLOG DEVELOPMENT
 export const convertSlugToTitle = (slug: string) => {
+  if (!slug) return "All Posts";
   return slug
     .split("-")
     .map((i) => i.toUpperCase())

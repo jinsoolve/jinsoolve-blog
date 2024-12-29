@@ -12,7 +12,7 @@ interface PostCardProps {
   slug: string;
   createdAt: string;
   updatedAt: string;
-  tags: readonly (string | null)[];
+  categories: readonly (string | null)[];
   thumbnail: IGatsbyImageData;
 }
 
@@ -20,7 +20,7 @@ const PostCard = ({
   createdAt,
   description,
   slug,
-  tags,
+  categories,
   thumbnail,
   title,
   updatedAt,
@@ -95,11 +95,11 @@ const PostCard = ({
             </svg>
           </Center>
 
-          {/* Tags */}
+          {/* categories */}
           <Flex position="absolute" direction="column" left={0} top={0} margin="20px" gap="10px">
-            {tags?.map((tag) => (
+            {categories?.map((category) => (
               <Box
-                key={tag}
+                key={category}
                 border="white 2px solid"
                 borderRadius="20px"
                 color="white"
@@ -108,7 +108,7 @@ const PostCard = ({
                 fontWeight="800"
                 width="fit-content"
               >
-                {koreanTagNames[tag!] || tag}
+                {koreanTagNames[category!] || category}
               </Box>
             ))}
           </Flex>
@@ -127,7 +127,7 @@ const PostCard = ({
         {/* Title */}
       </Box>
 
-      {/* title + tags + new Post */}
+      {/* title + categories + new Post */}
       <Flex direction="column" alignItems="start">
         <Flex gap="10px" marginTop="16px">
           <Box
@@ -143,7 +143,7 @@ const PostCard = ({
             {updatedAt ? `${updatedAt} (updated)` : createdAt}
           </Box>
 
-          {/* New Tag */}
+          {/* New category */}
           {isNewPost && (
             <Box
               color="black.900"

@@ -1332,6 +1332,7 @@ input MdxFilterListInput {
 }
 
 type MdxFrontmatter {
+  categories: [String]
   createdAt: String
   description: String
   featured: Boolean
@@ -1345,6 +1346,7 @@ type MdxFrontmatter {
 }
 
 input MdxFrontmatterFieldSelector {
+  categories: FieldSelectorEnum
   createdAt: FieldSelectorEnum
   description: FieldSelectorEnum
   featured: FieldSelectorEnum
@@ -1358,6 +1360,7 @@ input MdxFrontmatterFieldSelector {
 }
 
 input MdxFrontmatterFilterInput {
+  categories: StringQueryOperatorInput
   createdAt: StringQueryOperatorInput
   description: StringQueryOperatorInput
   featured: BooleanQueryOperatorInput
@@ -1371,6 +1374,7 @@ input MdxFrontmatterFilterInput {
 }
 
 input MdxFrontmatterSortInput {
+  categories: SortOrderEnum
   createdAt: SortOrderEnum
   description: SortOrderEnum
   featured: SortOrderEnum

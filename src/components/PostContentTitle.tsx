@@ -37,10 +37,10 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
             ? `${post?.frontmatter?.updatedAt} updated`
             : post?.frontmatter?.createdAt}
         </Box>
-        {post?.frontmatter?.tags?.map((tag) => (
-          <Link key={tag} to={`/tags/${tag}`}>
+        {post?.frontmatter?.categories?.map((category) => (
+          <Link key={category} to={`/categories/${category}`}>
             <Box
-              key={tag}
+              key={category}
               color={colorMode === "dark" ? "gray.50" : "gray.900"}
               borderColor={colorMode === "dark" ? "gray.50" : "gray.900"}
               border="2px solid"
@@ -50,7 +50,7 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
               fontWeight="800"
               width="fit-content"
             >
-              {koreanTagNames[tag!] || tag}
+              {koreanTagNames[category!] || category}
             </Box>
           </Link>
         ))}
