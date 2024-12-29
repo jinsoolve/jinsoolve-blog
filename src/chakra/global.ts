@@ -32,4 +32,8 @@ export default {
 
     marginTop: "16px",
   },
+
+  ".frac-line": {
+    borderColor: "white",
+  },
 };

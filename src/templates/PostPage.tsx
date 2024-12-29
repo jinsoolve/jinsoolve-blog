@@ -144,7 +144,6 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
       <meta name="twitter:image" content={getSrc(ogimage)}></meta>
       <meta name="twitter:label1" content="Category" />
       <meta name="twitter:data1" content={`${devCategory} | ${data.post?.frontmatter?.categories![0]}`} />
-      {/*<meta name="twitter:data1" content={`${devCategory} | ${data.post?.frontmatter?.tags![0]}`} />*/}
       <meta
         name="article:published_time"
         content={`${data.post?.frontmatter?.createdAt?.replace(/[/]/g, "-")}T09:00:00.000Z`}

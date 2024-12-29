@@ -19,15 +19,19 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
       alignItems="baseline"
       isolation="isolate"
     >
-      <Heading as="h1" fontSize={36} marginBottom="3" fontWeight={900} wordBreak="break-word">
-        {post?.frontmatter?.title}
-      </Heading>
+      <Flex alignItems="baseline" columnGap="15px">
+        <Heading as="h1" fontSize={36} marginBottom="3" fontWeight={900} wordBreak="break-word">
+          {post?.frontmatter?.title}
+        </Heading>
+        <Text fontSize="12px">{readingTime}</Text>
+      </Flex>
+
       <Flex columnGap="14px" rowGap="10px" alignItems="end" flexWrap="wrap">
         <Box
           color={colorMode === "dark" ? "gray.50" : "gray.900"}
           borderColor={colorMode === "dark" ? "gray.50" : "gray.900"}
           border="2px solid"
-          borderRadius="20px"
+          borderRadius="10px"
           padding="6px 10px"
           fontSize="14px"
           fontWeight="800"
@@ -44,8 +48,8 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
               color={colorMode === "dark" ? "gray.50" : "gray.900"}
               borderColor={colorMode === "dark" ? "gray.50" : "gray.900"}
               border="2px solid"
-              borderRadius="20px"
-              padding="6px"
+              borderRadius="10px"
+              padding="6px 10px"
               fontSize="14px"
               fontWeight="800"
               width="fit-content"
@@ -54,7 +58,27 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
             </Box>
           </Link>
         ))}
-        <Text fontSize="12px">{readingTime}</Text>
+      </Flex>
+      <Box height="10px" />  {/* 여기에 간격을 추가합니다. */}
+
+      <Flex columnGap="10px" rowGap="10px" alignItems="baseline" flexWrap="wrap">
+        {post?.frontmatter?.tags?.map((tag) => (
+          <Link key={tag} to={`/tags/${tag}`}>
+            <Box
+              key={tag}
+              color={colorMode === "dark" ? "gray.50" : "gray.900"}
+              borderColor={colorMode === "dark" ? "gray.50" : "gray.900"}
+              border="2px solid"
+              borderRadius="20px"
+              padding="6px"
+              fontSize="14px"
+              fontWeight="800"
+              width="fit-content"
+            >
+              {koreanTagNames[tag!] || tag}
+            </Box>
+          </Link>
+        ))}
       </Flex>
 
       <Box

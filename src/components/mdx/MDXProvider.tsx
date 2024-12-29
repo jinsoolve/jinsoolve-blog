@@ -10,6 +10,7 @@ import Callout from "./Callout";
 import { InternalLink } from "./InternalLink";
 import YouTubePlayer from "./YouTubePlayer";
 
+
 /* 커스텀 HTML Elements */
 const customComponents = {
   h1: (props: HeadingProps) => <Heading as="h1" fontSize={36} mt="80px" {...props} />,
@@ -112,10 +113,32 @@ const customComponents = {
     return <Callout>{children}</Callout>;
   },
 
+  katex: (props: ComponentDefaultProps) => {
+    const { children } = props;
+
+    return (
+      <Box
+        className="katex-container"
+        sx={{
+          border: "1px solid white", // border 스타일
+          borderRadius: "8px", // 추가 스타일
+          padding: "16px",
+          backgroundColor: "gray.50",
+          _dark: {
+            backgroundColor: "gray.900", // 다크 모드 배경
+          },
+        }}
+      >
+        {children}
+      </Box>
+    );
+  },
+
   // NOTE: match하면 code block, match하지 않으면 inline code
   code: (props: ComponentDefaultProps) => {
     const { className, children } = props;
     const match = /language-(\w+)/.exec(className || "");
+
 
     if (!match) {
       return (

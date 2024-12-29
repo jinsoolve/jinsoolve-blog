@@ -78,7 +78,7 @@ export default function categories({ currentCategory }: CategoriesProps) {
               fontWeight={currentCategory === ALL_POSTS_NAME ? 700 : 400}
               _hover={{ textDecoration: "underline" }}
             >
-              All.
+              AllCategories.
             </Text>
             <Text fontSize="12px" fontWeight={currentCategory === ALL_POSTS_NAME ? 700 : 300}>
               ({data.allMdx.allPostCount})
