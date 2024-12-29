@@ -64,7 +64,7 @@ const Profile = () => {
             h="120px"
             pos="relative"
             overflow="hidden"
-            backgroundColor="blue.50"
+            backgroundColor="#F5F4F8"
             objectFit="cover"
             borderRadius="50%"
             isolation="isolate"
