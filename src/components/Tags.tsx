@@ -71,14 +71,14 @@ export default function Tags({ currentTag }: TagsProps) {
         width="100%"
         maxWidth="600px"
       >
-        <Link to="/">
+        <Link to="/tags/">
           <Flex justifyContent="center" alignItems="flex-start">
             <Text
               fontSize={{ base: "14px", md: "18px" }}
               fontWeight={currentTag === ALL_POSTS_TAG_NAME ? 700 : 400}
               _hover={{ textDecoration: "underline" }}
             >
-              All Posts
+              All Tags
             </Text>
             <Text fontSize="12px" fontWeight={currentTag === ALL_POSTS_TAG_NAME ? 700 : 300}>
               ({data.allMdx.allPostCount})

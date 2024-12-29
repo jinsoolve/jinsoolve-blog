@@ -2,7 +2,7 @@ import { Flex, Heading, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { graphql, Link, useStaticQuery } from "gatsby";
 
-import { ALL_POSTS_TAG_NAME, koreanTagNames } from "../constants";
+import { ALL_POSTS_NAME, koreanTagNames } from "../constants";
 import { convertSlugToTitle } from "../utils/string";
 
 interface CategoriesProps {
@@ -44,7 +44,7 @@ export default function categories({ currentCategory }: CategoriesProps) {
       >
         <Heading
           fontStyle="italic"
-          fontSize={{ base: currentCategory === ALL_POSTS_TAG_NAME ? "40px" : "30px", md: "60px" }}
+          fontSize={{ base: currentCategory === ALL_POSTS_NAME ? "40px" : "30px", md: "60px" }}
           fontWeight="800"
           letterSpacing={-1.5}
         >
@@ -56,7 +56,7 @@ export default function categories({ currentCategory }: CategoriesProps) {
           color="gray.500"
           fontWeight="200"
         >
-          ({currentCategory === ALL_POSTS_TAG_NAME ? data.allMdx.allPostCount : currentCategoryPostCount})
+          ({currentCategory === ALL_POSTS_NAME ? data.allMdx.allPostCount : currentCategoryPostCount})
         </Text>
       </motion.div>
 
@@ -75,12 +75,12 @@ export default function categories({ currentCategory }: CategoriesProps) {
           <Flex justifyContent="center" alignItems="flex-start">
             <Text
               fontSize={{ base: "14px", md: "18px" }}
-              fontWeight={currentCategory === ALL_POSTS_TAG_NAME ? 700 : 400}
+              fontWeight={currentCategory === ALL_POSTS_NAME ? 700 : 400}
               _hover={{ textDecoration: "underline" }}
             >
               All Posts
             </Text>
-            <Text fontSize="12px" fontWeight={currentCategory === ALL_POSTS_TAG_NAME ? 700 : 300}>
+            <Text fontSize="12px" fontWeight={currentCategory === ALL_POSTS_NAME ? 700 : 300}>
               ({data.allMdx.allPostCount})
             </Text>
           </Flex>

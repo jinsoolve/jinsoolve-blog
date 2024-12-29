@@ -6,6 +6,7 @@ const TagPageTemplate = path.resolve(`./src/templates/TagPage.tsx`);
 const CategoryPageTemplate = path.resolve(`./src/templates/CategoryPage.tsx`);
 const PortfolioPageTemplate = path.resolve(`./src/templates/PortfolioPage.tsx`);
 const AllPostPageTemplate = path.resolve(`./src/templates/AllPostPage.tsx`);
+const AllTagPostPageTemplate = path.resolve(`./src/templates/AllTagPostPage.tsx`);
 
 const WORDS_PER_MINUTE = 500;
 
@@ -99,6 +100,19 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     createPage({
       path: i === 0 ? `/` : `/${i + 1}`,
       component: AllPostPageTemplate,
+      context: {
+        limit: POST_PER_PAGE,
+        skip: i * POST_PER_PAGE,
+        numPages: allPostsNumPages,
+        currentPage: i + 1,
+      },
+    });
+  });
+
+  Array.from({ length: allPostsNumPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/tags/` : `/tags/${i + 1}`,
+      component: AllTagPostPageTemplate,
       context: {
         limit: POST_PER_PAGE,
         skip: i * POST_PER_PAGE,

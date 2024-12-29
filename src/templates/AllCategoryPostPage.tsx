@@ -9,8 +9,8 @@ import Pagenation from "../components/Pagenation";
 import PostGrid from "../components/PostGrid";
 import Profile from "../components/Profile";
 import ShortPostSection from "../components/ShortPostSection";
-import Categories from "../components/Categories";
-import { ALL_POSTS_NAME, DOMAIN } from "../constants";
+import Categoriess from "../components/Categories";
+import { ALL_POSTS_TAG_NAME, DOMAIN } from "../constants";
 
 export const query = graphql`
   fragment MdxContent on Mdx {
@@ -104,18 +104,18 @@ export default function AllPostPageTemplate({ data }: AllPostPageTemplateProps) 
 
   return (
     <MainLayout>
-      <Categories currentCategory={ALL_POSTS_NAME} />
+      <Categirues currentTag={ALL_POSTS_TAG_NAME} />
 
-      <Flex
-        width="100%"
-        maxWidth={{ base: "95%", md: "600px", lg: "100%" }}
-        direction={{ base: "column", lg: "row" }}
-        marginTop="40px"
-        gap={{ base: "20px", lg: "60px" }}
-      >
-        <FeaturedPostSection posts={featuredPosts} />
-        <ShortPostSection posts={shortPosts} />
-      </Flex>
+      {/*<Flex*/}
+      {/*  width="100%"*/}
+      {/*  maxWidth={{ base: "95%", md: "600px", lg: "100%" }}*/}
+      {/*  direction={{ base: "column", lg: "row" }}*/}
+      {/*  marginTop="40px"*/}
+      {/*  gap={{ base: "20px", lg: "60px" }}*/}
+      {/*>*/}
+      {/*  <FeaturedPostSection posts={featuredPosts} />*/}
+      {/*  <ShortPostSection posts={shortPosts} />*/}
+      {/*</Flex>*/}
 
       <PostGrid posts={data.allMdx.nodes} />
       {pageCount > 1 && <Pagenation currentPage={currentPage} pageCount={pageCount} />}
