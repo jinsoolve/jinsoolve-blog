@@ -98,11 +98,11 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
           alt={post?.frontmatter?.title!}
         />
       </Box>
-      {post?.frontmatter?.thumbnailSource && (
-        <Text fontSize="12px" textAlign="center" width="100%">
-          이미지 출처: {post?.frontmatter?.thumbnailSource}
-        </Text>
-      )}
+      {/*{post?.frontmatter?.thumbnailSource && (*/}
+      {/*  <Text fontSize="12px" textAlign="center" width="100%">*/}
+      {/*    이미지 출처: {post?.frontmatter?.thumbnailSource}*/}
+      {/*  </Text>*/}
+      {/*)}*/}
     </Flex>
   );
 };
