@@ -1982,14 +1982,12 @@ type SiteFieldSelector = {
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly flags: InputMaybe<SiteFlagsFieldSelector>;
   readonly graphqlTypegen: InputMaybe<SiteGraphqlTypegenFieldSelector>;
-  readonly host: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
   readonly jsxRuntime: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly pathPrefix: InputMaybe<FieldSelectorEnum>;
   readonly polyfill: InputMaybe<FieldSelectorEnum>;
-  readonly port: InputMaybe<FieldSelectorEnum>;
   readonly siteMetadata: InputMaybe<SiteSiteMetadataFieldSelector>;
   readonly trailingSlash: InputMaybe<FieldSelectorEnum>;
 };
@@ -2168,25 +2166,21 @@ type SiteFunctionSortInput = {
 };
 
 type SiteGraphqlTypegen = {
-  readonly documentSearchPaths: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
   readonly generateOnBuild: Maybe<Scalars['Boolean']>;
   readonly typesOutputPath: Maybe<Scalars['String']>;
 };
 
 type SiteGraphqlTypegenFieldSelector = {
-  readonly documentSearchPaths: InputMaybe<FieldSelectorEnum>;
   readonly generateOnBuild: InputMaybe<FieldSelectorEnum>;
   readonly typesOutputPath: InputMaybe<FieldSelectorEnum>;
 };
 
 type SiteGraphqlTypegenFilterInput = {
-  readonly documentSearchPaths: InputMaybe<StringQueryOperatorInput>;
   readonly generateOnBuild: InputMaybe<BooleanQueryOperatorInput>;
   readonly typesOutputPath: InputMaybe<StringQueryOperatorInput>;
 };
 
 type SiteGraphqlTypegenSortInput = {
-  readonly documentSearchPaths: InputMaybe<SortOrderEnum>;
   readonly generateOnBuild: InputMaybe<SortOrderEnum>;
   readonly typesOutputPath: InputMaybe<SortOrderEnum>;
 };
@@ -2553,14 +2547,12 @@ type SiteSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
   readonly flags: InputMaybe<SiteFlagsSortInput>;
   readonly graphqlTypegen: InputMaybe<SiteGraphqlTypegenSortInput>;
-  readonly host: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
   readonly jsxRuntime: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly pathPrefix: InputMaybe<SortOrderEnum>;
   readonly polyfill: InputMaybe<SortOrderEnum>;
-  readonly port: InputMaybe<SortOrderEnum>;
   readonly siteMetadata: InputMaybe<SiteSiteMetadataSortInput>;
   readonly trailingSlash: InputMaybe<SortOrderEnum>;
 };
