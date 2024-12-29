@@ -38,6 +38,12 @@ module.exports = {
               showCaptions: true,
             },
           },
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+              strict: "ignore", // KaTeX strict 모드 설정
+            },
+          },
         ],
         mdxOptions: {
           rehypePlugins: [

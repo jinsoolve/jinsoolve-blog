@@ -122,17 +122,19 @@ const customComponents = {
         <Text
           as="code"
           sx={{
-            _after: {
-              content: '"`"',
-            },
-            _before: {
-              content: '"`"',
-            },
-            color: "gray.900",
+            borderRadius: "4px",
+            padding: "2px 4px",
             letterSpacing: "-0.04px",
             fontWeight: "600",
+            // backgroundColor: "gray.200",
+            color: "gray.900",
+
+            // borderColor: "gray.400", // 기본 테두리 색상
             _dark: {
+              // backgroundColor: "gray.900",
               color: "gray.50",
+              // border: "0.5px solid", // 기본 테두리
+              // borderColor: "gray.50", // 다크 모드에서 테두리 색상 변경
             },
           }}
         >
