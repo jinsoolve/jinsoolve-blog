@@ -55,7 +55,7 @@ const Header = () => {
       <Tags />
       <Portfoilo />
       <About />
-      <RSS />
+      {/*<RSS />*/}
       <ThemeToggler />
     </Box>
   );

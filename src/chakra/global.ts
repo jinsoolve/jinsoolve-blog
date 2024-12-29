@@ -34,6 +34,7 @@ export default {
   },
 
   ".frac-line": {
-    borderColor: "white",
+    borderColor: "currentColor",
+    borderWidth: "0.8px",
   },
 };
