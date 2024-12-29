@@ -907,9 +907,9 @@ type ImageSharp implements Node {
 
     """
     Format of generated placeholder image, displayed while the main image loads.
-    BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
-    DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
-    TRACED_SVG: a low-resolution traced SVG of the image.
+    BLURRED: a blurred, low resolution image, encoded as a base64 data URI
+    DOMINANT_COLOR: a solid color, calculated from the dominant color of the image (default).
+    TRACED_SVG: deprecated. Will use DOMINANT_COLOR.
     NONE: no placeholder. Set "background" to use a fixed background color.
     """
     placeholder: ImagePlaceholder
@@ -1630,12 +1630,14 @@ input SiteFieldSelector {
   children: NodeFieldSelector
   flags: SiteFlagsFieldSelector
   graphqlTypegen: SiteGraphqlTypegenFieldSelector
+  host: FieldSelectorEnum
   id: FieldSelectorEnum
   internal: InternalFieldSelector
   jsxRuntime: FieldSelectorEnum
   parent: NodeFieldSelector
   pathPrefix: FieldSelectorEnum
   polyfill: FieldSelectorEnum
+  port: FieldSelectorEnum
   siteMetadata: SiteSiteMetadataFieldSelector
   trailingSlash: FieldSelectorEnum
 }
@@ -1760,21 +1762,25 @@ input SiteFunctionSortInput {
 }
 
 type SiteGraphqlTypegen {
+  documentSearchPaths: [String]
   generateOnBuild: Boolean
   typesOutputPath: String
 }
 
 input SiteGraphqlTypegenFieldSelector {
+  documentSearchPaths: FieldSelectorEnum
   generateOnBuild: FieldSelectorEnum
   typesOutputPath: FieldSelectorEnum
 }
 
 input SiteGraphqlTypegenFilterInput {
+  documentSearchPaths: StringQueryOperatorInput
   generateOnBuild: BooleanQueryOperatorInput
   typesOutputPath: StringQueryOperatorInput
 }
 
 input SiteGraphqlTypegenSortInput {
+  documentSearchPaths: SortOrderEnum
   generateOnBuild: SortOrderEnum
   typesOutputPath: SortOrderEnum
 }
@@ -1906,12 +1912,14 @@ input SiteSortInput {
   children: NodeSortInput
   flags: SiteFlagsSortInput
   graphqlTypegen: SiteGraphqlTypegenSortInput
+  host: SortOrderEnum
   id: SortOrderEnum
   internal: InternalSortInput
   jsxRuntime: SortOrderEnum
   parent: NodeSortInput
   pathPrefix: SortOrderEnum
   polyfill: SortOrderEnum
+  port: SortOrderEnum
   siteMetadata: SiteSiteMetadataSortInput
   trailingSlash: SortOrderEnum
 }
