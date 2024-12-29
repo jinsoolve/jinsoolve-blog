@@ -9,8 +9,8 @@ import Pagenation from "../components/Pagenation";
 import PostGrid from "../components/PostGrid";
 import Profile from "../components/Profile";
 import ShortPostSection from "../components/ShortPostSection";
-import Categoriess from "../components/Categories";
-import { ALL_POSTS_TAG_NAME, DOMAIN } from "../constants";
+import Categories from "../components/Categories";
+import { ALL_POSTS_CATEGORY_NAME, DOMAIN } from "../constants";
 
 export const query = graphql`
   fragment MdxContent on Mdx {
@@ -104,7 +104,7 @@ export default function AllPostPageTemplate({ data }: AllPostPageTemplateProps) 
 
   return (
     <MainLayout>
-      <Categirues currentTag={ALL_POSTS_TAG_NAME} />
+      <Categories currentCategory={ALL_POSTS_CATEGORY_NAME} />
 
       {/*<Flex*/}
       {/*  width="100%"*/}

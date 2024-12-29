@@ -7,6 +7,7 @@ import About from "./About";
 import Logo from "./Logo";
 import Portfoilo from "./Portfolio";
 import Tags from "./Tags";
+import Categories from "./Categories";
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -50,6 +51,7 @@ const Header = () => {
     >
       <Logo />
       <Spacer />
+      <Categories />
       <Tags />
       <Portfoilo />
       <About />
