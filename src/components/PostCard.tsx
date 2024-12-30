@@ -5,6 +5,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import { useMemo, useState } from "react";
 
 import { koreanTagNames } from "../constants";
+import { useColorModeValue } from "@chakra-ui/react";
 
 interface PostCardProps {
   title: string;
@@ -17,17 +18,22 @@ interface PostCardProps {
 }
 
 const PostCard = ({
-  createdAt,
-  description,
-  slug,
-  categories,
-  thumbnail,
-  title,
-  updatedAt,
-}: PostCardProps) => {
+                    createdAt,
+                    description,
+                    slug,
+                    categories,
+                    thumbnail,
+                    title,
+                    updatedAt,
+                  }: PostCardProps) => {
   const diffMs = useMemo(() => new Date().getTime() - new Date(createdAt).getTime(), [createdAt]);
   const isNewPost = useMemo(() => Math.floor(diffMs / (1000 * 60 * 60 * 24)) <= 10, [diffMs]);
   const [isHovered, setIsHovered] = useState(false);
+
+  const boxShadowColor = useColorModeValue(
+    "0 4px 6px rgba(0, 0, 0, 0.3)", // 라이트모드 음영
+    "0 4px 6px rgba(255, 255, 255, 0.3)" // 다크모드 음영
+  );
 
   return (
     <Link
@@ -45,6 +51,7 @@ const PostCard = ({
         width="100%"
         height={{ base: "100%", sm: "280px", md: "316px" }}
         isolation="isolate"
+        boxShadow={boxShadowColor} // 동적 음영 색상 적용
       >
         {/* Overlay */}
         <Box
@@ -115,7 +122,14 @@ const PostCard = ({
         </Box>
 
         {/* Image */}
-        <Box display="block" as="span" width="100%" height="100%" borderRadius={2}>
+        <Box
+          display="block"
+          as="span"
+          width="100%"
+          height="100%"
+          borderRadius="20px" // 이미지도 동일하게 경계선 조정
+          overflow="hidden"
+        >
           <GatsbyImage
             objectFit="cover"
             style={{ height: "100%" }}
@@ -123,8 +137,6 @@ const PostCard = ({
             alt={`${slug} cover image`}
           />
         </Box>
-
-        {/* Title */}
       </Box>
 
       {/* title + categories + new Post */}
@@ -169,3 +181,4 @@ const PostCard = ({
 };
 
 export default PostCard;
+

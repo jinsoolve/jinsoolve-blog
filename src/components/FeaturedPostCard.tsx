@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import type { IGatsbyImageData } from "gatsby-plugin-image";
 import { GatsbyImage } from "gatsby-plugin-image";
@@ -17,17 +17,23 @@ interface FeaturedPostCardProps {
 }
 
 const FeaturedPostCard = ({
-  createdAt,
-  description,
-  slug,
-  categories,
-  thumbnail,
-  title,
-  updatedAt,
-}: FeaturedPostCardProps) => {
+                            createdAt,
+                            description,
+                            slug,
+                            categories,
+                            thumbnail,
+                            title,
+                            updatedAt,
+                          }: FeaturedPostCardProps) => {
   const diffMs = useMemo(() => new Date().getTime() - new Date(createdAt).getTime(), [createdAt]);
   const isNewPost = useMemo(() => Math.floor(diffMs / (1000 * 60 * 60 * 24)) <= 10, [diffMs]);
   const [isHovered, setIsHovered] = useState(false);
+
+  // 다크모드와 라이트모드에 따른 음영 설정
+  const boxShadowColor = useColorModeValue(
+    "0 4px 6px rgba(0, 0, 0, 0.3)", // 라이트모드 음영
+    "0 4px 6px rgba(255, 255, 255, 0.3)" // 다크모드 음영
+  );
 
   return (
     <Link
@@ -45,6 +51,7 @@ const FeaturedPostCard = ({
         width="100%"
         height={{ base: "100%", sm: "380px", md: "480px" }}
         isolation="isolate"
+        boxShadow={boxShadowColor} // 동적 음영
       >
         {/* Overlay */}
         <Box

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, useColorMode, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, useColorMode, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
@@ -13,6 +13,10 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
   const { colorMode } = useColorMode();
   // 좁은 화면에서는 column(세로), 넓은 화면에서는 row(가로)로 전환
   const flexDirection = useBreakpointValue({ base: "column", xl: "row" });
+  const boxShadowColor = useColorModeValue(
+    "0 4px 6px rgba(0, 0, 0, 0.3)", // 라이트모드 음영
+    "0 4px 6px rgba(255, 255, 255, 0.3)" // 다크모드 음영
+  );
 
   return (
     <Flex
@@ -111,6 +115,7 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
         isolation="isolate"
         borderRadius="20px"
         overflow="hidden"
+        boxShadow={boxShadowColor}
         marginTop="20px"
       >
         <GatsbyImage
