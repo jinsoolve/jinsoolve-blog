@@ -136,7 +136,7 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
 
       {/*  Twitter Meta categories  */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta property="twitter:domain" content="junghyeonsu.com" />
+      <meta property="twitter:domain" content="jinsoolve.netlify.app" />
       <meta property="twitter:url" content={`${DOMAIN}/posts/${data.post?.frontmatter?.slug}`} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />

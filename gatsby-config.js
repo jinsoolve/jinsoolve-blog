@@ -173,7 +173,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Junghyeonsu blog's RSS Feed",
+            title: "jinsoolve blog's RSS Feed",
           },
         ],
       },

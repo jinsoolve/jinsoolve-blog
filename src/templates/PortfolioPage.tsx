@@ -91,7 +91,7 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
 
       {/*  Twitter Meta categories  */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta property="twitter:domain" content="junghyeonsu.com" />
+      <meta property="twitter:domain" content="jinsoolve.netlify.app" />
       <meta property="twitter:url" content={`${DOMAIN}/${data.post?.frontmatter?.slug}`} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
