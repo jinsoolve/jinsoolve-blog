@@ -37,4 +37,7 @@ export default {
     borderColor: "currentColor",
     borderWidth: "0.8px",
   },
+  ".katex": {
+    overflowX: "auto",
+  }
 };

@@ -124,6 +124,8 @@ const customComponents = {
           borderRadius: "8px", // 추가 스타일
           padding: "16px",
           backgroundColor: "gray.50",
+          overflow: "auto", // 가로 스크롤 허용
+          whiteSpace: "nowrap", // 내용이 줄바꿈되지 않도록 설정
           _dark: {
             backgroundColor: "gray.900", // 다크 모드 배경
           },
