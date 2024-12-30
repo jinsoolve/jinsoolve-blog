@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, useColorMode } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, useColorMode, useBreakpointValue } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
@@ -11,6 +11,9 @@ interface PostContentTitleProps {
 
 const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
   const { colorMode } = useColorMode();
+  // 좁은 화면에서는 column(세로), 넓은 화면에서는 row(가로)로 전환
+  const flexDirection = useBreakpointValue({ base: "column", xl: "row" });
+
   return (
     <Flex
       width="100%"
@@ -19,11 +22,28 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
       alignItems="baseline"
       isolation="isolate"
     >
-      <Flex alignItems="baseline" columnGap="15px">
-        <Heading as="h1" fontSize={36} marginBottom="3" fontWeight={900} wordBreak="break-word">
+      <Flex
+        alignItems={flexDirection === "column" ? "start" : "baseline"}
+        flexDirection={flexDirection} // 반응형 레이아웃 전환
+        columnGap="15px"
+        rowGap="5px" // 세로 정렬일 때 간격
+      >
+        <Heading
+          as="h1"
+          fontSize={36}
+
+          fontWeight={900}
+          wordBreak="break-word"
+        >
           {post?.frontmatter?.title}
         </Heading>
-        <Text fontSize="12px">{readingTime}</Text>
+        <Text
+          fontSize="12px"
+
+          marginBottom="3"
+        >
+          {readingTime}
+        </Text>
       </Flex>
 
       <Flex columnGap="14px" rowGap="10px" alignItems="end" flexWrap="wrap">
