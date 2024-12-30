@@ -6,7 +6,7 @@ interface InternalLinkProps {
   children: React.ReactNode;
 }
 
-const URL = "https://junghyeonsu.com";
+const URL = "https://jinsoolve.netlify.app";
 
 export const InternalLink: React.FC<InternalLinkProps> = ({ to, children }) => {
   const [isHovered, setIsHovered] = React.useState(false);
