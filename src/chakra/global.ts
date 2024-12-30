@@ -39,5 +39,6 @@ export default {
   },
   ".katex": {
     overflowX: "auto",
+    overflowY: "hidden",
   }
 };
