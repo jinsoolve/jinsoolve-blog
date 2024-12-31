@@ -3,7 +3,8 @@ import { Box, Heading, Text } from "@chakra-ui/react";
 import { MDXProvider } from "@mdx-js/react";
 import type { AnchorHTMLAttributes, PropsWithChildren } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { oneLight, oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { useColorMode } from "@chakra-ui/react";
 
 import { parseSyntaxHighlighterClassName } from "../../utils/string";
 import Callout from "./Callout";
@@ -170,11 +171,19 @@ const customComponents = {
 
     // NOTE: jsx,1-2&4-6,7-8
     const { addLines, removeLines } = parseSyntaxHighlighterClassName(className);
-
+    const { colorMode } = useColorMode();
+    const theme = colorMode === "dark" ? oneDark : oneLight;
     return (
       <SyntaxHighlighter
-        style={vscDarkPlus}
-        customStyle={{ margin: "20px 0px", borderRadius: "20px" }}
+        style={theme}
+        customStyle={{
+          margin: "20px 0px", borderRadius: "10px",
+          boxShadow: colorMode === "dark"
+            ? "0px 4px 12px rgba(0, 0, 0, 0.4)" // 다크모드 음영
+            : "0px 4px 12px rgba(0, 0, 0, 0.1)", // 라이트모드 음영
+          fontFamily: "Fira Code, monospace",
+        }}
+
         showLineNumbers
         PreTag="div"
         language={match[1]}
