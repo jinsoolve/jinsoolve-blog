@@ -40,5 +40,10 @@ export default {
   ".katex": {
     overflowX: "auto",
     overflowY: "hidden",
-  }
+  },
+  // react-syntax-highlighter 줄 번호 스타일
+  ".react-syntax-highlighter-line-number": {
+    userSelect: "none",
+    pointerEvents: "none",
+  },
 };
