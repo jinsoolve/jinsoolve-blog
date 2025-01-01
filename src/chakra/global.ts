@@ -46,4 +46,11 @@ export default {
     userSelect: "none",
     pointerEvents: "none",
   },
+
+  "@font-face": {
+    fontFamily: "SBAggro",
+    src: "url('/SBAggroM.otf') format('opentype')",
+    fontWeight: "normal",
+    fontStyle: "normal",
+  },
 };

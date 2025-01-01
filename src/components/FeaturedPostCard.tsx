@@ -122,21 +122,46 @@ const FeaturedPostCard = ({
           </Flex>
         </Box>
 
-        {/* Image */}
+        {/* Image or Fallback Content */}
         <Box display="block" as="span" width="100%" height="100%" borderRadius={2}>
           {thumbnail ? (
             <GatsbyImage
               objectFit="cover"
-              style={{ height: "100%" }}
+              style={{ height: "100%", width: "100%" }}
               image={thumbnail}
               alt={`${slug} cover image`}
             />
           ) : (
-            <img
-              src={defaultThumbnailImage}
-              alt="default cover image"
-              style={{ height: "100%", width: "100%", objectFit: "cover" }}
-            />
+            <Box
+              backgroundColor="white"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              height="100%"
+              width="100%"
+              borderRadius="20px"
+            >
+              <Box
+                textAlign="center"
+                height="100%"
+                width="100%"
+                padding="20px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Heading
+                  fontSize="60px"
+                  fontWeight="700"
+                  color="black"
+                  fontFamily="SBAggro"
+                  textAlign="center"
+                  lineHeight="1.5"
+                >
+                  {title}
+                </Heading>
+              </Box>
+            </Box>
           )}
         </Box>
       </Box>
