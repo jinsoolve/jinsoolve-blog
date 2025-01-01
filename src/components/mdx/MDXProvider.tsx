@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import type { BoxProps, ComponentDefaultProps, HeadingProps, TextProps } from "@chakra-ui/react";
-import { Box, Heading, Text, useColorMode, Button } from "@chakra-ui/react";
+import { Box, useColorMode, IconButton, Tooltip } from "@chakra-ui/react";
 import { MDXProvider } from "@mdx-js/react";
-import type { AnchorHTMLAttributes, PropsWithChildren } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight, oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { FiCopy, FiCheck } from "react-icons/fi";
 
 import { parseSyntaxHighlighterClassName } from "../../utils/string";
 import Callout from "./Callout";
@@ -25,100 +24,28 @@ const CopyButton = ({ text }: { text: string }) => {
   };
 
   return (
-    <Button
-      size="sm"
-      position="absolute"
-      top="8px"
-      right="8px"
-      onClick={handleCopy}
-      backgroundColor="blue.500"
-      color="white"
-      _hover={{ backgroundColor: "blue.600" }}
-    >
-      {copied ? "Copied!" : "Copy"}
-    </Button>
+    <Tooltip label={copied ? "Copied!" : "Copy"} hasArrow placement="top">
+      <IconButton
+        icon={copied ? <FiCheck /> : <FiCopy />}
+        onClick={handleCopy}
+        size="md"
+        position="absolute"
+        top="8px"
+        right="8px"
+        aria-label="Copy code"
+        backgroundColor="gray.900"
+        color="white"
+        _hover={{ backgroundColor: "gray.600" }}
+        _active={{ backgroundColor: "gray.700" }}
+        borderRadius="10px"
+      />
+    </Tooltip>
   );
 };
 
 /* 커스텀 HTML Elements */
 const customComponents = {
-  h1: (props: HeadingProps) => <Heading as="h1" fontSize={36} mt="80px" {...props} />,
-  h2: (props: HeadingProps) => <Heading as="h2" fontSize={32} mt="80px" mb="40px" {...props} />,
-  h3: (props: HeadingProps) => <Heading as="h3" fontSize={24} mt="60px" mb="30px" {...props} />,
-  h4: (props: HeadingProps) => <Heading as="h4" fontSize={20} mt="40px" mb="20px" {...props} />,
-  p: (props: TextProps) => <Text fontSize={16} mt="16px" lineHeight="2" {...props} />,
-
-  li: (props: BoxProps) => (
-    <Box
-      as="li"
-      sx={{
-        listStyleType: "none",
-        _before: {
-          content: '"•"',
-          fontSize: "20px",
-          color: "gray.300",
-          width: "20px",
-          display: "inline-block",
-        },
-      }}
-      fontSize={16}
-      {...props}
-    />
-  ),
-
-  ol: (props: BoxProps) => <Box as="ol" fontSize={16} mt="16px" listStylePos="inside" {...props} />,
-  ul: (props: BoxProps) => (
-    <Box
-      as="ul"
-      sx={{
-        "* > ul": {
-          margin: 0,
-          marginLeft: "20px",
-        },
-      }}
-      fontSize={16}
-      mt="16px"
-      listStylePos="inside"
-      {...props}
-    />
-  ),
-
-  a: (props: AnchorHTMLAttributes<HTMLAnchorElement>) => {
-    const ariaHidden = props["aria-hidden"];
-    const isInternalLink = props.href?.startsWith("/");
-    const href = props.href;
-
-    if (!href) return <a {...props} />;
-
-    if (isInternalLink) {
-      return <InternalLink to={href}>{props.children}</InternalLink>;
-    }
-
-    return (
-      <Box
-        as="span"
-        _hover={{
-          textDecoration: "underline",
-        }}
-      >
-        <a
-          style={{
-            fontWeight: 600,
-            color: "var(--chakra-colors-blue-400)",
-          }}
-          target={!ariaHidden ? "_blank" : undefined}
-          {...props}
-        />
-      </Box>
-    );
-  },
-
-  blockquote: (props: ComponentDefaultProps) => {
-    const children = props.children;
-    return <Callout>{children}</Callout>;
-  },
-
-  code: (props: ComponentDefaultProps) => {
+  code: (props: { className?: string; children: React.ReactNode }) => {
     const { className, children } = props;
     const match = /language-(\w+)/.exec(className || "");
     const { colorMode } = useColorMode();
@@ -126,7 +53,7 @@ const customComponents = {
 
     if (!match) {
       return (
-        <Text
+        <Box
           as="code"
           sx={{
             borderRadius: "4px",
@@ -140,7 +67,7 @@ const customComponents = {
           }}
         >
           {children}
-        </Text>
+        </Box>
       );
     }
 
@@ -169,10 +96,11 @@ const customComponents = {
     );
   },
 
+  // 기존 컴포넌트 설정 유지
   Callout,
   YouTubePlayer,
 };
 
-export default function ({ children }: PropsWithChildren) {
-  return <MDXProvider components={customComponents as any}>{children}</MDXProvider>;
+export default function ({ children }: { children: React.ReactNode }) {
+  return <MDXProvider components={customComponents}>{children}</MDXProvider>;
 }
