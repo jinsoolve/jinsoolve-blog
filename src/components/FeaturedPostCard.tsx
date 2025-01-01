@@ -5,6 +5,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import { useMemo, useState } from "react";
 
 import { koreanTagNames } from "../constants";
+import defaultThumbnailImage from "../assets/default-thumbnail.png";
 
 interface FeaturedPostCardProps {
   title: string;
@@ -13,7 +14,7 @@ interface FeaturedPostCardProps {
   createdAt: string;
   updatedAt: string;
   categories: readonly (string | null)[];
-  thumbnail: IGatsbyImageData;
+  thumbnail?: IGatsbyImageData;
 }
 
 const FeaturedPostCard = ({
@@ -123,12 +124,20 @@ const FeaturedPostCard = ({
 
         {/* Image */}
         <Box display="block" as="span" width="100%" height="100%" borderRadius={2}>
-          <GatsbyImage
-            objectFit="cover"
-            style={{ height: "100%" }}
-            image={thumbnail}
-            alt={`${slug} cover image`}
-          />
+          {thumbnail ? (
+            <GatsbyImage
+              objectFit="cover"
+              style={{ height: "100%" }}
+              image={thumbnail}
+              alt={`${slug} cover image`}
+            />
+          ) : (
+            <img
+              src={defaultThumbnailImage}
+              alt="default cover image"
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            />
+          )}
         </Box>
       </Box>
 

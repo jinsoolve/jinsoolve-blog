@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 
 import { koreanTagNames } from "../constants";
 import { useColorModeValue } from "@chakra-ui/react";
+import defaultThumbnailImage from "../assets/default-thumbnail.png"; // 기본 이미지 경로
 
 interface PostCardProps {
   title: string;
@@ -14,7 +15,7 @@ interface PostCardProps {
   createdAt: string;
   updatedAt: string;
   categories: readonly (string | null)[];
-  thumbnail: IGatsbyImageData;
+  thumbnail?: IGatsbyImageData;
 }
 
 const PostCard = ({
@@ -122,20 +123,21 @@ const PostCard = ({
         </Box>
 
         {/* Image */}
-        <Box
-          display="block"
-          as="span"
-          width="100%"
-          height="100%"
-          borderRadius="20px" // 이미지도 동일하게 경계선 조정
-          overflow="hidden"
-        >
-          <GatsbyImage
-            objectFit="cover"
-            style={{ height: "100%" }}
-            image={thumbnail}
-            alt={`${slug} cover image`}
-          />
+        <Box display="block" as="span" width="100%" height="100%" borderRadius={2}>
+          {thumbnail ? (
+            <GatsbyImage
+              objectFit="cover"
+              style={{ height: "100%" }}
+              image={thumbnail}
+              alt={`${slug} cover image`}
+            />
+          ) : (
+            <img
+              src={defaultThumbnailImage}
+              alt="default cover image"
+              style={{ height: "100%", width: "100%", objectFit: "cover" }}
+            />
+          )}
         </Box>
       </Box>
 
