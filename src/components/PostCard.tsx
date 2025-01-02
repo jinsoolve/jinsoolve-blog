@@ -20,20 +20,26 @@ interface PostCardProps {
 
 const ResponsiveBox = ({ title }: { title: string }) => {
   const [fontSize, setFontSize] = useState(40);
+  const [paddingY, setPaddingY] = useState<string>("10%"); // 위아래 패딩 (%)
+  const [paddingX, setPaddingX] = useState<string>("7%"); // 좌우 패딩 (%)
   const boxRef = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState<number | undefined>();
 
   useEffect(() => {
-    const resizeFont = () => {
+    const resizeBox = () => {
       if (boxRef.current) {
-        const { width, height } = boxRef.current.getBoundingClientRect();
-        const adjustedFontSize = Math.min(width / title.length * 1.75, height / 1.5);
-        setFontSize(Math.max(20, Math.min(adjustedFontSize, 60))); // 최소 30, 최대 60
+        const { width } = boxRef.current.getBoundingClientRect();
+        const newHeight = width * 0.8; // 16:9 비율
+        setHeight(newHeight);
+
+        const adjustedFontSize = Math.min((width / title.length) * 1.75, newHeight / 1.5);
+        setFontSize(Math.max(20, Math.min(adjustedFontSize, 60))); // 최소 20, 최대 60
       }
     };
 
-    resizeFont();
-    window.addEventListener("resize", resizeFont);
-    return () => window.removeEventListener("resize", resizeFont);
+    resizeBox();
+    window.addEventListener("resize", resizeBox);
+    return () => window.removeEventListener("resize", resizeBox);
   }, [title]);
 
   return (
@@ -41,16 +47,16 @@ const ResponsiveBox = ({ title }: { title: string }) => {
       ref={boxRef}
       backgroundColor="white"
       display="flex"
-      alignItems="center"
+      alignItems="start"
       justifyContent="center"
-      height="100%"
       width="100%"
       borderRadius="20px"
+      height={height ? `${height}px` : "auto"}
+      padding={`${paddingY} ${paddingX}`} // 위아래와 좌우의 패딩을 % 단위로 적용
     >
       <Box
         height="100%"
         width="100%"
-        padding="40px"
         display="flex"
         alignItems="start"
       >
