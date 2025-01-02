@@ -1,0 +1,157 @@
+---
+slug: boj-17407
+title: 백준 17407 - 괄호 문자열과 쿼리
+description: 
+thumbnail: 
+categories:
+  - PS
+tags: 
+createdAt: 2025/01/01
+updatedAt: 
+featured: true
+---
+
+# [백준 17407 - 괄호 문자열과 쿼리](https://www.acmicpc.net/problem/17407)
+
+## 풀이
+`(`을 +1, `)`을 -1로 한 다음 누적합을 먼저 계산한다.  
+이 누적합에 대한 lazy segment tree를 만든다.  
+
+만약 x번째 문자를 `(`에서 `)`으로 바꾼다면 x ~ n번째(전체 문자길이가 n일 때) 문자까지 누적합을 전부 -2를 시켜주면 되고 그 반대의 경우는 +2를 시켜주면 된다. 위 내용은 구간 업데이트로 lazy update를 사용한다.  
+
+문자를 변경했을 때 전체 괄호 누적합의 min이 0보다 크거나 같아야 하고, 전체 누적합의 결과가 0이면 해당 문자열은 올바른 괄호 문자열이다.  
+즉, 누적합의 lazy seg에서 전체의 min이 0보다 크거나 같고, 마지막 누적합의 값이 0이기만 하면 된다.
+
+## 코드
+```cpp
+#include <bits/stdc++.h>
+
+#define endl "\n"
+#define all(v) (v).begin(), (v).end()
+#define For(i, a, b) for(int i=(a); i<(b); i++)
+#define FOR(i, a, b) for(int i=(a); i<=(b); i++)
+#define Bor(i, a, b) for(int i=(a)-1; i>=(b); i--)
+#define BOR(i, a, b) for(int i=(a); i>=(b); i--)
+#define ft first
+#define sd second
+
+using namespace std;
+using ll = long long;
+using lll = __int128_t;
+using ulll = __uint128_t;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using ti3 = tuple<int, int, int>;
+using tl3 = tuple<ll, ll, ll>;
+
+template<typename T> using ve = vector<T>;
+template<typename T> using vve = vector<vector<T>>;
+
+template<class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template<class T> bool ckmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
+
+const int INF = 987654321;
+const int INF0 = numeric_limits<int>::max();
+const ll LNF = 987654321987654321;
+const ll LNF0 = numeric_limits<ll>::max();
+
+struct Lazy {
+    ll val, a, b; // a * val + b
+};
+
+class LazySegment {
+public:
+    vector<Lazy> tree; //tree[node] := a[start ~ end] 의 합
+
+    LazySegment() {}
+    LazySegment(int size) {
+        this->resize(size);
+    }
+    void resize(int size) {
+        size = (int) floor(log2(size)) + 2;
+        size = pow(2, size);
+        tree.resize(size, {0,1, 0});
+    }
+    ll init(vector<ll> &a, int node, int start, int end) {
+        if(start == end) return tree[node].val = a[start];
+        return tree[node].val = min(init(a, 2*node, start, (start+end)/2), init(a, 2*node+1, (start+end)/2+1, end));
+    }
+    void update_lazy(int node, int start, int end) {
+        if(tree[node].a == 1 && tree[node].b == 0) return;
+        tree[node].val = (tree[node].a*tree[node].val + tree[node].b);
+        if(start != end) {
+            for(auto i : {2*node, 2*node+1}) {
+                tree[i].a = (tree[node].a * tree[i].a);
+                tree[i].b = (tree[node].a * tree[i].b + tree[node].b);
+            }
+        }
+        tree[node].a = 1, tree[node].b = 0;
+    }
+    void update(int node, int start, int end, int left, int right, ll a, ll b) {
+        update_lazy(node, start, end);
+        if(right < start || end < left) return;
+        if(left <= start && end <= right) {
+            tree[node].a = (tree[node].a * a);
+            tree[node].b = (tree[node].b + b);
+            update_lazy(node, start, end);
+            return;
+        }
+        update(node * 2, start, (start + end) / 2, left, right, a, b);
+        update(node * 2 + 1, (start + end) / 2 + 1, end, left, right, a, b);
+        tree[node].val = min(tree[2*node].val, tree[2*node+1].val);
+    }
+    ll query(int node, int start, int end, int left, int right) {
+        update_lazy(node, start, end);
+        if(right < start || end < left) return INF;
+        if(left <= start && end <= right) return tree[node].val;
+        return min(query(node * 2, start, (start + end) / 2, left, right),
+                   query(node * 2 + 1, (start + end) / 2 + 1, end, left, right));
+    }
+};
+
+void solve() {
+    string s; cin >> s;
+    int n = s.length();
+    LazySegment seg(n);
+    vector<ll> a(n+1);
+    a[0] = 0;
+    FOR(i,1,n) {
+        a[i] = a[i-1] + (s[i-1] == '(' ? 1 : -1);
+    }
+    seg.init(a,1,1,n);
+
+    int m; cin >> m;
+    int ans = 0;
+    while(m--) {
+        int x; cin >> x;
+        if(s[x-1] == '(') {
+            s[x-1] = ')';
+            seg.update(1,1,n,x,n,1,-2);
+        }
+        else {
+            s[x-1] = '(';
+            seg.update(1,1,n,x,n,1,2);
+        }
+        if(seg.query(1,1,n,1,n) == 0 and seg.query(1,1,n,n,n) == 0) ans++;
+    }
+    cout << ans << endl;
+}
+
+int main(void) {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    int TC=1;
+//    cin >> TC;
+    FOR(tc, 1, TC) {
+//        cout << "Case #" << tc << ": ";
+        solve();
+    }
+
+
+    return 0;
+}
+```
