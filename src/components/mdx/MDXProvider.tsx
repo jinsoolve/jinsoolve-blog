@@ -159,13 +159,13 @@ const customComponents = {
 
     return (
       <Box
-        position="relative" borderRadius="10px" overflow="hidden" mb="20px"
-        customStyle={{
-          boxShadow:
-            colorMode === "dark"
-              ? "0px 4px 12px rgba(0, 0, 0, 1)"
-              : "0px 4px 12px rgba(0, 0, 0, 1)",
-        }}
+        position="relative"
+        borderRadius="10px"
+        overflow="hidden"
+        mb="20px"
+        boxShadow={colorMode === "dark"
+          ? "0px 4px 12px rgba(0, 0, 0, 0.6)"
+          : "0px 4px 12px rgba(0, 0, 0, 0.2)"}
       >
         {/* 상단 바 */}
         <Box
@@ -211,10 +211,11 @@ const customComponents = {
               margin: "0px",
               borderRadius: "0px 0px 10px 10px",
               fontFamily: "Fira Code, monospace",
+              boxShadow: "none", // 코드 블록의 음영 제거 (최상위 Box에서 관리)
             }}
             showLineNumbers
             lineNumberStyle={{
-              width: "4px",
+              width: "42px",
               textAlign: "right",
               paddingRight: "18px",
             }}
