@@ -2,7 +2,7 @@ import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import type { IGatsbyImageData } from "gatsby-plugin-image";
 import { GatsbyImage } from "gatsby-plugin-image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 
 import { koreanTagNames } from "../constants";
 import { useColorModeValue } from "@chakra-ui/react";
@@ -18,6 +18,64 @@ interface PostCardProps {
   thumbnail?: IGatsbyImageData;
 }
 
+const ResponsiveBox = ({ title }: { title: string }) => {
+  const [fontSize, setFontSize] = useState(40);
+  const [paddingY, setPaddingY] = useState<string>("10%"); // 위아래 패딩 (%)
+  const [paddingX, setPaddingX] = useState<string>("7%"); // 좌우 패딩 (%)
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState<number | undefined>();
+
+  useEffect(() => {
+    const resizeBox = () => {
+      if (boxRef.current) {
+        const { width } = boxRef.current.getBoundingClientRect();
+        const newHeight = width * 0.8; // 16:9 비율
+        setHeight(newHeight);
+
+        const adjustedFontSize = Math.min((width / title.length) * 1.75, newHeight / 1.5);
+        setFontSize(Math.max(20, Math.min(adjustedFontSize, 60))); // 최소 20, 최대 60
+      }
+    };
+
+    resizeBox();
+    window.addEventListener("resize", resizeBox);
+    return () => window.removeEventListener("resize", resizeBox);
+  }, [title]);
+
+  return (
+    <Box
+      ref={boxRef}
+      backgroundColor="white"
+      display="flex"
+      alignItems="start"
+      justifyContent="center"
+      width="100%"
+      borderRadius="20px"
+      height={height ? `${height}px` : "auto"}
+      padding={`${paddingY} ${paddingX}`} // 위아래와 좌우의 패딩을 % 단위로 적용
+    >
+      <Box
+        height="100%"
+        width="100%"
+        display="flex"
+        alignItems="start"
+      >
+        <Heading
+          style={{
+            fontSize: `${fontSize}px`,
+          }}
+          fontWeight="700"
+          color="black"
+          fontFamily="SBAggro"
+          lineHeight="1.5"
+        >
+          {title}
+        </Heading>
+      </Box>
+    </Box>
+  );
+};
+
 const PostCard = ({
                     createdAt,
                     description,
@@ -27,8 +85,14 @@ const PostCard = ({
                     title,
                     updatedAt,
                   }: PostCardProps) => {
-  const diffMs = useMemo(() => new Date().getTime() - new Date(createdAt).getTime(), [createdAt]);
-  const isNewPost = useMemo(() => Math.floor(diffMs / (1000 * 60 * 60 * 24)) <= 10, [diffMs]);
+  const diffMs = useMemo(
+    () => new Date().getTime() - new Date(createdAt).getTime(),
+    [createdAt]
+  );
+  const isNewPost = useMemo(
+    () => Math.floor(diffMs / (1000 * 60 * 60 * 24)) <= 10,
+    [diffMs]
+  );
   const [isHovered, setIsHovered] = useState(false);
 
   const boxShadowColor = useColorModeValue(
@@ -52,7 +116,7 @@ const PostCard = ({
         width="100%"
         height={{ base: "100%", sm: "280px", md: "316px" }}
         isolation="isolate"
-        boxShadow={boxShadowColor} // 동적 음영 색상 적용
+        boxShadow={boxShadowColor}
       >
         {/* Overlay */}
         <Box
@@ -66,7 +130,7 @@ const PostCard = ({
           transition="opacity 0.25s ease"
           opacity={isHovered ? 1 : 0}
         >
-          {/* Title */}
+          {/* Description */}
           <Flex
             position="absolute"
             bottom={0}
@@ -79,7 +143,6 @@ const PostCard = ({
               {description}
             </Text>
           </Flex>
-
           {/* Right Top Arrow Icon */}
           <Center
             position="absolute"
@@ -103,8 +166,15 @@ const PostCard = ({
             </svg>
           </Center>
 
-          {/* categories */}
-          <Flex position="absolute" direction="column" left={0} top={0} margin="20px" gap="10px">
+          {/* Categories */}
+          <Flex
+            position="absolute"
+            direction="column"
+            left={0}
+            top={0}
+            margin="20px"
+            gap="10px"
+          >
             {categories?.map((category) => (
               <Box
                 key={category}
@@ -122,21 +192,17 @@ const PostCard = ({
           </Flex>
         </Box>
 
-        {/* Image */}
+        {/* Image or Fallback Content */}
         <Box display="block" as="span" width="100%" height="100%" borderRadius={2}>
           {thumbnail ? (
             <GatsbyImage
               objectFit="cover"
-              style={{ height: "100%" }}
+              style={{ height: "100%", width: "100%" }}
               image={thumbnail}
               alt={`${slug} cover image`}
             />
           ) : (
-            <img
-              src={defaultThumbnailImage}
-              alt="default cover image"
-              style={{ height: "100%", width: "100%", objectFit: "cover" }}
-            />
+            <ResponsiveBox title={title} />
           )}
         </Box>
       </Box>
@@ -157,7 +223,6 @@ const PostCard = ({
             {updatedAt ? `${updatedAt} (updated)` : createdAt}
           </Box>
 
-          {/* New category */}
           {isNewPost && (
             <Box
               color="black.900"
@@ -183,4 +248,3 @@ const PostCard = ({
 };
 
 export default PostCard;
-
