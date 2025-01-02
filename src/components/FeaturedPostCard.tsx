@@ -2,10 +2,9 @@ import { Box, Center, Flex, Heading, Text, useColorModeValue } from "@chakra-ui/
 import { Link } from "gatsby";
 import type { IGatsbyImageData } from "gatsby-plugin-image";
 import { GatsbyImage } from "gatsby-plugin-image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 
 import { koreanTagNames } from "../constants";
-import defaultThumbnailImage from "../assets/default-thumbnail.png";
 
 interface FeaturedPostCardProps {
   title: string;
@@ -30,11 +29,63 @@ const FeaturedPostCard = ({
   const isNewPost = useMemo(() => Math.floor(diffMs / (1000 * 60 * 60 * 24)) <= 10, [diffMs]);
   const [isHovered, setIsHovered] = useState(false);
 
-  // 다크모드와 라이트모드에 따른 음영 설정
   const boxShadowColor = useColorModeValue(
-    "0 4px 6px rgba(0, 0, 0, 0.3)", // 라이트모드 음영
-    "0 4px 6px rgba(255, 255, 255, 0.3)" // 다크모드 음영
+    "0 4px 6px rgba(0, 0, 0, 0.3)",
+    "0 4px 6px rgba(255, 255, 255, 0.3)"
   );
+
+  const ResponsiveBox = ({ title }: { title: string }) => {
+    const [fontSize, setFontSize] = useState(40);
+    const boxRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+      const resizeFont = () => {
+        if (boxRef.current) {
+          const { width, height } = boxRef.current.getBoundingClientRect();
+          const adjustedFontSize = Math.min(width / title.length * 1.75, height / 1.5);
+          setFontSize(Math.max(20, Math.min(adjustedFontSize, 60))); // 최소 30, 최대 60
+        }
+      };
+
+      resizeFont();
+      window.addEventListener("resize", resizeFont);
+      return () => window.removeEventListener("resize", resizeFont);
+    }, [title]);
+
+    return (
+      <Box
+        ref={boxRef}
+        backgroundColor="white"
+        padding="5px"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height="100%"
+        width="100%"
+        borderRadius="20px"
+      >
+        <Box
+          height="100%"
+          width="100%"
+          padding="40px"
+          display="flex"
+          alignItems="start"
+        >
+          <Heading
+            style={{
+              fontSize: `${fontSize}px`,
+            }}
+            fontWeight="700"
+            color="black"
+            fontFamily="SBAggro"
+            lineHeight="1.5"
+          >
+            {title}
+          </Heading>
+        </Box>
+      </Box>
+    );
+  };
 
   return (
     <Link
@@ -44,15 +95,14 @@ const FeaturedPostCard = ({
     >
       <Box
         as="article"
-        transition="all 0.25s ease"
         position="relative"
-        _hover={{ boxShadow: "lg", cursor: "pointer" }}
         borderRadius="20px"
         overflow="hidden"
         width="100%"
         height={{ base: "100%", sm: "380px", md: "480px" }}
-        isolation="isolate"
-        boxShadow={boxShadowColor} // 동적 음영
+        transition="box-shadow 0.25s ease"
+        boxShadow={boxShadowColor}
+        _hover={{ boxShadow: "lg", cursor: "pointer" }}
       >
         {/* Overlay */}
         <Box
@@ -60,61 +110,30 @@ const FeaturedPostCard = ({
           top={0}
           left={0}
           width="100%"
-          height={{ base: "100%", sm: "380px", md: "480px" }}
-          backgroundColor={"blackAlpha.600"}
+          height="100%"
+          backgroundColor="blackAlpha.600"
           zIndex={2}
-          transition="opacity 0.25s ease"
           opacity={isHovered ? 1 : 0}
+          transition="opacity 0.25s ease"
         >
-          {/* Title */}
-          <Flex
-            position="absolute"
-            bottom={0}
-            left={0}
-            margin="20px"
-            direction="column"
-            alignItems="start"
-          >
-            <Text fontSize={16} color="white" noOfLines={2}>
+          {/* Description */}
+          <Flex position="absolute" bottom={4} left={4} color="white" direction="column">
+            <Text fontSize={16} noOfLines={2}>
               {description}
             </Text>
           </Flex>
 
-          {/* Right Top Arrow Icon */}
-          <Center
-            position="absolute"
-            top={0}
-            right={0}
-            margin="20px"
-            backgroundColor="white"
-            borderRadius="50%"
-            width="40px"
-            height="40px"
-          >
-            <svg
-              fill="#000000"
-              width="30px"
-              height="30px"
-              viewBox="-6 -6.5 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="xMinYMin"
-            >
-              <path d="M7.828 2.414H2.243a1 1 0 1 1 0-2h8a.997.997 0 0 1 1 1v8a1 1 0 0 1-2 0V3.828l-6.779 6.779A1 1 0 0 1 1.05 9.192l6.778-6.778z" />
-            </svg>
-          </Center>
-
-          {/* categories */}
-          <Flex position="absolute" direction="column" left={0} top={0} margin="20px" gap="10px">
+          {/* Categories */}
+          <Flex position="absolute" top={4} left={4} gap={2}>
             {categories?.map((category) => (
               <Box
                 key={category}
-                border="white 2px solid"
+                border="2px solid white"
                 borderRadius="20px"
-                color="white"
-                padding="10px"
+                padding="5px 10px"
                 fontSize="14px"
                 fontWeight="800"
-                width="fit-content"
+                color="white"
               >
                 {koreanTagNames[category!] || category}
               </Box>
@@ -122,8 +141,8 @@ const FeaturedPostCard = ({
           </Flex>
         </Box>
 
-        {/* Image or Fallback Content */}
-        <Box display="block" as="span" width="100%" height="100%" borderRadius={2}>
+        {/* Thumbnail or Fallback */}
+        <Box width="100%" height="100%">
           {thumbnail ? (
             <GatsbyImage
               objectFit="cover"
@@ -132,86 +151,45 @@ const FeaturedPostCard = ({
               alt={`${slug} cover image`}
             />
           ) : (
-            <Box
-              backgroundColor="white"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              height="100%"
-              width="100%"
-              borderRadius="20px"
-            >
-              <Box
-                textAlign="center"
-                height="100%"
-                width="100%"
-                padding="20px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Heading
-                  fontSize="60px"
-                  fontWeight="700"
-                  color="black"
-                  fontFamily="SBAggro"
-                  textAlign="center"
-                  lineHeight="1.5"
-                >
-                  {title}
-                </Heading>
-              </Box>
-            </Box>
+            <ResponsiveBox title={title} />
           )}
         </Box>
       </Box>
 
-      {/* title + categories */}
-      <Flex direction="column" alignItems="start">
-        <Flex gap="10px" marginTop="16px">
+      {/* Footer */}
+      <Flex direction="column" alignItems="start" marginTop={4}>
+        <Flex gap={2}>
           <Box
-            color="black.900"
-            borderColor="black.900"
-            border="3px solid"
+            border="3px solid black"
             borderRadius="20px"
             padding="8px"
             fontSize="14px"
             fontWeight="800"
-            width="fit-content"
           >
             {updatedAt ? `${updatedAt} (updated)` : createdAt}
           </Box>
           <Box
-            color="black.900"
-            borderColor="black.900"
-            border="3px solid"
+            border="3px solid black"
             borderRadius="20px"
             padding="8px"
             fontSize="14px"
             fontWeight="800"
-            width="fit-content"
           >
             FEATURED POST
           </Box>
-
-          {/* New category */}
           {isNewPost && (
             <Box
-              color="black.900"
-              borderColor="black.900"
-              border="3px solid"
+              border="3px solid black"
               borderRadius="20px"
               padding="8px"
               fontSize="14px"
               fontWeight="800"
-              width="fit-content"
-              zIndex={1}
             >
               NEW POST
             </Box>
           )}
         </Flex>
-        <Heading marginTop="10px" fontSize="24px" fontWeight="700">
+        <Heading marginTop={2} fontSize="24px" fontWeight="700">
           {title}
         </Heading>
       </Flex>

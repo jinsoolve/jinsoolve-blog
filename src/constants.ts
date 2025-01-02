@@ -2,7 +2,7 @@ export const koreanTagNames: Record<string, string> = {
   diary: "일기",
   short: "짧.",
   PS: "PS",
-  ML: "머신러닝",
+  ML: "ML",
 };
 
 export const ALL_POSTS_NAME = "all posts";
