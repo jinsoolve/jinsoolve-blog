@@ -165,7 +165,7 @@ const FeaturedPostCard = ({
       <Flex direction="column" alignItems="start" marginTop={4}>
         <Flex gap={2}>
           <Box
-            border="3px solid black"
+            border="3px solid"
             borderRadius="20px"
             padding="8px"
             fontSize="14px"
@@ -174,7 +174,7 @@ const FeaturedPostCard = ({
             {updatedAt ? `${updatedAt} (updated)` : createdAt}
           </Box>
           <Box
-            border="3px solid black"
+            border="3px solid"
             borderRadius="20px"
             padding="8px"
             fontSize="14px"
@@ -184,7 +184,7 @@ const FeaturedPostCard = ({
           </Box>
           {isNewPost && (
             <Box
-              border="3px solid black"
+              border="3px solid"
               borderRadius="20px"
               padding="8px"
               fontSize="14px"
