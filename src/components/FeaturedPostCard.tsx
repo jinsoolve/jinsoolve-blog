@@ -2,7 +2,7 @@ import { Box, Center, Flex, Heading, Text, useColorModeValue } from "@chakra-ui/
 import { Link } from "gatsby";
 import type { IGatsbyImageData } from "gatsby-plugin-image";
 import { GatsbyImage } from "gatsby-plugin-image";
-import { useMemo, useState, useEffect, useRef } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 
 import { koreanTagNames } from "../constants";
 
@@ -36,14 +36,28 @@ const FeaturedPostCard = ({
 
   const ResponsiveBox = ({ title }: { title: string }) => {
     const [fontSize, setFontSize] = useState(40);
-    const [paddingY, setPaddingY] = useState<string>("10%"); // 위아래 패딩 (%)
-    const [paddingX, setPaddingX] = useState<string>("7%"); // 좌우 패딩 (%)
+    const [paddingY, setPaddingY] = useState<string>("10%");
+    const [paddingX, setPaddingX] = useState<string>("7%");
     const boxRef = useRef<HTMLDivElement | null>(null);
     const [height, setHeight] = useState<number | undefined>();
+    const [windowWidth, setWindowWidth] = useState<number | null>(null);
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        setWindowWidth(window.innerWidth);
+
+        const handleResize = () => {
+          setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }
+    }, []);
 
     useEffect(() => {
       const resizeBox = () => {
-        if (boxRef.current) {
+        if (boxRef.current && windowWidth !== null) {
           const { width } = boxRef.current.getBoundingClientRect();
           const newHeight = width * 0.95; // 16:9 비율
           setHeight(newHeight);
@@ -53,10 +67,8 @@ const FeaturedPostCard = ({
         }
       };
 
-      resizeBox();
-      window.addEventListener("resize", resizeBox);
-      return () => window.removeEventListener("resize", resizeBox);
-    }, [title]);
+      resizeBox(); // 초기 크기 설정
+    }, [windowWidth, title]); // 종속성에 hover 관련 상태 제외
 
     return (
       <Box
@@ -68,7 +80,7 @@ const FeaturedPostCard = ({
         width="100%"
         borderRadius="20px"
         height={height ? `${height}px` : "auto"}
-        padding={`${paddingY} ${paddingX}`} // 위아래와 좌우의 패딩을 % 단위로 적용
+        padding={`${paddingY} ${paddingX}`}
       >
         <Box
           height="100%"
