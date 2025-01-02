@@ -29,7 +29,7 @@ const ResponsiveBox = ({ title }: { title: string }) => {
     const resizeBox = () => {
       if (boxRef.current) {
         const { width } = boxRef.current.getBoundingClientRect();
-        const newHeight = width * 0.8; // 16:9 비율
+        const newHeight = width * 0.95; // 16:9 비율
         setHeight(newHeight);
 
         const adjustedFontSize = Math.min((width / title.length) * 1.75, newHeight / 1.5);
@@ -51,7 +51,7 @@ const ResponsiveBox = ({ title }: { title: string }) => {
       justifyContent="center"
       width="100%"
       borderRadius="20px"
-      height={height ? `${height}px` : "auto"}
+      height={height ? `${height}px` : `${height}px`}
       padding={`${paddingY} ${paddingX}`} // 위아래와 좌우의 패딩을 % 단위로 적용
     >
       <Box
