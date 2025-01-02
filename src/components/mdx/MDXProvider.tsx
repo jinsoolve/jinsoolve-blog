@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { BoxProps, ComponentDefaultProps, HeadingProps, TextProps } from "@chakra-ui/react";
+import type { BoxProps, ComponentDefaultProps, HeadingProps, TextProps, Flex, Stack } from "@chakra-ui/react";
 import { Box, Heading, Text, useColorMode, Button } from "@chakra-ui/react";
 import { IconButton, Tooltip } from "@chakra-ui/react";
 import { MDXProvider } from "@mdx-js/react";
@@ -34,7 +34,7 @@ const CopyButton = ({ text }: { text: string }) => {
         onClick={handleCopy}
         size="md"
         position="absolute"
-        top="8px"
+        top="12px"
         right="8px"
         aria-label="Copy code"
         backgroundColor={colorMode === "dark" ? "gray.800" : "gray.200"} // 모드별 색상
@@ -135,6 +135,7 @@ const customComponents = {
     const match = /language-(\w+)/.exec(className || "");
     const { colorMode } = useColorMode();
     const theme = colorMode === "dark" ? oneDark : oneLight;
+    const backgroundColor = theme["code[class*=\"language-\"]"]?.background || "inherit";
 
     if (!match) {
       return (
@@ -157,26 +158,73 @@ const customComponents = {
     }
 
     return (
-      <Box position="relative">
-        <CopyButton text={String(children).replace(/\n$/, "")} />
-        <SyntaxHighlighter
-          style={theme}
-          customStyle={{
-            margin: "20px 0px",
-            borderRadius: "10px",
-            boxShadow:
-              colorMode === "dark"
-                ? "0px 4px 12px rgba(0, 0, 0, 0.4)"
-                : "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            fontFamily: "Fira Code, monospace",
-          }}
-          showLineNumbers
-          PreTag="div"
-          language={match[1]}
-          {...props}
+      <Box
+        position="relative" borderRadius="10px" overflow="hidden" mb="20px"
+        customStyle={{
+          boxShadow:
+            colorMode === "dark"
+              ? "0px 4px 12px rgba(0, 0, 0, 1)"
+              : "0px 4px 12px rgba(0, 0, 0, 1)",
+        }}
+      >
+        {/* 상단 바 */}
+        <Box
+          bg={backgroundColor} // 코드 블록과 동일한 배경색
+          height="40px"
+          px="10px"
+          display="flex"
+          alignItems="center"
+          borderBottom={`1px solid ${colorMode === "dark" ? "gray.700" : "gray.400"}`}
+          paddingLeft="20px"
+          paddingTop="25px"
+          paddingBottom="25px"
         >
-          {String(children).replace(/\n$/, "")}
-        </SyntaxHighlighter>
+          {/* 원형 버튼 */}
+          <Box display="flex" gap="8px">
+            <Box
+              width="12px"
+              height="12px"
+              borderRadius="full"
+              bg="red.500"
+            />
+            <Box
+              width="12px"
+              height="12px"
+              borderRadius="full"
+              bg="yellow.500"
+            />
+            <Box
+              width="12px"
+              height="12px"
+              borderRadius="full"
+              bg="green.500"
+            />
+          </Box>
+        </Box>
+
+        {/* 코드 블록 */}
+        <Box>
+          <CopyButton text={String(children).replace(/\n$/, "")} />
+          <SyntaxHighlighter
+            style={theme}
+            customStyle={{
+              margin: "0px",
+              borderRadius: "0px 0px 10px 10px",
+              fontFamily: "Fira Code, monospace",
+            }}
+            showLineNumbers
+            lineNumberStyle={{
+              width: "4px",
+              textAlign: "right",
+              paddingRight: "18px",
+            }}
+            PreTag="div"
+            language={match[1]}
+            {...props}
+          >
+            {String(children).replace(/\n$/, "")}
+          </SyntaxHighlighter>
+        </Box>
       </Box>
     );
   },

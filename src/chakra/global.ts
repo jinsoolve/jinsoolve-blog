@@ -27,9 +27,7 @@ export default {
   ".gatsby-resp-image-figcaption": {
     fontSize: "14px",
     textAlign: "center",
-
     color: "gray.500",
-
     marginTop: "16px",
   },
 
@@ -37,12 +35,15 @@ export default {
     borderColor: "currentColor",
     borderWidth: "0.8px",
   },
+
   ".katex": {
     overflowX: "auto",
     overflowY: "hidden",
   },
+
   // react-syntax-highlighter 줄 번호 스타일
   ".react-syntax-highlighter-line-number": {
+    minWidth: "35px !important",
     userSelect: "none",
     pointerEvents: "none",
   },
