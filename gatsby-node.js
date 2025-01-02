@@ -4,8 +4,10 @@ const readingTime = require(`reading-time`);
 const PostPageTemplate = path.resolve(`./src/templates/PostPage.tsx`);
 const TagPageTemplate = path.resolve(`./src/templates/TagPage.tsx`);
 const CategoryPageTemplate = path.resolve(`./src/templates/CategoryPage.tsx`);
+const FeaturedPageTemplate = path.resolve(`./src/templates/FeaturedPage.tsx`);
 const PortfolioPageTemplate = path.resolve(`./src/templates/PortfolioPage.tsx`);
 const AllPostPageTemplate = path.resolve(`./src/templates/AllPostPage.tsx`);
+const AllFeaturedPostPageTemplate = path.resolve(`./src/templates/AllFeaturedPostPage.tsx`);
 const AllCategoryPostPageTemplate = path.resolve(`./src/templates/AllCategoryPostPage.tsx`);
 const AllTagPostPageTemplate = path.resolve(`./src/templates/AllTagPostPage.tsx`);
 
@@ -38,6 +40,15 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
           }
           internal {
             contentFilePath
+          }
+        }
+      }
+      
+      allFeaturedPosts: allMdx {
+        group(field: { frontmatter: { categories: SELECT } }) {
+          category: fieldValue
+          nodes {
+            id
           }
         }
       }
@@ -110,6 +121,20 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     });
   });
 
+  // allFeaturedPosts All Page
+  Array.from({ length: allPostsNumPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/allFeaturedPosts/` : `/allFeaturedPosts/${i + 1}`,
+      component: AllFeaturedPostPageTemplate,
+      context: {
+        limit: POST_PER_PAGE,
+        skip: i * POST_PER_PAGE,
+        numPages: allPostsNumPages,
+        currentPage: i + 1,
+      },
+    });
+  });
+
   // Categories All Page
   Array.from({ length: allPostsNumPages }).forEach((_, i) => {
     createPage({
@@ -135,6 +160,26 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         numPages: allPostsNumPages,
         currentPage: i + 1,
       },
+    });
+  });
+
+  // allFeaturedPosts 페이지네이션 생성
+  const allFeaturedPosts = result.data.allFeaturedPosts.group;
+  allFeaturedPosts.forEach(({ category, nodes }) => {
+    const allFeaturedPostsNumPages = Math.ceil(nodes.length / POST_PER_PAGE);
+
+    Array.from({ length: allFeaturedPostsNumPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? `/allFeaturedPosts/${category}` : `/allFeaturedPosts/${category}/${i + 1}`,
+        component: FeaturedPageTemplate,
+        context: {
+          limit: POST_PER_PAGE,
+          skip: i * POST_PER_PAGE,
+          numPages: allFeaturedPostsNumPages,
+          currentPage: i + 1,
+          category, // 수정된 부분
+        },
+      });
     });
   });
 

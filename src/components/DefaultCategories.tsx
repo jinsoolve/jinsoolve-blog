@@ -105,7 +105,7 @@ export default function categories({ currentCategory }: CategoriesProps) {
               categoryPostCount: number;
             };
             return (
-              <Link key={category} to={`/categories/${category}`}>
+              <Link key={category} to={`/allFeaturedPosts/${category}`}>
                 <Flex justifyContent="center" alignItems="flex-start">
                   <Text
                     fontSize={{ base: "14px", md: "18px" }}
