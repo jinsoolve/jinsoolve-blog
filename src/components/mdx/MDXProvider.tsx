@@ -164,14 +164,11 @@ const customComponents = {
     <Box
       as="li"
       sx={{
-        listStyleType: "none",
-        _before: {
-          content: '"•"',
-          fontSize: "20px",
-          color: "gray.300",
-          width: "20px",
-          display: "inline-block",
-        },
+        listStyleType: "disc", // 기본 bullet 사용
+        listStylePosition: "inside", // bullet이 텍스트와 같은 시작점에 위치
+        marginBottom: "8px", // 항목 간 간격
+        wordBreak: "break-word", // 단어가 너무 길 경우 줄바꿈
+        lineHeight: "1.6", // 텍스트의 줄 간격
       }}
       fontSize={16}
       {...props}
