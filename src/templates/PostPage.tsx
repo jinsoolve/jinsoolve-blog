@@ -16,6 +16,8 @@ import TableOfContents from "../components/TableOfContents";
 import { DOMAIN } from "../constants";
 import { fadeInFromLeft } from "../framer-motions";
 
+import { useBreakpointValue } from "@chakra-ui/react";
+
 export const query = graphql`
   query PostPage($id: String!, $categories: [String!]!, $slug: String!) {
     post: mdx(id: { eq: $id }) {
@@ -82,28 +84,42 @@ interface PostTemplateProps {
 }
 
 const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext }) => {
-  // NOTE: 기본 locale은 Ko
   const locales = data.otherLocalePost.nodes.map((node) => node.frontmatter?.locale || "ko");
   const currentLocale = data.post?.frontmatter?.locale || "ko";
   const currentSlug = data.post?.frontmatter?.slug!;
+
+  // 화면 크기에 따라 TOC 위치 결정 (작은 화면: 본문 아래, 큰 화면: 우측 고정)
+  const isLargeScreen = useBreakpointValue({ base: false, xl: true });
 
   return (
     <PostLayout>
       <motion.article style={{ width: "100%" }} {...fadeInFromLeft}>
         <Flex direction="column" width={{ base: "100%", xl: "800px" }}>
           <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
+
+          {/* 화면 크기에 따라 TOC 위치 조정 */}
+          {!isLargeScreen && (
+            <motion.div {...fadeInFromLeft} style={{ marginTop: "50px" }}>
+              <TableOfContents tableOfContents={data.post?.tableOfContents} />
+            </motion.div>
+          )}
+
           {locales.length > 1 && (
             <Locales currentSlug={currentSlug} locales={locales} currentLocale={currentLocale} />
           )}
-          <Box marginTop="50px">{children}</Box>
+          <Box marginTop="10px">{children}</Box>
           <RelatedPosts relatedPosts={data.relatedPosts} />
           <Profile />
           <Giscus />
         </Flex>
       </motion.article>
-      <motion.div {...fadeInFromLeft}>
-        <TableOfContents tableOfContents={data.post?.tableOfContents} />
-      </motion.div>
+
+      {/* 큰 화면일 때만 TOC를 옆에 고정 */}
+      {isLargeScreen && (
+        <motion.div {...fadeInFromLeft} style={{ marginLeft: "100px", position: "sticky", top: "150px", width: "100%" }}>
+          <TableOfContents tableOfContents={data.post?.tableOfContents} />
+        </motion.div>
+      )}
     </PostLayout>
   );
 };

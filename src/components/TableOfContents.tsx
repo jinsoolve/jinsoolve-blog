@@ -3,6 +3,7 @@ import { Box, Heading, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Link } from "gatsby";
 import React, { useEffect, useState } from "react";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 export type TableOfContentsItemType = {
   url: string;
@@ -61,17 +62,13 @@ export default function TableOfContents({
 }: {
   tableOfContents: TableOfContentsType;
 }) {
+  const h2FontSize = useBreakpointValue({ base: "20px", xl: "18px" }); // 작은 화면에서는 16px, 큰 화면에서는 14px
+  const basicFontSize = useBreakpointValue({ base: "14px", xl: "14px" });
+
   if (!tableOfContents || !tableOfContents.items || tableOfContents.items.length === 0) {
     return (
-      <Box
-        as="nav"
-        position="sticky"
-        display={{ base: "none", xl: "block" }}
-        top="150px"
-        width="250px"
-        marginLeft="100px"
-      >
-        <Heading as="h2" fontSize="20px">
+      <Box as="nav" position="sticky" top="150px">
+        <Heading as="h2" fontSize={h2FontSize}>
           ON THIS PAGE
         </Heading>
       </Box>
@@ -108,24 +105,13 @@ export default function TableOfContents({
   }, [setActiveId, tableOfContents.items]);
 
   return (
-    <Box
-      as="nav"
-      position="sticky"
-      display={{ base: "none", xl: "block" }}
-      top="150px"
-      width="250px"
-      marginLeft="100px"
-    >
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <Heading as="h2" fontSize="20px">
+    <Box as="nav" position="sticky" top="150px" width="100%">
+      <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
+        <Heading as="h2" fontSize={h2FontSize}>
           ON THIS PAGE
         </Heading>
       </motion.div>
-      <Box marginTop="10px" listStyleType="none" fontSize="14px" as="ul">
+      <Box marginTop="10px" listStyleType="none" fontSize={basicFontSize} as="ul">
         {tableOfContents.items.map((item, index) => (
           <TableOfContentsItem
             delay={(0.1 + index) / 10}

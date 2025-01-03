@@ -16,7 +16,7 @@ export default function PostLayout({ children }: LayoutProps) {
       <Box
         key={`${children}`}
         as="main"
-        maxWidth={{ base: "800px", xl: "1100px" }}
+        maxWidth={{ base: "800px", xl: "1200px" }}
         style={{
           display: "flex",
           position: "relative",

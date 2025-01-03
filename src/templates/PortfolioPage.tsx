@@ -1,5 +1,4 @@
-// @refresh reset
-import { Box, Flex } from "@chakra-ui/react";
+import { useBreakpointValue, Box, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
@@ -50,6 +49,9 @@ interface PortfolioTemplateProps {
 }
 
 const PostTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, pageContext }) => {
+  // 화면 크기에 따라 TOC 위치 변경 (base~lg: 아래, xl 이상: 옆)
+  const isLargeScreen = useBreakpointValue({ base: false, xl: true });
+
   return (
     <PostLayout>
       <motion.article style={{ width: "100%" }} {...fadeInFromLeft}>
@@ -59,14 +61,26 @@ const PostTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, pageCo
             post={data.post}
             showThumbnail={false}
           />
+
+          {/* 화면 크기에 따라 TOC 위치 조정 */}
+          {!isLargeScreen && (
+            <motion.div {...fadeInFromLeft} style={{ marginTop: "50px" }}>
+              <TableOfContents tableOfContents={data.post?.tableOfContents} />
+            </motion.div>
+          )}
+
           <Box marginTop="50px">{children}</Box>
           <Profile />
           <Giscus />
         </Flex>
       </motion.article>
-      <motion.div {...fadeInFromLeft}>
-        <TableOfContents tableOfContents={data.post?.tableOfContents} />
-      </motion.div>
+
+      {/* 큰 화면일 때만 TOC를 옆에 고정 */}
+      {isLargeScreen && (
+        <motion.div {...fadeInFromLeft} style={{ marginLeft: "100px", position: "sticky", top: "150px", width: "100%" }}>
+          <TableOfContents tableOfContents={data.post?.tableOfContents} />
+        </motion.div>
+      )}
     </PostLayout>
   );
 };
@@ -93,13 +107,13 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
       <meta property="og:image" content={getSrc(ogimage)} />
       <meta property="og:locale" content={metaLocale} />
 
-      {/*  Twitter Meta categories  */}
+      {/* Twitter Meta categories */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="jinsoolve.netlify.app" />
       <meta property="twitter:url" content={`${DOMAIN}/${data.post?.frontmatter?.slug}`} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={getSrc(ogimage)}></meta>
+      <meta name="twitter:image" content={getSrc(ogimage)} />
       <meta name="twitter:label1" content="Category" />
       <meta name="twitter:data1" content={`${devCategory}`} />
       <meta
@@ -109,4 +123,5 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
     </>
   );
 };
+
 export default PostTemplate;
