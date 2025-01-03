@@ -59,7 +59,7 @@ const FeaturedPostCard = ({
       const resizeBox = () => {
         if (boxRef.current && windowWidth !== null) {
           const { width } = boxRef.current.getBoundingClientRect();
-          const newHeight = width * 0.95; // 16:9 비율
+          const newHeight = width * 1.2; // 16:9 비율
           setHeight(newHeight);
 
           const adjustedFontSize = Math.min((width / title.length) * 1.75, newHeight / 1.5);
