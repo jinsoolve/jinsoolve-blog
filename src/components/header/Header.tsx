@@ -83,40 +83,42 @@ const Header = () => {
 
             {/* 모바일과 데스크탑 메뉴 분기 */}
             {isMobile ? (
-                <>
-                    {/* 햄버거 버튼 */}
-                    <IconButton
+              <>
+                  <Box display="flex" alignItems="center" gap="2">
+                      {/* ThemeToggler와 햄버거 버튼 사이의 간격을 줄이기 위한 Box */}
+                      <ThemeToggler />
+                      {/* 햄버거 버튼 */}
+                      <IconButton
                         aria-label="Open menu"
                         icon={<HamburgerIcon />}
                         variant="outline"
                         onClick={onOpen}
-                    />
-                    {/* Drawer (모바일 메뉴) */}
-                    <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-                        <DrawerOverlay />
-                        <DrawerContent background="gray.100" _dark={{backgroundColor: "gray.900"}}>
-                            <DrawerCloseButton />
-                            <DrawerHeader>Menu</DrawerHeader>
-                            <DrawerBody>
-                                <Box mb="4">
-                                    <Categories />
-                                </Box>
-                                <Box mb="4">
-                                    <Tags />
-                                </Box>
-                                <Box mt="6" mb="2">
-                                    <Portfoilo />
-                                </Box>
-                                <Box mb="2">
-                                    <About />
-                                </Box>
-                                <Box>
-                                    <ThemeToggler />
-                                </Box>
-                            </DrawerBody>
-                        </DrawerContent>
-                    </Drawer>
-                </>
+                      />
+                  </Box>
+
+                  {/* Drawer (모바일 메뉴) */}
+                  <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+                      <DrawerOverlay />
+                      <DrawerContent background="gray.100" _dark={{ backgroundColor: "gray.800" }}>
+                          <DrawerCloseButton />
+                          <DrawerHeader>Menu</DrawerHeader>
+                          <DrawerBody>
+                              <Box mb="4">
+                                  <Categories />
+                              </Box>
+                              <Box mb="4">
+                                  <Tags />
+                              </Box>
+                              <Box mt="6" mb="2">
+                                  <Portfoilo />
+                              </Box>
+                              <Box mb="2">
+                                  <About />
+                              </Box>
+                          </DrawerBody>
+                      </DrawerContent>
+                  </Drawer>
+              </>
             ) : (
                 <>
                     {/* 데스크탑 메뉴 */}
