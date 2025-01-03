@@ -46,6 +46,10 @@ module.exports = {
           },
         ],
         mdxOptions: {
+          remarkPlugins: [
+            [require(`remark-gfm`), { singleTilde: false }],
+            // require(`remark-breaks`), // 줄바꿈 지원을 위한 플러그인 추가
+          ],
           rehypePlugins: [
             [wrapESMPlugin(`rehype-slug`)],
             [
@@ -204,5 +208,6 @@ module.exports = {
         icon: "src/assets/favicon.png",
       },
     },
+
   ],
 };

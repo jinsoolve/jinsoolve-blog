@@ -1982,14 +1982,12 @@ type SiteFieldSelector = {
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly flags: InputMaybe<SiteFlagsFieldSelector>;
   readonly graphqlTypegen: InputMaybe<SiteGraphqlTypegenFieldSelector>;
-  readonly host: InputMaybe<FieldSelectorEnum>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
   readonly jsxRuntime: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly pathPrefix: InputMaybe<FieldSelectorEnum>;
   readonly polyfill: InputMaybe<FieldSelectorEnum>;
-  readonly port: InputMaybe<FieldSelectorEnum>;
   readonly siteMetadata: InputMaybe<SiteSiteMetadataFieldSelector>;
   readonly trailingSlash: InputMaybe<FieldSelectorEnum>;
 };
@@ -2549,14 +2547,12 @@ type SiteSortInput = {
   readonly children: InputMaybe<NodeSortInput>;
   readonly flags: InputMaybe<SiteFlagsSortInput>;
   readonly graphqlTypegen: InputMaybe<SiteGraphqlTypegenSortInput>;
-  readonly host: InputMaybe<SortOrderEnum>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
   readonly jsxRuntime: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly pathPrefix: InputMaybe<SortOrderEnum>;
   readonly polyfill: InputMaybe<SortOrderEnum>;
-  readonly port: InputMaybe<SortOrderEnum>;
   readonly siteMetadata: InputMaybe<SiteSiteMetadataSortInput>;
   readonly trailingSlash: InputMaybe<SortOrderEnum>;
 };
@@ -2604,7 +2600,7 @@ type CategoryPageTemplateQueryVariables = Exact<{
 }>;
 
 
-type CategoryPageTemplateQuery = { readonly allMdx: { readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }>, readonly pageInfo: { readonly currentPage: number, readonly pageCount: number } }, readonly ogimage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly profileImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null };
+type CategoryPageTemplateQuery = { readonly allMdx: { readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }>, readonly pageInfo: { readonly currentPage: number, readonly pageCount: number } }, readonly ogimage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly profileImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly featuredPosts: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
 
 type PortfolioPageQueryVariables = Exact<{
   id: Scalars['String'];

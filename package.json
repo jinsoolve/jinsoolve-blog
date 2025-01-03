@@ -26,7 +26,7 @@
     "gatsby-plugin-gtag": "^1.0.13",
     "gatsby-plugin-image": "^3.0.0",
     "gatsby-plugin-manifest": "^5.12.0",
-    "gatsby-plugin-mdx": "^5.0.0",
+    "gatsby-plugin-mdx": "^5.14.0",
     "gatsby-plugin-mdx-frontmatter": "^0.0.4",
     "gatsby-plugin-sharp": "^5.0.0",
     "gatsby-plugin-typegen": "^3.1.0",
@@ -44,7 +44,9 @@
     "react-syntax-highlighter": "^15.6.1",
     "reading-time": "^1.5.0",
     "rehype-autolink-headings": "^6.1.1",
-    "rehype-slug": "^5.0.1"
+    "rehype-slug": "^5.0.1",
+    "remark-breaks": "1.0.0",
+    "remark-gfm": "1.0.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",
