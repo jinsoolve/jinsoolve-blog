@@ -1,21 +1,17 @@
 import { Box, Flex, Heading, Text, useColorMode, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
-
 import { koreanTagNames } from "../constants";
 import React, { useState, useEffect, useRef } from "react";
-
-import defaultThumbnailImage from "../assets/default-thumbnail.jpg"; // 기본 이미지 경로
 
 interface PostContentTitleProps {
   readingTime: string;
   post: GatsbyTypes.PostPageQuery["post"];
+  showThumbnail?: boolean; // ✅ 추가: 썸네일 표시 여부를 제어하는 prop
 }
 
 const ResponsiveBox = ({ title }: { title: string }) => {
   const [fontSize, setFontSize] = useState(40);
-  const [paddingY, setPaddingY] = useState<string>("10%"); // 위아래 패딩 (%)
-  const [paddingX, setPaddingX] = useState<string>("7%"); // 좌우 패딩 (%)
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState<number | undefined>();
 
@@ -25,9 +21,8 @@ const ResponsiveBox = ({ title }: { title: string }) => {
         const { width } = boxRef.current.getBoundingClientRect();
         const newHeight = width * 0.95; // 16:9 비율
         setHeight(newHeight);
-
         const adjustedFontSize = Math.min((width / title.length) * 1.75, newHeight / 1.5);
-        setFontSize(Math.max(20, Math.min(adjustedFontSize, 60))); // 최소 20, 최대 60
+        setFontSize(Math.max(20, Math.min(adjustedFontSize, 60)));
       }
     };
 
@@ -46,18 +41,11 @@ const ResponsiveBox = ({ title }: { title: string }) => {
       width="100%"
       borderRadius="20px"
       height={height ? `${height}px` : "auto"}
-      padding={`${paddingY} ${paddingX}`} // 위아래와 좌우의 패딩을 % 단위로 적용
+      padding="10% 7%"
     >
-      <Box
-        height="100%"
-        width="100%"
-        display="flex"
-        alignItems="start"
-      >
+      <Box height="100%" width="100%" display="flex" alignItems="start">
         <Heading
-          style={{
-            fontSize: `${fontSize}px`,
-          }}
+          style={{ fontSize: `${fontSize}px` }}
           fontWeight="700"
           color="black"
           fontFamily="SBAggro"
@@ -70,10 +58,7 @@ const ResponsiveBox = ({ title }: { title: string }) => {
   );
 };
 
-
-
-
-const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
+const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostContentTitleProps) => {
   const { colorMode } = useColorMode();
   const flexDirection = useBreakpointValue({ base: "column", xl: "row" });
   const boxShadowColor = useColorModeValue(
@@ -89,18 +74,14 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
       alignItems="baseline"
       isolation="isolate"
     >
+      {/* 제목 및 메타데이터 */}
       <Flex
         alignItems={flexDirection === "column" ? "start" : "baseline"}
         flexDirection={flexDirection}
         columnGap="15px"
         rowGap="5px"
       >
-        <Heading
-          as="h1"
-          fontSize={36}
-          fontWeight={900}
-          wordBreak="break-word"
-        >
+        <Heading as="h1" fontSize={36} fontWeight={900} wordBreak="break-word">
           {post?.frontmatter?.title}
         </Heading>
         <Text fontSize="12px" marginBottom="3">
@@ -108,6 +89,7 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
         </Text>
       </Flex>
 
+      {/* 카테고리 및 날짜 */}
       <Flex columnGap="14px" rowGap="10px" alignItems="end" flexWrap="wrap">
         <Box
           color={colorMode === "dark" ? "gray.50" : "gray.900"}
@@ -120,8 +102,8 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
           width="fit-content"
         >
           {post?.frontmatter?.updatedAt
-            ? `${post?.frontmatter?.updatedAt} updated`
-            : post?.frontmatter?.createdAt}
+            ? `${post.frontmatter.updatedAt} updated`
+            : post.frontmatter.createdAt}
         </Box>
         {post?.frontmatter?.categories?.map((category) => (
           <Link key={category} to={`/categories/${category}`}>
@@ -141,34 +123,30 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
         ))}
       </Flex>
 
-      <Box height="10px" />
-
-      <Box
-        display="flex"
-        flexDirection="column"
-        maxHeight="700px"
-        justifyContent="center"
-        alignItems="center"
-        isolation="isolate"
-        borderRadius="20px"
-        overflow="hidden"
-        boxShadow={boxShadowColor}
-        marginTop="20px"
-      >
-        {post?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData ? (
-          <GatsbyImage
-            image={post.frontmatter.thumbnail.childImageSharp.gatsbyImageData}
-            alt={post.frontmatter.title || "Post Thumbnail"}
-          />
-        ) : (
-          <ResponsiveBox title={post?.frontmatter?.title || "No Title Available"} />
-          // <img
-          //   src={defaultThumbnailImage}
-          //   alt="Default Thumbnail"
-          //   style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }} // 스타일 적용 가능
-          // />
-        )}
-      </Box>
+      {/* ✅ 썸네일 표시 여부를 prop으로 제어 */}
+      {showThumbnail && (
+        <Box
+          display="flex"
+          flexDirection="column"
+          maxHeight="700px"
+          justifyContent="center"
+          alignItems="center"
+          isolation="isolate"
+          borderRadius="20px"
+          overflow="hidden"
+          boxShadow={boxShadowColor}
+          marginTop="20px"
+        >
+          {post?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData ? (
+            <GatsbyImage
+              image={post.frontmatter.thumbnail.childImageSharp.gatsbyImageData}
+              alt={post.frontmatter.title || "Post Thumbnail"}
+            />
+          ) : (
+            <ResponsiveBox title={post.frontmatter.title || "No Title Available"} />
+          )}
+        </Box>
+      )}
     </Flex>
   );
 };

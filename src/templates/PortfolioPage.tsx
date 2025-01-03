@@ -54,7 +54,11 @@ const PostTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, pageCo
     <PostLayout>
       <motion.article style={{ width: "100%" }} {...fadeInFromLeft}>
         <Flex direction="column" width={{ base: "100%", xl: "800px" }}>
-          <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
+          <PostContentTitle
+            readingTime={pageContext.readingTime.text}
+            post={data.post}
+            showThumbnail={false}
+          />
           <Box marginTop="50px">{children}</Box>
           <Profile />
           <Giscus />
