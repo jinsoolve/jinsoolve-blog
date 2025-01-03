@@ -3,7 +3,9 @@ import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 
 import { koreanTagNames } from "../constants";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
+import defaultThumbnailImage from "../assets/default-thumbnail.jpg"; // 기본 이미지 경로
 
 interface PostContentTitleProps {
   readingTime: string;
@@ -160,6 +162,11 @@ const PostContentTitle = ({ post, readingTime }: PostContentTitleProps) => {
           />
         ) : (
           <ResponsiveBox title={post?.frontmatter?.title || "No Title Available"} />
+          // <img
+          //   src={defaultThumbnailImage}
+          //   alt="Default Thumbnail"
+          //   style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }} // 스타일 적용 가능
+          // />
         )}
       </Box>
     </Flex>

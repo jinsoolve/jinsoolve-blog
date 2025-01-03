@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Img, Text } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import type { IGatsbyImageData } from "gatsby-plugin-image";
 import { GatsbyImage } from "gatsby-plugin-image";
@@ -6,7 +6,7 @@ import { useMemo, useState, useEffect, useRef } from "react";
 
 import { koreanTagNames } from "../constants";
 import { useColorModeValue } from "@chakra-ui/react";
-import defaultThumbnailImage from "../assets/default-thumbnail.png"; // 기본 이미지 경로
+import defaultThumbnailImage from "../assets/default-thumbnail.jpg"; // 기본 이미지 경로
 
 interface PostCardProps {
   title: string;
@@ -203,6 +203,11 @@ const PostCard = ({
             />
           ) : (
             <ResponsiveBox title={title} />
+            // <img
+            //   src={defaultThumbnailImage}
+            //   alt="Default Thumbnail"
+            //   style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }} // 스타일 적용 가능
+            // />
           )}
         </Box>
       </Box>
