@@ -169,12 +169,12 @@ const FeaturedPostCard = ({
               alt={`${slug} cover image`}
             />
           ) : (
-            <ResponsiveBox title={title} />
-            // <img
-            //   src={defaultThumbnailImage}
-            //   alt="Default Thumbnail"
-            //   style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }} // 스타일 적용 가능
-            // />
+            // <ResponsiveBox title={title} />
+            <img
+              src={defaultThumbnailImage}
+              alt="Default Thumbnail"
+              style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }} // 스타일 적용 가능
+            />
           )}
         </Box>
       </Box>
