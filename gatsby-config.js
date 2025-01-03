@@ -41,14 +41,14 @@ module.exports = {
           {
             resolve: `gatsby-remark-katex`,
             options: {
-              strict: "ignore", // KaTeX strict 모드 설정
+              strict: "ignore",
             },
           },
         ],
         mdxOptions: {
           remarkPlugins: [
             [require(`remark-gfm`), { singleTilde: false }],
-            // require(`remark-breaks`), // 줄바꿈 지원을 위한 플러그인 추가
+            wrapESMPlugin(`remark-breaks`), // wrapESMPlugin으로 ESM 모듈 처리
           ],
           rehypePlugins: [
             [wrapESMPlugin(`rehype-slug`)],
@@ -131,7 +131,6 @@ module.exports = {
         },
       },
     },
-
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -192,13 +191,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-clarity`,
       options: {
-        // String value for your clarity project id
-        // Project id is found in your clarity dashboard url
-        // https://clarity.microsoft.com/projects/view/{clarity_project_id}/
         clarity_project_id: "guzda4dk44",
-        // Boolean value for enabling clarity while developing
-        // true will enable clarity tracking code on both development and production environments
-        // false will enable clarity tracking code on production environment only
         enable_on_dev_env: false,
       },
     },
@@ -208,6 +201,5 @@ module.exports = {
         icon: "src/assets/favicon.png",
       },
     },
-
   ],
 };
