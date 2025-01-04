@@ -39,7 +39,12 @@ const PostCard = ({
     "0 4px 6px rgba(0, 0, 0, 0.3)",
     "0 4px 6px rgba(255, 255, 255, 0.3)"
   );
-  const cardHeight = "380px";
+  const cardHeight = useMemo(() => {
+    if (!thumbnail) {
+      return { base: "190px", sm_md: "380px" };
+    }
+    return "380px";
+  }, [thumbnail]);
 
   return (
     <Link to={`/posts/${slug}`}>
