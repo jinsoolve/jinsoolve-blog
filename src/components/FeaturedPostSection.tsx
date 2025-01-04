@@ -13,9 +13,10 @@ import FeaturedPostCard from "./FeaturedPostCard";
 
 interface FeaturedPostSectionProps {
   posts: GatsbyTypes.AllPostPageTemplateQuery["featuredPosts"]["nodes"];
+  isLarge?: boolean; // boolean prop 추가 (optional)
 }
 
-const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
+const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { colorMode } = useColorMode();
@@ -42,8 +43,8 @@ const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
 
   return (
     <Box
-      width="80%"
-      maxWidth="1200px"
+      width={isLarge ? "90%" : "80%"} // boolean 값에 따라 width 변경
+      maxWidth="1600px"
       mx="auto"
       py="20px"
       position="relative" // 버튼이 이 컨테이너 기준으로 배치됨

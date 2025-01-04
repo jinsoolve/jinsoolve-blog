@@ -89,8 +89,8 @@ export default function CategoriesTemplate({ pageContext, data }: CategoriesProp
       <Categories currentCategory={pageContext.category} />
 
       {featuredPosts.length > 0 && (
-        <Container maxW="800px" centerContent padding="20px">
-          <FeaturedPostSection posts={featuredPosts} />
+        <Container maxW="none" centerContent padding="20px">
+          <FeaturedPostSection posts={featuredPosts} isLarge={true} />
         </Container>
       )}
 
