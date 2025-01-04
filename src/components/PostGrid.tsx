@@ -18,6 +18,7 @@ const PostGrid = ({ posts }: PostGridProps) => {
         margin={{ base: "120px auto" }}
         gap={6}
         rowGap={10}
+        justifyContent="center"
       >
         {posts.map((posts) => {
           const cardData = {

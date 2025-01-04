@@ -22,6 +22,7 @@ const theme = extendTheme({
     sm_md: "660px",
     md: "768px",
     lg: "960px",
+    lg_xl: "1000px",
     xl: "1200px",
     "1.5xl": "1350px",
     "2xl": "1536px",
