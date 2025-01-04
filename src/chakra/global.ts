@@ -54,4 +54,9 @@ export default {
     fontWeight: "normal",
     fontStyle: "normal",
   },
+
+  // img 요소의 스타일 추가
+  img: {
+    borderRadius: "15px",
+  },
 };

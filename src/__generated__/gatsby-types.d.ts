@@ -2606,6 +2606,13 @@ type CategoryPageTemplateQueryVariables = Exact<{
 
 type CategoryPageTemplateQuery = { readonly allMdx: { readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }>, readonly pageInfo: { readonly currentPage: number, readonly pageCount: number } }, readonly ogimage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly profileImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly featuredPosts: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
 
+type PortfolioPageQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+type PortfolioPageQuery = { readonly post: { readonly tableOfContents: any | null, readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly description: string | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly locale: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null };
+
 type PostPageQueryVariables = Exact<{
   id: Scalars['String'];
   categories: ReadonlyArray<Scalars['String']> | Scalars['String'];
