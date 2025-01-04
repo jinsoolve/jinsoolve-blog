@@ -70,7 +70,16 @@ const PortfolioTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, p
           )}
 
           {/* 본문 */}
-          <Box marginTop="50px">{children}</Box>
+          <Box
+            marginTop="50px"
+            sx={{
+              img: {
+                borderRadius: "10px", // 모든 img 태그에 borderRadius 적용
+              },
+            }}
+          >
+            {children}
+          </Box>
 
           {/* 프로필 & 댓글 */}
           <Profile />

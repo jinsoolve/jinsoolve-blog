@@ -18,6 +18,7 @@ import { fadeInFromLeft } from "../framer-motions";
 
 import { useBreakpointValue } from "@chakra-ui/react";
 
+
 export const query = graphql`
   query PostPage($id: String!, $categories: [String!]!, $slug: String!) {
     post: mdx(id: { eq: $id }) {
@@ -110,7 +111,16 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
         )}
 
         {/* 본문 */}
-        <Box marginTop="10px">{children}</Box>
+        <Box
+          marginTop="10px"
+          sx={{
+            img: {
+              borderRadius: "10px", // 모든 img 태그에 borderRadius 적용
+            },
+          }}
+        >
+          {children}
+        </Box>
 
         {/* 관련 글, 프로필, 댓글 */}
         <RelatedPosts relatedPosts={data.relatedPosts} />
