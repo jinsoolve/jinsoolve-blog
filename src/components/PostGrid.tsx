@@ -13,7 +13,7 @@ const PostGrid = ({ posts }: PostGridProps) => {
     <motion.div {...fadeInFromLeft}>
       <Grid
         as="section"
-        templateColumns={{ lg: "repeat(2, 1fr)" }}
+        templateColumns={{ lg: "repeat(3, 1fr)" }}
         maxWidth={{ base: "95%", md: "600px", lg: "100%" }}
         margin={{ base: "120px auto" }}
         gap={6}

@@ -106,116 +106,88 @@ const FeaturedPostCard = ({
   };
 
   return (
-    <Link
-      to={`/posts/${slug}`}
-      onMouseOver={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <Link to={`/posts/${slug}`}>
       <Box
         as="article"
         position="relative"
         borderRadius="20px"
         overflow="hidden"
-        width="100%"
-        height={{ base: "100%", sm: "380px", md: "480px" }}
-        transition="box-shadow 0.25s ease"
-        boxShadow={boxShadowColor}
-        _hover={{ boxShadow: "lg", cursor: "pointer" }}
+        width="300px"
+        height="380px"
+        transition="all 0.25s ease"
+        boxShadow="xl"
+        borderWidth="2px"
+        _hover={{
+          borderColor: "blue.400",
+          boxShadow: "xl",
+          cursor: "pointer",
+        }}
       >
-        {/* Overlay */}
-        <Box
-          position="absolute"
-          top={0}
-          left={0}
-          width="100%"
-          height="100%"
-          backgroundColor="blackAlpha.600"
-          zIndex={2}
-          opacity={isHovered ? 1 : 0}
-          transition="opacity 0.25s ease"
+        {/* 썸네일 */}
+        {thumbnail ? (
+          <GatsbyImage
+            objectFit="cover"
+            style={{ height: "45%", width: "100%" }}
+            image={thumbnail}
+            alt={`${slug} cover image`}
+          />
+        ) : (
+          <GatsbyImage
+            objectFit="cover"
+            style={{ height: "45%", width: "100%" }}
+            image={thumbnail}
+            alt={`${slug} cover image`}
+          />
+          // <Box
+          //   height="45%"
+          //   width="100%"
+          //   backgroundColor="gray.200"
+          //   display="flex"
+          //   alignItems="center"
+          //   justifyContent="center"
+          // >
+          //   <Text color="gray.500" fontSize="16px">
+          //     No Thumbnail
+          //   </Text>
+          // </Box>
+        )}
+
+        {/* 메타 정보와 제목 */}
+        <Flex
+          flexDirection="column"
+          justifyContent="space-between"
+          height="55%"
+          padding="20px"
         >
-          {/* Description */}
-          <Flex position="absolute" bottom={4} left={4} color="white" direction="column">
-            <Text fontSize={16} noOfLines={2}>
+          <Box>
+            <Heading fontSize="20px" fontWeight="700" marginBottom="8px">
+              {title}
+            </Heading>
+            <Text fontSize="16px" color="gray.600" noOfLines={2} marginBottom="10px">
               {description}
             </Text>
-          </Flex>
+          </Box>
 
-          {/* Categories */}
-          <Flex position="absolute" top={4} left={4} gap={2}>
-            {categories?.map((category) => (
+          {/* 날짜 및 New Post 태그 */}
+          <Flex justifyContent="space-between" alignItems="center" marginTop="10px">
+            <Text fontSize="14px" color="gray.500">
+              {updatedAt ? `${updatedAt} (updated)` : createdAt}
+            </Text>
+            {isNewPost && (
               <Box
-                key={category}
-                border="2px solid white"
-                borderRadius="20px"
-                padding="5px 10px"
-                fontSize="14px"
-                fontWeight="800"
+                backgroundColor="blue.400"
                 color="white"
+                borderRadius="12px"
+                padding="4px 8px"
+                fontSize="12px"
+                fontWeight="bold"
               >
-                {koreanTagNames[category!] || category}
+                NEW POST
               </Box>
-            ))}
+            )}
           </Flex>
-        </Box>
-
-        {/* Thumbnail or Fallback */}
-        <Box width="100%" height="100%">
-          {thumbnail ? (
-            <GatsbyImage
-              objectFit="cover"
-              style={{ height: "100%", width: "100%" }}
-              image={thumbnail}
-              alt={`${slug} cover image`}
-            />
-          ) : (
-            <ResponsiveBox title={title} />
-            // <img
-            //   src={defaultThumbnailImage}
-            //   alt="Default Thumbnail"
-            //   style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }} // 스타일 적용 가능
-            // />
-          )}
-        </Box>
-      </Box>
-
-      {/* Footer */}
-      <Flex direction="column" alignItems="start" marginTop={4}>
-        <Flex gap={2}>
-          <Box
-            border="3px solid"
-            borderRadius="20px"
-            padding="8px"
-            fontSize="14px"
-            fontWeight="800"
-          >
-            {updatedAt ? `${updatedAt} (updated)` : createdAt}
-          </Box>
-          <Box
-            border="3px solid"
-            borderRadius="20px"
-            padding="8px"
-            fontSize="14px"
-            fontWeight="800"
-          >
-            FEATURED POST
-          </Box>
-          {isNewPost && (
-            <Box
-              border="3px solid"
-              borderRadius="20px"
-              padding="8px"
-              fontSize="14px"
-              fontWeight="800"
-            >
-              NEW POST
-            </Box>
-          )}
         </Flex>
-        <Heading marginTop={2} fontSize="24px" fontWeight="700">
-          {title}
-        </Heading>
-      </Flex>
+      </Box>
     </Link>
   );
 };

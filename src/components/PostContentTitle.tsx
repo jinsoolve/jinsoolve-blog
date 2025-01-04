@@ -124,7 +124,7 @@ const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostConte
       </Flex>
 
       {/* ✅ 썸네일 표시 여부를 prop으로 제어 */}
-      {showThumbnail && (
+      {showThumbnail && post?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData && (
         <Box
           display="flex"
           flexDirection="column"
@@ -137,14 +137,10 @@ const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostConte
           boxShadow={boxShadowColor}
           marginTop="20px"
         >
-          {post?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData ? (
-            <GatsbyImage
-              image={post.frontmatter.thumbnail.childImageSharp.gatsbyImageData}
-              alt={post.frontmatter.title || "Post Thumbnail"}
-            />
-          ) : (
-            <ResponsiveBox title={post.frontmatter.title || "No Title Available"} />
-          )}
+          <GatsbyImage
+            image={post.frontmatter.thumbnail.childImageSharp.gatsbyImageData}
+            alt={post.frontmatter.title || "Post Thumbnail"}
+          />
         </Box>
       )}
     </Flex>

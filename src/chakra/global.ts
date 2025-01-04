@@ -56,7 +56,7 @@ export default {
   },
 
   // img 요소의 스타일 추가
-  img: {
-    borderRadius: "15px",
-  },
+  // img: {
+  //   borderRadius: "15px",
+  // },
 };
