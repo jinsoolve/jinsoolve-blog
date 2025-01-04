@@ -63,6 +63,11 @@ const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
       py="20px"
       position="relative" // 버튼이 이 컨테이너 기준으로 배치됨
     >
+      {/* Heading 위치 조정 */}
+      <Heading fontStyle="italic" marginBottom="20px" marginTop="-20px">
+        Featured.
+      </Heading>
+
       {/* 콘텐츠 영역 */}
       <Box
         ref={scrollContainerRef}
