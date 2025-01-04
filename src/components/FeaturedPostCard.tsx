@@ -35,6 +35,7 @@ const FeaturedPostCard = ({
     "0 4px 6px rgba(255, 255, 255, 0.3)"
   );
 
+  const borderColor = useColorModeValue("gray.50", "#444548");
 
   return (
     <Link to={`/posts/${slug}`}>
@@ -48,6 +49,7 @@ const FeaturedPostCard = ({
         transition="all 0.25s ease"
         boxShadow="xl"
         borderWidth="2px"
+        borderColor={borderColor}
         _hover={{
           borderColor: "blue.400",
           boxShadow: "xl",

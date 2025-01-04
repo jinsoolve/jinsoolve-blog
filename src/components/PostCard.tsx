@@ -33,7 +33,7 @@ const PostCard = ({
     [diffMs]
   );
 
-  const borderColor = useColorModeValue("blue.300", "blue.600");
+  const borderColor = useColorModeValue("gray.50", "#444548");
   const hoverBorderColor = useColorModeValue("blue.500", "blue.400");
   const boxShadowColor = useColorModeValue(
     "0 4px 6px rgba(0, 0, 0, 0.3)",
@@ -58,6 +58,7 @@ const PostCard = ({
         height={cardHeight}
         boxShadow="xl"
         borderWidth="2px"
+        borderColor={borderColor}
         _hover={{
           borderColor: hoverBorderColor,
           boxShadow: "xl",
