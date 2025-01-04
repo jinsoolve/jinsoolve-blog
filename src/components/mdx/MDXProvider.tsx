@@ -48,29 +48,51 @@ const CopyButton = ({ text }: { text: string }) => {
   );
 };
 
+const InlineCode = ({ children }: { children: string }) => {
+  const { colorMode } = useColorMode();
+  const theme = colorMode === "dark" ? oneDark : oneLight;
+
+  const inlineStyle = {
+    backgroundColor: colorMode === "dark" ? "gray.900" : "gray.50", // 필요 시 주석 해제
+    color: colorMode === "dark" ? "white" : "gray.900",
+    padding: "2px 6px",
+    borderRadius: "4px",
+    fontWeight: "550",
+    textDecoration: "underline", // 밑줄 추가
+    textDecorationColor: colorMode === "dark" ? "blue.400" : "blue.500", // 밑줄 색상 설정
+    textDecorationThickness: "2px", // 밑줄 두께 설정
+    textUnderlineOffset: "5px", // 밑줄과 텍스트 사이 간격
+  };
+
+  return (
+    <Text as="code" sx={inlineStyle}>
+      {children}
+    </Text>
+  );
+};
+
 const CodeBlock = (props: any) => {
   const { className, children } = props;
   const match = /language-(\w+)/.exec(className || "");
   const { colorMode } = useColorMode();
   const theme = colorMode === "dark" ? oneDark : oneLight;
-  const backgroundColor = theme["code[class*=\"language-\"]"]?.background || "inherit";
 
-  const [fontSize, setFontSize] = useState(14); // 기본 폰트 크기
+  const [fontSize, setFontSize] = useState(14);
 
   useEffect(() => {
     const updateFontSize = () => {
       const width = window.innerWidth;
 
       if (width < 768) {
-        setFontSize(13); // 모바일
+        setFontSize(13);
       } else if (width < 1024) {
-        setFontSize(14); // 태블릿
+        setFontSize(14);
       } else {
-        setFontSize(15); // 데스크톱
+        setFontSize(15);
       }
     };
 
-    updateFontSize(); // 초기 폰트 크기 설정
+    updateFontSize();
     window.addEventListener("resize", updateFontSize);
 
     return () => {
@@ -79,23 +101,8 @@ const CodeBlock = (props: any) => {
   }, []);
 
   if (!match) {
-    return (
-      <Text
-        as="code"
-        sx={{
-          borderRadius: "4px",
-          padding: "2px 4px",
-          letterSpacing: "-0.04px",
-          fontWeight: "600",
-          color: "gray.900",
-          _dark: {
-            color: "gray.50",
-          },
-        }}
-      >
-        {children}
-      </Text>
-    );
+    // 인라인 코드일 경우 InlineCode 컴포넌트 사용
+    return <InlineCode>{children}</InlineCode>;
   }
 
   return (
@@ -104,12 +111,14 @@ const CodeBlock = (props: any) => {
       borderRadius="10px"
       overflow="hidden"
       mb="20px"
-      boxShadow={colorMode === "dark"
-        ? "0px 4px 12px rgba(0, 0, 0, 0.6)"
-        : "0px 4px 12px rgba(0, 0, 0, 0.2)"}
+      boxShadow={
+        colorMode === "dark"
+          ? "0px 4px 12px rgba(0, 0, 0, 0.6)"
+          : "0px 4px 12px rgba(0, 0, 0, 0.2)"
+      }
     >
       <Box
-        bg={backgroundColor}
+        bg={theme['code[class*="language-"]']?.background || "inherit"}
         height="40px"
         px="10px"
         display="flex"
@@ -134,14 +143,14 @@ const CodeBlock = (props: any) => {
             margin: "0px",
             borderRadius: "0px 0px 10px 10px",
             fontFamily: "Fira Code, monospace",
-            fontSize: `${fontSize}px`, // 동적 폰트 크기
+            fontSize: `${fontSize}px`,
           }}
           showLineNumbers
           lineNumberStyle={{
             width: "42px",
             textAlign: "right",
             paddingRight: "18px",
-            fontSize: `${fontSize - 2}px`, // 라인 넘버 크기
+            fontSize: `${fontSize - 2}px`,
           }}
           PreTag="div"
           language={match[1]}

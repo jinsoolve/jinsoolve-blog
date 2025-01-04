@@ -55,8 +55,11 @@ export default {
     fontStyle: "normal",
   },
 
-  // img 요소의 스타일 추가
-  // img: {
-  //   borderRadius: "15px",
-  // },
+  // Bold 텍스트에 밑줄 스타일 추가
+  "b, strong": {
+    textDecoration: "underline",
+    textDecorationColor: "blue.400", // 밑줄 색깔 설정
+    textDecorationThickness: "2px", // 밑줄 두께 설정
+    textUnderlineOffset: "4px", // 밑줄 위치 조정
+  },
 };
