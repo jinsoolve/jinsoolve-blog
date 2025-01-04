@@ -89,37 +89,34 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const currentSlug = data.post?.frontmatter?.slug!;
 
   // 화면 크기에 따라 TOC 위치 결정 (작은 화면: 본문 아래, 큰 화면: 우측 고정)
-  const isLargeScreen = useBreakpointValue({ base: false, xl: true });
+  const isLargeScreen = useBreakpointValue({ base: false, "1.5xl": true });
 
   return (
-    <PostLayout>
-      <motion.article style={{ width: "100%" }} {...fadeInFromLeft}>
-        <Flex direction="column" width={{ base: "100%", xl: "800px" }}>
-          <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
+    <PostLayout tableOfContents={isLargeScreen ? data.post?.tableOfContents : undefined}>
+      <Flex direction="column" width="100%">
+        {/* ContentTitle */}
+        <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
 
-          {/* 화면 크기에 따라 TOC 위치 조정 */}
-          {!isLargeScreen && (
-            <motion.div {...fadeInFromLeft} style={{ marginTop: "50px" }}>
-              <TableOfContents tableOfContents={data.post?.tableOfContents} />
-            </motion.div>
-          )}
+        {/* 작은 화면에서만 ContentTitle 아래 TOC 렌더링 */}
+        {!isLargeScreen && data.post?.tableOfContents && (
+          <Box as="nav" marginTop="40px">
+            <TableOfContents tableOfContents={data.post.tableOfContents} />
+          </Box>
+        )}
 
-          {locales.length > 1 && (
-            <Locales currentSlug={currentSlug} locales={locales} currentLocale={currentLocale} />
-          )}
-          <Box marginTop="10px">{children}</Box>
-          <RelatedPosts relatedPosts={data.relatedPosts} />
-          <Profile />
-          <Giscus />
-        </Flex>
-      </motion.article>
+        {/* 다국어 지원 */}
+        {locales.length > 1 && (
+          <Locales currentSlug={currentSlug} locales={locales} currentLocale={currentLocale} />
+        )}
 
-      {/* 큰 화면일 때만 TOC를 옆에 고정 */}
-      {isLargeScreen && (
-        <motion.div {...fadeInFromLeft} style={{ marginLeft: "100px", position: "sticky", top: "150px", width: "100%" }}>
-          <TableOfContents tableOfContents={data.post?.tableOfContents} />
-        </motion.div>
-      )}
+        {/* 본문 */}
+        <Box marginTop="10px">{children}</Box>
+
+        {/* 관련 글, 프로필, 댓글 */}
+        <RelatedPosts relatedPosts={data.relatedPosts} />
+        <Profile />
+        <Giscus />
+      </Flex>
     </PostLayout>
   );
 };

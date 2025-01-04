@@ -48,39 +48,35 @@ interface PortfolioTemplateProps {
   };
 }
 
-const PostTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, pageContext }) => {
-  // 화면 크기에 따라 TOC 위치 변경 (base~lg: 아래, xl 이상: 옆)
-  const isLargeScreen = useBreakpointValue({ base: false, xl: true });
+const PortfolioTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, pageContext }) => {
+  const isLargeScreen = useBreakpointValue({ base: false, "1.5xl": true });
 
   return (
-    <PostLayout>
+    <PostLayout tableOfContents={isLargeScreen ? data.post?.tableOfContents : undefined}>
       <motion.article style={{ width: "100%" }} {...fadeInFromLeft}>
-        <Flex direction="column" width={{ base: "100%", xl: "800px" }}>
+        <Flex direction="column" width="100%">
+          {/* 제목 */}
           <PostContentTitle
             readingTime={pageContext.readingTime.text}
             post={data.post}
             showThumbnail={false}
           />
 
-          {/* 화면 크기에 따라 TOC 위치 조정 */}
-          {!isLargeScreen && (
-            <motion.div {...fadeInFromLeft} style={{ marginTop: "50px" }}>
-              <TableOfContents tableOfContents={data.post?.tableOfContents} />
-            </motion.div>
+          {/* 작은 화면에서 ContentTitle 아래 TOC 표시 */}
+          {!isLargeScreen && data.post?.tableOfContents && (
+            <Box as="nav" marginTop="40px">
+              <TableOfContents tableOfContents={data.post.tableOfContents} />
+            </Box>
           )}
 
+          {/* 본문 */}
           <Box marginTop="50px">{children}</Box>
+
+          {/* 프로필 & 댓글 */}
           <Profile />
           <Giscus />
         </Flex>
       </motion.article>
-
-      {/* 큰 화면일 때만 TOC를 옆에 고정 */}
-      {isLargeScreen && (
-        <motion.div {...fadeInFromLeft} style={{ marginLeft: "100px", position: "sticky", top: "150px", width: "100%" }}>
-          <TableOfContents tableOfContents={data.post?.tableOfContents} />
-        </motion.div>
-      )}
     </PostLayout>
   );
 };
@@ -94,11 +90,8 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
 
   return (
     <>
-      {/* HTML Meta categories */}
       <title>{title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-      {/* Facebook Meta categories */}
       <meta property="og:url" content={`${DOMAIN}/${data.post?.frontmatter?.slug}`} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={title} />
@@ -106,8 +99,6 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
       <meta property="og:description" content={description} />
       <meta property="og:image" content={getSrc(ogimage)} />
       <meta property="og:locale" content={metaLocale} />
-
-      {/* Twitter Meta categories */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="jinsoolve.netlify.app" />
       <meta property="twitter:url" content={`${DOMAIN}/${data.post?.frontmatter?.slug}`} />
@@ -124,4 +115,4 @@ export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
   );
 };
 
-export default PostTemplate;
+export default PortfolioTemplate;
