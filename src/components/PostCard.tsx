@@ -77,7 +77,7 @@ const PostCard = ({
         <Flex
           flexDirection="column"
           justifyContent="space-between"
-          height="40%"
+          height={thumbnail ? "55%" : "100%"}
           padding="20px"
         >
           <Box>

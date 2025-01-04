@@ -100,7 +100,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
 
         {/* 작은 화면에서만 ContentTitle 아래 TOC 렌더링 */}
         {!isLargeScreen && data.post?.tableOfContents && (
-          <Box as="nav" marginTop="40px">
+          <Box as="nav" marginTop="80px">
             <TableOfContents tableOfContents={data.post.tableOfContents} />
           </Box>
         )}
@@ -112,7 +112,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
 
         {/* 본문 */}
         <Box
-          marginTop="10px"
+          marginTop="-10px"
           sx={{
             img: {
               borderRadius: "10px", // 모든 img 태그에 borderRadius 적용

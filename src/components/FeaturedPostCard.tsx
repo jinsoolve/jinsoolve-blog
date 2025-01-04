@@ -89,7 +89,7 @@ const FeaturedPostCard = ({
         <Flex
           flexDirection="column"
           justifyContent="space-between"
-          height="55%"
+          height={thumbnail ? "55%" : "100%"}
           padding="20px"
         >
           <Box>
@@ -102,7 +102,7 @@ const FeaturedPostCard = ({
           </Box>
 
           {/* 날짜 및 New Post 태그 */}
-          <Flex justifyContent="space-between" alignItems="center" marginTop="10px">
+          <Flex justifyContent="space-between" alignItems="center" marginTop="0px">
             <Text fontSize="14px" color="gray.500">
               {updatedAt ? `${updatedAt} (updated)` : createdAt}
             </Text>
