@@ -1,4 +1,11 @@
-import { Box, Flex, Heading, IconButton, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  useColorMode,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
@@ -10,10 +17,11 @@ interface FeaturedPostSectionProps {
 
 const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [mouseNearLeft, setMouseNearLeft] = useState(false);
-  const [mouseNearRight, setMouseNearRight] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [showScrollbar, setShowScrollbar] = useState(false);
+  const { colorMode } = useColorMode();
+
+  // 반응형으로 버튼 위치 조정
+  const arrowPosition = useBreakpointValue({ base: "-30px", md: "-50px" });
 
   const handleScroll = (direction: "left" | "right") => {
     if (!scrollContainerRef.current) return;
@@ -31,29 +39,6 @@ const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
 
     setScrollPosition(newScrollPosition);
   };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!scrollContainerRef.current) return;
-
-    const containerRect = scrollContainerRef.current.getBoundingClientRect();
-    const mouseX = e.clientX;
-
-    // 좌측 버튼 범위 (왼쪽 끝으로부터 50px 이내)
-    if (mouseX - containerRect.left < 50) {
-      setMouseNearLeft(true);
-    } else {
-      setMouseNearLeft(false);
-    }
-
-    // 우측 버튼 범위 (오른쪽 끝으로부터 50px 이내)
-    if (containerRect.right - mouseX < 50) {
-      setMouseNearRight(true);
-    } else {
-      setMouseNearRight(false);
-    }
-  };
-
-  const { colorMode } = useColorMode()
 
   return (
     <Box
@@ -120,7 +105,7 @@ const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
         position="absolute"
         top="50%"
         transform="translateY(-50%)"
-        left="-50px" // 콘텐츠 왼쪽 바깥쪽으로 배치
+        left={arrowPosition} // 반응형으로 위치 조정
         zIndex={9999}
         onClick={() => handleScroll("left")}
         icon={<LeftArrowIcon />}
@@ -130,7 +115,7 @@ const FeaturedPostSection = ({ posts }: FeaturedPostSectionProps) => {
         position="absolute"
         top="50%"
         transform="translateY(-50%)"
-        right="-50px" // 콘텐츠 오른쪽 바깥쪽으로 배치
+        right={arrowPosition} // 반응형으로 위치 조정
         zIndex={9999}
         onClick={() => handleScroll("right")}
         icon={<RightArrowIcon />}
