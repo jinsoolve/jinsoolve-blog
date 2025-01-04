@@ -9,7 +9,7 @@ const ShortPostSection = ({ posts }: ShortPostSectionProps) => {
   return (
     <Flex
       marginTop={{ base: "100px", lg: "0px" }}
-      marginLeft={{ base: "125px", md: "150px", lg: "0px" }}
+      marginLeft={{ base: "18vw", md: "150px", lg: "0px" }}
       width={{ base: "100%", lg: "240px" }}
       direction="column"
       alignSelf={{ base: "center", lg: "flex-start" }} // 좁을 때만 중앙정렬

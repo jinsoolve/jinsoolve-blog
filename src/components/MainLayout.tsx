@@ -14,6 +14,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         justifyContent="center"
         maxWidth={900}
         margin="auto"
+        overflowX="hidden" // 가로 스크롤 방지
+        width="100%" // Box가 부모 요소를 완전히 채우도록 설정
       >
         {children}
       </Box>
