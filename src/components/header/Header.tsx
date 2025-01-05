@@ -59,80 +59,75 @@ const Header = () => {
     }, []);
 
     return (
-        <Box
-            overflow="hidden"
-            as="header"
-            position="sticky"
-            top="0"
-            display="flex"
-            paddingLeft={5}
-            paddingRight={5}
-            columnGap={4}
-            zIndex="5"
-            alignItems="center"
-            width="100%"
-            height="70px"
-            transition="box-shadow 0.3s ease"
-            shadow={isSticky ? "sm" : "none"}
-            backgroundColor="white"
-            _dark={{
-                backgroundColor: "gray.800",
-            }}
-        >
-            <Logo />
-            <Spacer />
+      <Box
+        as="header"
+        position="sticky"
+        top="0"
+        display="flex"
+        paddingLeft={5}
+        paddingRight={5}
+        columnGap={4}
+        zIndex="5"
+        alignItems="center"
+        width="100%"
+        height="70px"
+        transition="box-shadow 0.3s ease"
+        shadow={isSticky ? "sm" : "none"}
+        backgroundColor="white"
+        _dark={{
+            backgroundColor: "gray.800",
+        }}
+        // overflow="hidden" 제거
+      >
+          <Logo />
+          <Spacer />
 
-            {/* 모바일과 데스크탑 메뉴 분기 */}
-            {isMobile ? (
-              <>
-                  <Box display="flex" alignItems="center" gap="2">
-                      {/* ThemeToggler와 햄버거 버튼 사이의 간격을 줄이기 위한 Box */}
-                      <ThemeToggler />
-                      {/* 햄버거 버튼 */}
-                      <IconButton
-                        aria-label="Open menu"
-                        icon={<HamburgerIcon />}
-                        variant="outline"
-                        onClick={onOpen}
-                      />
-                  </Box>
-
-                  {/* Drawer (모바일 메뉴) */}
-                  <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-                      <DrawerOverlay />
-                      <DrawerContent background="gray.100" _dark={{ backgroundColor: "gray.800" }}>
-                          <DrawerCloseButton />
-                          <DrawerHeader>Menu</DrawerHeader>
-                          <DrawerBody>
-                              <Box mb="4">
-                                  <Categories />
-                              </Box>
-                              <Box mb="4">
-                                  <Tags />
-                              </Box>
-                              <Box mt="6" mb="2">
-                                  <Portfoilo />
-                              </Box>
-                              <Box mb="2">
-                                  <About />
-                              </Box>
-                          </DrawerBody>
-                      </DrawerContent>
-                  </Drawer>
-              </>
-            ) : (
-                <>
-                    {/* 데스크탑 메뉴 */}
-                    <Categories />
-                    <Tags />
-                    <Portfoilo />
-                    <About />
-                    {/*<RSS />*/}
+          {isMobile ? (
+            <>
+                <Box display="flex" alignItems="center" gap="2">
                     <ThemeToggler />
-                    <Search />
-                </>
-            )}
-        </Box>
+                    <IconButton
+                      aria-label="Open menu"
+                      icon={<HamburgerIcon />}
+                      variant="outline"
+                      onClick={onOpen}
+                    />
+                </Box>
+                <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+                    <DrawerOverlay />
+                    <DrawerContent background="gray.100" _dark={{ backgroundColor: "gray.800" }}>
+                        <DrawerCloseButton />
+                        <DrawerHeader>Menu</DrawerHeader>
+                        <DrawerBody>
+                            <Box mb="4">
+                                <Categories />
+                            </Box>
+                            <Box mb="4">
+                                <Tags />
+                            </Box>
+                            <Box mt="6" mb="2">
+                                <Portfoilo />
+                            </Box>
+                            <Box mb="2">
+                                <About />
+                            </Box>
+                        </DrawerBody>
+                    </DrawerContent>
+                </Drawer>
+            </>
+          ) : (
+            <>
+                <Categories />
+                <Tags />
+                <Portfoilo />
+                <About />
+                <Search />
+                <ThemeToggler />
+                {/* Search 컴포넌트 */}
+
+            </>
+          )}
+      </Box>
     );
 };
 
