@@ -21,6 +21,7 @@ import Logo from "./Logo";
 import Portfoilo from "./Portfolio";
 import Tags from "./Tags";
 import Categories from "./Categories";
+import Search from "./Search";
 
 const Header = () => {
     const [isSticky, setIsSticky] = useState(false);
@@ -128,6 +129,7 @@ const Header = () => {
                     <About />
                     {/*<RSS />*/}
                     <ThemeToggler />
+                    <Search />
                 </>
             )}
         </Box>

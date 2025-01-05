@@ -1,9 +1,25 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+//
+// console.log(".env.production Path:", `.env.${process.env.NODE_ENV}`);
+// console.log("NODE_ENV:", process.env.NODE_ENV);
+//
+// console.log("Algolia App ID:", process.env.GATSBY_ALGOLIA_APP_ID);
+// console.log("Algolia Admin Key:", process.env.GATSBY_ALGOLIA_ADMIN_KEY);
+// console.log("Algolia Index Name:", process.env.GATSBY_ALGOLIA_INDEX_NAME);
+
+const queries = require('./src/utils/algolia');
+
 const path = require(`path`);
 
 const SITE_METADATA = Object.freeze({
   title: "Jinsoolve 블로그",
   description: "머신러닝과 알고리즘을 공부하는 김진수 입니다.",
   siteUrl: "https://jinsoolve.netlify.app",
+  algoliaAppId: process.env.GATSBY_ALGOLIA_APP_ID,
+  algoliaSearchKey: process.env.GATSBY_ALGOLIA_SEARCH_KEY,
+  algoliaIndexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
 });
 
 const wrapESMPlugin = (name) =>
@@ -199,6 +215,26 @@ module.exports = {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "src/assets/favicon.png",
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-algolia',
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
+        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
+        queries,
+        chunkSize: 10000,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        allowList: [
+          "GATSBY_ALGOLIA_APP_ID",
+          "GATSBY_ALGOLIA_SEARCH_KEY",
+          "GATSBY_ALGOLIA_INDEX_NAME"
+        ],
       },
     },
   ],
