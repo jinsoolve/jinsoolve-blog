@@ -100,7 +100,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
 
         {/* 작은 화면에서만 ContentTitle 아래 TOC 렌더링 */}
         {!isLargeScreen && data.post?.tableOfContents && (
-          <Box as="nav" marginTop="80px">
+          <Box as="nav" marginTop="80px" marginBottom="60px">
             <TableOfContents tableOfContents={data.post.tableOfContents} />
           </Box>
         )}
