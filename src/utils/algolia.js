@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 const mdxQuery = `
   query {
@@ -22,20 +22,20 @@ const mdxQuery = `
 `;
 
 const unnestFrontmatter = (node) => {
-  const { frontmatter, ...rest } = node;
+  const { frontmatter, body, ...rest } = node;
 
-  // ✅ contentDigest 추가
   const contentDigest = crypto
-    .createHash('md5')
+    .createHash("md5")
     .update(JSON.stringify(node))
-    .digest('hex');
+    .digest("hex");
 
   return {
     ...frontmatter,
+    body,
     ...rest,
     internal: {
       contentFilePath: node.internal.contentFilePath,
-      contentDigest, // ✅ 여기에 추가
+      contentDigest,
     },
   };
 };
@@ -45,6 +45,10 @@ const queries = [
     query: mdxQuery,
     transformer: ({ data }) =>
       data.allPosts.nodes.map(unnestFrontmatter),
+    settings: {
+      attributesToRetrieve: ["title", "body", "slug", "tags", "categories", "description"],
+      attributesToHighlight: ["title", "body", "slug", "tags", "categories", "description"], // 강조 처리할 필드 추가
+    },
   },
 ];
 

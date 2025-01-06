@@ -108,8 +108,8 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
         top="50%"
         transform="translateY(-50%)"
         left={arrowPosition} // 반응형으로 위치 조정
-        zIndex={9999}
         onClick={() => handleScroll("left")}
+        boxShadow="lg"
         icon={<LeftArrowIcon />}
       />
       <IconButton
@@ -118,8 +118,8 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
         top="50%"
         transform="translateY(-50%)"
         right={arrowPosition} // 반응형으로 위치 조정
-        zIndex={9999}
         onClick={() => handleScroll("right")}
+        boxShadow="lg"
         icon={<RightArrowIcon />}
       />
     </Box>
