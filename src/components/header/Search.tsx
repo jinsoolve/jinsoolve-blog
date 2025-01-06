@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Input, InputGroup, InputLeftElement, Box, VStack, Text, Link, IconButton, chakra } from "@chakra-ui/react";
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Box,
+  VStack,
+  Text,
+  Link,
+  IconButton,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, useSearchBox, useHits } from "react-instantsearch-hooks-web";
@@ -10,19 +20,12 @@ const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_SEARCH_KEY!
 );
 
-// const StyledStrong = chakra("strong", {
-//   baseStyle: {
-//     color: "white",
-//     fontWeight: "bold",
-//     textDecoration: "underline",
-//     textDecorationColor: "blue.400", // 밑줄 색깔 설정
-//     textDecorationThickness: "2px", // 밑줄 두께 설정
-//     textUnderlineOffset: "4px", // 밑줄 위치 조정
-//   },
-// });
-
 // SearchBox 컴포넌트
-const SearchBox = ({ onQueryChange }: { onQueryChange: (query: string) => void }) => {
+const SearchBox = ({ onQueryChange, isMobile, autoFocus }: {
+  onQueryChange: (query: string) => void;
+  isMobile: boolean;
+  autoFocus: boolean; // autoFocus를 props로 받음
+}) => {
   const { query, refine } = useSearchBox();
   const [inputValue, setInputValue] = useState(query || "");
   const [isComposing, setIsComposing] = useState(false);
@@ -46,13 +49,14 @@ const SearchBox = ({ onQueryChange }: { onQueryChange: (query: string) => void }
   return (
     <InputGroup
       size="lg"
-      position="fixed"
-      right="40px"
-      top="20px"
-      width="300px" // Input과 동일한 너비로 설정
-      maxW="none" // 필요 없는 제한 제거
+      position={isMobile ? "absolute" : "fixed"}
+      top={isMobile ? "50%" : "20px"}
+      left={isMobile ? "50%" : "unset"}
+      transform={isMobile ? "translate(-50%, -50%)" : "unset"}
+      right={isMobile ? "unset" : "40px"}
+      width={isMobile ? "90vw" : "300px"}
+      maxW="none"
     >
-      {/* 왼쪽에 아이콘 추가 */}
       <InputLeftElement pointerEvents="none">
         <Search2Icon color="gray.500" />
       </InputLeftElement>
@@ -64,19 +68,19 @@ const SearchBox = ({ onQueryChange }: { onQueryChange: (query: string) => void }
         placeholder="제목이나 내용으로 검색..."
         borderRadius="lg"
         borderWidth="2px"
-        width="300px"
+        width="100%"
         bg="white"
         _dark={{ bg: "gray.800" }}
         shadow="md"
-        autoFocus
-        pl="3rem" // 아이콘 때문에 왼쪽 여백 추가
+        autoFocus={autoFocus} // autoFocus 속성을 동적으로 설정
+        pl="3rem"
       />
     </InputGroup>
   );
 };
 
 // Hits 컴포넌트
-const Hits = ({ query }: { query: string }) => {
+const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
   const { hits } = useHits();
   const MAX_AROUND = 50;
 
@@ -136,18 +140,16 @@ const Hits = ({ query }: { query: string }) => {
       p={4}
       rounded="lg"
       spacing={4}
-      maxW="90vw"
-      width="500px" // 너비 설정
-      // maxH="500px"
-      height="70vh"
-      position="fixed"
-      top="100px"
-      right="40px" // 화면 오른쪽에서 20px 떨어진 곳에서 끝나도록 설정
+      position={isMobile ? "absolute" : "fixed"}
+      top={isMobile ? "480px" : "100px"}
+      left={isMobile ? "50%" : "unset"}
+      transform={isMobile ? "translate(-50%, -50%)" : "unset"}
+      right={isMobile ? "unset" : "40px"}
       zIndex="20"
+      width={isMobile ? "90vw" : "500px"}
+      height="70vh"
       overflowY="auto"
-      padding="20px 30px"
     >
-      {/* 검색 결과 수 표시 */}
       <Text fontSize="sm" fontWeight="bold" mb={2}>
         검색 결과 {hits.length}개
       </Text>
@@ -157,7 +159,9 @@ const Hits = ({ query }: { query: string }) => {
       ) : (
         hits.map((hit: any) => {
           const matchingField = findFirstMatchingField(hit, query);
-          const descriptionFallback = hit.description ? truncateHighlightedValue(hit.description, query) : "설명이 없습니다.";
+          const descriptionFallback = hit.description
+            ? truncateHighlightedValue(hit.description, query)
+            : "설명이 없습니다.";
 
           return (
             <Box
@@ -165,32 +169,17 @@ const Hits = ({ query }: { query: string }) => {
               p={4}
               bg="white"
               borderColor="white"
-              boxShadow="lg !important"
-              _dark={{ bg: "gray.800", borderColor: "gray.800", boxShadow: "dark-lg !important" }}
+              boxShadow="lg"
+              _dark={{ bg: "gray.800", borderColor: "gray.800", boxShadow: "dark-lg" }}
               borderWidth="1.5px"
               borderRadius="md"
               width="100%"
-              _hover={{
-                cursor: "pointer !important",
-                bg: "gray.100 !important", // 라이트 모드에서 hover 시 배경색
-                borderColor: "blue.400 !important", // hover 시 borderColor
-                _dark: {
-                  bg: "gray.700 !important", // 다크 모드에서 hover 시 배경색
-                  borderColor: "blue.400 !important", // 다크 모드에서 hover 시 borderColor
-                },
-              }}
             >
-              <Link
-                href={`/posts/${hit.slug}`}
-                fontSize="md"
-                _hover={{ textDecoration: "none" }}
-              >
+              <Link href={`/posts/${hit.slug}`} fontSize="md" _hover={{ textDecoration: "none" }}>
                 {matchingField?.field === "title"
                   ? truncateHighlightedValue(hit.title, query, true)
                   : hit.title}
               </Link>
-
-              {/* 매칭되는 필드가 없으면 description 표시 */}
               <Text mt={2} fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }}>
                 {matchingField && matchingField.field !== "title"
                   ? truncateHighlightedValue(matchingField.value, query)
@@ -209,6 +198,7 @@ const Search: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [query, setQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobile] = useMediaQuery("(max-width: 580px)");
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
@@ -219,7 +209,7 @@ const Search: React.FC = () => {
   };
 
   const handleQueryChange = (query: string) => {
-    console.log("Updated Query:", query); // 디버깅: query 값 확인
+    console.log("Updated Query:", query); // 디버깅용
     setQuery(query);
   };
 
@@ -230,6 +220,7 @@ const Search: React.FC = () => {
 
   return (
     <Box position="relative">
+      {/* 백그라운드 블러 */}
       {isFocused && (
         <Box
           position="fixed"
@@ -243,32 +234,40 @@ const Search: React.FC = () => {
           onClick={toggleSearch}
         />
       )}
+
       <Box
         position="relative"
         zIndex="20"
         mx="auto"
         mt="10"
-        maxW="600px"
+        maxW={isMobile ? "100%" : "600px"}
         onBlur={handleBlur}
         onFocus={handleFocus}
         display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        {isSearchOpen ? (
+        {isMobile ? (
+          // 모바일: 항상 SearchBox 표시
           <InstantSearch searchClient={searchClient} indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME!}>
-            <SearchBox onQueryChange={handleQueryChange} />
-            {isFocused && query.trim() && <Hits query={query} />}
+            <SearchBox onQueryChange={handleQueryChange} isMobile={isMobile} />
+            {isFocused && query.trim() && <Hits query={query} isMobile={isMobile} />}
+          </InstantSearch>
+        ) : isSearchOpen ? (
+          // 데스크톱: SearchBox 활성화
+          <InstantSearch searchClient={searchClient} indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME!}>
+            <SearchBox onQueryChange={handleQueryChange} isMobile={isMobile} autoFocus={isSearchOpen && !isMobile} />
+            {isFocused && query.trim() && <Hits query={query} isMobile={isMobile} />}
           </InstantSearch>
         ) : (
+          // 데스크톱: 아이콘 표시
           <IconButton
             aria-label="Open search"
             icon={<Search2Icon />}
             onClick={toggleSearch}
+            top="-20px"
             size="lg"
             bg="white"
-            top="-20px"
-            width="40px"
             _dark={{ bg: "gray.800" }}
             rounded="full"
           />

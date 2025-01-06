@@ -98,12 +98,25 @@ const Header = () => {
                     p={4}
                     overflowY="auto"
                   >
-                      <VStack align="stretch" spacing={6}>
-                          <Search />
-                          <Categories />
-                          <Tags />
-                          <Portfolio />
-                          <About />
+                      <VStack align="stretch" spacing={0}>
+                          <Box>
+                              <Search />
+                          </Box>
+                          <Box ml={4}>
+                              <Box mt={16} >
+                                  <Categories fontSize={"lg"} />
+                              </Box>
+                              <Box mt={6}>
+                                  <Tags fontSize={"lg"} />
+                              </Box>
+                              <Box mt={8}>
+                                  <Portfolio fontSize={"lg"} />
+                              </Box>
+                              <Box mt={10}>
+                                  <About fontSize={"lg"} />
+                              </Box>
+                          </Box>
+
                       </VStack>
                   </Box>
                 )}

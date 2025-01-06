@@ -1,7 +1,15 @@
 import { Box, Text, Tooltip } from "@chakra-ui/react";
 import { Link } from "gatsby";
 
-const Portfoilo = () => {
+interface PortfolioProps {
+  fontSize?: number | string; // fontSize를 prop으로 받음
+  dateText?: string; // 날짜 텍스트를 prop으로 받음
+}
+
+const Portfolio = ({ fontSize = 14, dateText }: PortfolioProps) => {
+  const currentMonth = new Date().getMonth() + 1; // 현재 월
+  const defaultDateText = `${currentMonth}월 안에는 꼭...`; // 기본 날짜 텍스트
+
   return (
     <Link to="/portfolio">
       <Box pos="relative">
@@ -14,13 +22,12 @@ const Portfoilo = () => {
           fontSize={10}
           fontWeight={800}
         >
-          {/* 내일까지는 꼭 */}
-          {`${new Date().getMonth() + 1}월 안에는 꼭...`}
+          {dateText || defaultDateText} {/* prop이 없으면 기본값 사용 */}
         </Text>
         <Tooltip label="Coming Soon!">
           <Text
             as="del"
-            fontSize={14}
+            fontSize={fontSize} // 전달받은 fontSize 사용
             fontStyle="italic"
             fontWeight={800}
             padding={1}
@@ -34,4 +41,4 @@ const Portfoilo = () => {
   );
 };
 
-export default Portfoilo;
+export default Portfolio;
