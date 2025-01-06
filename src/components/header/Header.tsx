@@ -2,23 +2,16 @@ import {
     Box,
     Spacer,
     IconButton,
-    Drawer,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    DrawerHeader,
-    DrawerBody,
     useDisclosure,
-    Stack
+    VStack,
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 
-import RSS from "../rss";
 import ThemeToggler from "../theme-toggle/ThemeToggler";
 import About from "./About";
 import Logo from "./Logo";
-import Portfoilo from "./Portfolio";
+import Portfolio from "./Portfolio";
 import Tags from "./Tags";
 import Categories from "./Categories";
 import Search from "./Search";
@@ -31,7 +24,7 @@ const Header = () => {
     // 화면 너비 감지
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 580); // 768px 이하에서 모바일 메뉴로 전환
+            setIsMobile(window.innerWidth < 580); // 580px 이하에서 모바일 메뉴로 전환
         };
 
         // 초기 상태 설정
@@ -77,7 +70,6 @@ const Header = () => {
         _dark={{
             backgroundColor: "gray.800",
         }}
-        // overflow="hidden" 제거
       >
           <Logo />
           <Spacer />
@@ -87,44 +79,43 @@ const Header = () => {
                 <Box display="flex" alignItems="center" gap="2">
                     <ThemeToggler />
                     <IconButton
-                      aria-label="Open menu"
-                      icon={<HamburgerIcon />}
+                      aria-label="Toggle menu"
+                      icon={isOpen ? <CloseIcon boxSize={3} /> : <HamburgerIcon />}
                       variant="outline"
-                      onClick={onOpen}
+                      onClick={isOpen ? onClose : onOpen}
                     />
                 </Box>
-                <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-                    <DrawerOverlay />
-                    <DrawerContent background="gray.100" _dark={{ backgroundColor: "gray.800" }}>
-                        <DrawerCloseButton />
-                        <DrawerHeader>Menu</DrawerHeader>
-                        <DrawerBody>
-                            <Box mb="4">
-                                <Categories />
-                            </Box>
-                            <Box mb="4">
-                                <Tags />
-                            </Box>
-                            <Box mt="6" mb="2">
-                                <Portfoilo />
-                            </Box>
-                            <Box mb="2">
-                                <About />
-                            </Box>
-                        </DrawerBody>
-                    </DrawerContent>
-                </Drawer>
+                {isOpen && (
+                  <Box
+                    position="absolute"
+                    top="70px"
+                    left="0"
+                    width="100%"
+                    height="calc(100vh - 70px)"
+                    bg="white"
+                    _dark={{ bg: "gray.800" }}
+                    zIndex="10"
+                    p={4}
+                    overflowY="auto"
+                  >
+                      <VStack align="stretch" spacing={6}>
+                          <Search />
+                          <Categories />
+                          <Tags />
+                          <Portfolio />
+                          <About />
+                      </VStack>
+                  </Box>
+                )}
             </>
           ) : (
             <>
                 <Categories />
                 <Tags />
-                <Portfoilo />
+                <Portfolio />
                 <About />
                 <Search />
                 <ThemeToggler />
-                {/* Search 컴포넌트 */}
-
             </>
           )}
       </Box>
