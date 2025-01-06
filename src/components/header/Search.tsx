@@ -10,16 +10,16 @@ const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_SEARCH_KEY!
 );
 
-const StyledStrong = chakra("strong", {
-  baseStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textDecoration: "underline",
-    textDecorationColor: "blue.400", // 밑줄 색깔 설정
-    textDecorationThickness: "2px", // 밑줄 두께 설정
-    textUnderlineOffset: "4px", // 밑줄 위치 조정
-  },
-});
+// const StyledStrong = chakra("strong", {
+//   baseStyle: {
+//     color: "white",
+//     fontWeight: "bold",
+//     textDecoration: "underline",
+//     textDecorationColor: "blue.400", // 밑줄 색깔 설정
+//     textDecorationThickness: "2px", // 밑줄 두께 설정
+//     textUnderlineOffset: "4px", // 밑줄 위치 조정
+//   },
+// });
 
 // SearchBox 컴포넌트
 const SearchBox = ({ onQueryChange }: { onQueryChange: (query: string) => void }) => {
@@ -44,7 +44,14 @@ const SearchBox = ({ onQueryChange }: { onQueryChange: (query: string) => void }
   };
 
   return (
-    <InputGroup size="lg" margin="0 auto" justifyContent="center" transform="translateX(-50%)">
+    <InputGroup
+      size="lg"
+      position="fixed"
+      right="40px"
+      top="20px"
+      width="300px" // Input과 동일한 너비로 설정
+      maxW="none" // 필요 없는 제한 제거
+    >
       {/* 왼쪽에 아이콘 추가 */}
       <InputLeftElement pointerEvents="none">
         <Search2Icon color="gray.500" />
@@ -82,7 +89,7 @@ const Hits = ({ query }: { query: string }) => {
       return (
         <>
           {value.substring(0, queryIndex)}
-          <StyledStrong>{match}</StyledStrong>
+          <strong>{match}</strong>
           {value.substring(queryIndex + query.length)}
         </>
       );
@@ -95,7 +102,7 @@ const Hits = ({ query }: { query: string }) => {
     return (
       <>
         {prefix ? `...${prefix}` : ""}
-        <StyledStrong>{match}</StyledStrong>
+        <strong>{match}</strong>
         {suffix ? `${suffix}...` : ""}
       </>
     );
@@ -125,21 +132,28 @@ const Hits = ({ query }: { query: string }) => {
     <VStack
       align="start"
       bg="white"
-      _dark={{ bg: "gray.900" }}
+      _dark={{ bg: "gray.800" }}
       p={4}
       rounded="lg"
       spacing={4}
       maxW="90vw"
-      width="500px"
-      maxH="500px"
+      width="500px" // 너비 설정
+      // maxH="500px"
+      height="70vh"
       position="fixed"
       top="100px"
-      transform="translateX(-50%)"
+      right="40px" // 화면 오른쪽에서 20px 떨어진 곳에서 끝나도록 설정
       zIndex="20"
       overflowY="auto"
+      padding="20px 30px"
     >
+      {/* 검색 결과 수 표시 */}
+      <Text fontSize="sm" fontWeight="bold" mb={2}>
+        검색 결과 {hits.length}개
+      </Text>
+
       {hits.length === 0 ? (
-        <Text fontSize="md">No results found</Text>
+        <Text fontSize="md">검색 결과 없음</Text>
       ) : (
         hits.map((hit: any) => {
           const matchingField = findFirstMatchingField(hit, query);
@@ -151,20 +165,25 @@ const Hits = ({ query }: { query: string }) => {
               p={4}
               bg="white"
               borderColor="white"
-              _dark={{ bg: "gray.800", borderColor: "gray.800" }}
+              boxShadow="lg !important"
+              _dark={{ bg: "gray.800", borderColor: "gray.800", boxShadow: "dark-lg !important" }}
               borderWidth="1.5px"
               borderRadius="md"
               width="100%"
               _hover={{
-                boxShadow: "md",
-                cursor: "pointer",
-                borderColor: "blue.400",
+                cursor: "pointer !important",
+                bg: "gray.100 !important", // 라이트 모드에서 hover 시 배경색
+                borderColor: "blue.400 !important", // hover 시 borderColor
+                _dark: {
+                  bg: "gray.700 !important", // 다크 모드에서 hover 시 배경색
+                  borderColor: "blue.400 !important", // 다크 모드에서 hover 시 borderColor
+                },
               }}
             >
               <Link
                 href={`/posts/${hit.slug}`}
                 fontSize="md"
-                _hover={{ textDecoration: "underline", color: "blue.500" }}
+                _hover={{ textDecoration: "none" }}
               >
                 {matchingField?.field === "title"
                   ? truncateHighlightedValue(hit.title, query, true)

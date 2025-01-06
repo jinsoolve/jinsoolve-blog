@@ -58,9 +58,15 @@ export default {
   // Bold 텍스트에 밑줄 스타일 추가
   "b, strong": {
     textDecoration: "underline",
-    textDecorationColor: "blue.400", // 밑줄 색깔 설정
-    textDecorationThickness: "2px", // 밑줄 두께 설정
-    textUnderlineOffset: "4px", // 밑줄 위치 조정
+    textDecorationColor: "blue.400",
+    textDecorationThickness: "2px",
+    textUnderlineOffset: "4px",
+    _light: {
+      color: "black", // 라이트 모드에서 텍스트 색상
+    },
+    _dark: {
+      color: "white", // 다크 모드에서 텍스트 색상
+    },
   },
 
   // 추가된 search-container 스타일
