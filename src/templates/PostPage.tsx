@@ -90,7 +90,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const currentSlug = data.post?.frontmatter?.slug!;
 
   // 화면 크기에 따라 TOC 위치 결정 (작은 화면: 본문 아래, 큰 화면: 우측 고정)
-  const isLargeScreen = useBreakpointValue({ base: false, "1.5xl": true });
+  const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
 
   return (
     <PostLayout tableOfContents={isLargeScreen ? data.post?.tableOfContents : undefined}>

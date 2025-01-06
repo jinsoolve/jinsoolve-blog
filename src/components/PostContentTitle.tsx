@@ -60,7 +60,7 @@ const ResponsiveBox = ({ title }: { title: string }) => {
 
 const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostContentTitleProps) => {
   const { colorMode } = useColorMode();
-  const flexDirection = useBreakpointValue({ base: "column", xl: "row" });
+  const flexDirection = useBreakpointValue({ base: "column", "1.75xl": "row" });
   const boxShadowColor = useColorModeValue(
     "0 4px 6px rgba(0, 0, 0, 0.3)",
     "0 4px 6px rgba(255, 255, 255, 0.3)"

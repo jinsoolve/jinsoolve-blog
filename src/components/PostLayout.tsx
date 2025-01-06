@@ -22,7 +22,7 @@ export default function PostLayout({ children, tableOfContents }: LayoutProps) {
         position="relative" // TOC를 article 기준으로 배치하기 위해 relative 사용
         margin="50px auto"
         padding="20px"
-        maxWidth="900px"
+        maxWidth={{ base: "750px", "1.75xl": "900px" }}
         wordBreak="keep-all"
         overflowWrap="break-word"
         lineHeight="1.7"
@@ -38,7 +38,7 @@ export default function PostLayout({ children, tableOfContents }: LayoutProps) {
           width="300px"
           position="fixed"
           top="150px"
-          right="calc(50% - 400px - 400px)" // article의 오른쪽 100px 위치
+          right={{ base: "calc(50% - 400px - 300px)", "1.75xl": "calc(50% - 400px - 400px)"}} // article의 오른쪽 100px 위치
           height="fit-content"
           display={{ base: "none", xl: "block" }}
         >

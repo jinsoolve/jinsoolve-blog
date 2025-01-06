@@ -62,8 +62,8 @@ export default function TableOfContents({
 }: {
   tableOfContents: TableOfContentsType;
 }) {
-  const h2FontSize = useBreakpointValue({ base: "20px", xl: "18px" }); // 작은 화면에서는 16px, 큰 화면에서는 14px
-  const basicFontSize = useBreakpointValue({ base: "14px", xl: "14px" });
+  const h2FontSize = useBreakpointValue({ base: "20px", "1.75xl": "18px" }); // 작은 화면에서는 16px, 큰 화면에서는 14px
+  const basicFontSize = useBreakpointValue({ base: "14px", "1.75xl": "14px" });
 
   if (!tableOfContents || !tableOfContents.items || tableOfContents.items.length === 0) {
     return (

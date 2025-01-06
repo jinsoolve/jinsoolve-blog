@@ -49,7 +49,7 @@ interface PortfolioTemplateProps {
 }
 
 const PortfolioTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, pageContext }) => {
-  const isLargeScreen = useBreakpointValue({ base: false, "1.5xl": true });
+  const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
 
   return (
     <PostLayout tableOfContents={isLargeScreen ? data.post?.tableOfContents : undefined}>
