@@ -80,47 +80,76 @@ const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostConte
         flexDirection={flexDirection}
         columnGap="15px"
         rowGap="5px"
+        marginBottom="5"
       >
         <Heading as="h1" fontSize={36} fontWeight={900} wordBreak="break-word">
           {post?.frontmatter?.title}
         </Heading>
-        <Text fontSize="12px" marginBottom="3">
-          {readingTime}
-        </Text>
       </Flex>
 
-      {/* 카테고리 및 날짜 */}
-      <Flex columnGap="14px" rowGap="10px" alignItems="end" flexWrap="wrap">
-        <Box
-          color={colorMode === "dark" ? "gray.50" : "gray.900"}
-          borderColor={colorMode === "dark" ? "gray.50" : "gray.900"}
-          border="2px solid"
-          borderRadius="10px"
-          padding="6px 10px"
-          fontSize="14px"
-          fontWeight="800"
-          width="fit-content"
-        >
+      <Flex columnGap="14px" rowGap="10px" flexDirection="column" alignItems="start">
+        {/* 카테고리 그룹 */}
+        <Flex columnGap="14px" rowGap="10px" alignItems="center" flexWrap="wrap">
+          {post?.frontmatter?.categories?.map((category) => (
+            <Link key={category} to={`/categories/${category}`}>
+              <Box
+                color={colorMode === "dark" ? "gray.50" : "gray.900"}
+                borderColor={colorMode === "dark" ? "gray.50" : "gray.900"}
+                border="2px solid"
+                borderRadius="10px"
+                padding="6px 10px"
+                fontSize="14px"
+                fontWeight="800"
+                width="fit-content"
+                _hover={{
+                  color: colorMode === "dark" ? "blue.500" : "blue.400",
+                  borderColor: colorMode === "dark" ? "blue.500" : "blue.400",
+                }}
+              >
+                {koreanTagNames[category!] || category}
+              </Box>
+            </Link>
+          ))}
+        </Flex>
+
+        {/* 태그 그룹 */}
+        <Flex columnGap="10px" rowGap="10px" flexWrap="wrap">
+          {post?.frontmatter?.tags?.map((tag) => (
+            <Link key={tag} to={`/tags/${tag}`}>
+              <Box
+                color={colorMode === "dark" ? "gray.200" : "gray.900"}
+                backgroundColor={colorMode === "dark" ? "#2f2f33" : "gray.100"}
+                borderRadius="10px"
+                padding="6px"
+                fontSize="14px"
+                fontWeight="600"
+                width="fit-content"
+                _hover={{
+                  backgroundColor: colorMode === "dark" ? "#535357" : "gray.200",
+                }}
+              >
+                {koreanTagNames[tag!] || tag}
+              </Box>
+            </Link>
+          ))}
+        </Flex>
+      </Flex>
+
+      <Flex
+        width="100%"
+        alignItems={flexDirection === "column" ? "end" : "baseline"}
+        flexDirection={flexDirection}
+        columnGap="15px"
+        rowGap="5px"
+      >
+        <Text fontSize={15} fontWeight={400} mt={1}>
           {post?.frontmatter?.updatedAt
-            ? `${post.frontmatter.updatedAt} updated`
-            : post.frontmatter.createdAt}
-        </Box>
-        {post?.frontmatter?.categories?.map((category) => (
-          <Link key={category} to={`/categories/${category}`}>
-            <Box
-              color={colorMode === "dark" ? "gray.50" : "gray.900"}
-              borderColor={colorMode === "dark" ? "gray.50" : "gray.900"}
-              border="2px solid"
-              borderRadius="10px"
-              padding="6px 10px"
-              fontSize="14px"
-              fontWeight="800"
-              width="fit-content"
-            >
-              {koreanTagNames[category!] || category}
-            </Box>
-          </Link>
-        ))}
+            ? `Updated At: ${post.frontmatter.updatedAt}`
+            : `Created At: ${post.frontmatter.createdAt}`}
+        </Text>
+        <Text fontSize="15px">
+          {readingTime}
+        </Text>
       </Flex>
 
       {/* ✅ 썸네일 표시 여부를 prop으로 제어 */}
