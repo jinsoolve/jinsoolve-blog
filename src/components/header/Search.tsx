@@ -24,26 +24,25 @@ const searchClient = algoliasearch(
 const SearchBox = ({ onQueryChange, isMobile, autoFocus }: {
   onQueryChange: (query: string) => void;
   isMobile: boolean;
-  autoFocus: boolean; // autoFocus를 props로 받음
+  autoFocus: boolean;
 }) => {
   const { query, refine } = useSearchBox();
   const [inputValue, setInputValue] = useState(query || "");
   const [isComposing, setIsComposing] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
     setInputValue(value);
-    if (!isComposing) {
-      refine(value);
-      onQueryChange(value);
-    }
+    refine(value);
+    onQueryChange(value);
   };
 
   const handleCompositionStart = () => setIsComposing(true);
   const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
     setIsComposing(false);
-    refine(e.currentTarget.value);
-    onQueryChange(e.currentTarget.value);
+    const value = e.currentTarget.value;
+    refine(value);
+    onQueryChange(value);
   };
 
   return (
@@ -62,7 +61,7 @@ const SearchBox = ({ onQueryChange, isMobile, autoFocus }: {
       </InputLeftElement>
       <Input
         value={inputValue}
-        onChange={handleChange}
+        onInput={handleInput} // onInput을 활용하여 입력 중에도 처리
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
         placeholder="제목이나 내용으로 검색..."
@@ -72,7 +71,7 @@ const SearchBox = ({ onQueryChange, isMobile, autoFocus }: {
         bg="white"
         _dark={{ bg: "gray.800" }}
         shadow="md"
-        autoFocus={autoFocus} // autoFocus 속성을 동적으로 설정
+        autoFocus={autoFocus}
         pl="3rem"
       />
     </InputGroup>
@@ -85,6 +84,8 @@ const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
   const MAX_AROUND = 50;
 
   const truncateHighlightedValue = (value: string, query: string, noLimit = false) => {
+    if (!query.trim()) return value; // 쿼리가 비어 있으면 강조 표시를 하지 않음
+
     const queryIndex = value.toLowerCase().indexOf(query.toLowerCase());
     if (queryIndex === -1) return value;
 
