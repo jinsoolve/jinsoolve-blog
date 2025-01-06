@@ -69,25 +69,8 @@ export default {
     },
   },
 
-  // 추가된 search-container 스타일
-  // ".search-container": {
-  //   maxWidth: "600px",
-  //   margin: "0 auto",
-  //   padding: "20px",
-  // },
-  //
-  // ".search-container .hit": {
-  //   marginBottom: "20px",
-  //   padding: "10px",
-  //   border: "1px solid #ddd",
-  //   borderRadius: "5px",
-  // },
-  //
-  // ".search-container .hit h2": {
-  //   margin: "0",
-  // },
-  //
-  // ".search-container .hit p": {
-  //   margin: "5px 0",
-  // },
+  img: {
+    marginTop: "10px",
+    marginBottom: "10px",
+  },
 };

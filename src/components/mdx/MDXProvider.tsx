@@ -108,7 +108,7 @@ const CodeBlock = (props: any) => {
   return (
     <Box
       position="relative"
-      marginTop="8px"
+      marginTop="10px"
       borderRadius="10px"
       overflow="hidden"
       mb="20px"
