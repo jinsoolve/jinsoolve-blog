@@ -102,17 +102,17 @@ const Header = () => {
                           <Box>
                               <Search />
                           </Box>
-                          <Box ml={4}>
+                          <Box ml={5}>
                               <Box mt={16} >
                                   <Categories fontSize={"lg"} />
                               </Box>
-                              <Box mt={6}>
+                              <Box mt={8}>
                                   <Tags fontSize={"lg"} />
                               </Box>
-                              <Box mt={8}>
+                              <Box mt={10}>
                                   <Portfolio fontSize={"lg"} />
                               </Box>
-                              <Box mt={10}>
+                              <Box mt={8}>
                                   <About fontSize={"lg"} />
                               </Box>
                           </Box>

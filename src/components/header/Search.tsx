@@ -253,24 +253,32 @@ const Search: React.FC = () => {
             <SearchBox onQueryChange={handleQueryChange} isMobile={isMobile} />
             {isFocused && query.trim() && <Hits query={query} isMobile={isMobile} />}
           </InstantSearch>
-        ) : isSearchOpen ? (
-          // 데스크톱: SearchBox 활성화
-          <InstantSearch searchClient={searchClient} indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME!}>
-            <SearchBox onQueryChange={handleQueryChange} isMobile={isMobile} autoFocus={isSearchOpen && !isMobile} />
-            {isFocused && query.trim() && <Hits query={query} isMobile={isMobile} />}
-          </InstantSearch>
         ) : (
-          // 데스크톱: 아이콘 표시
-          <IconButton
-            aria-label="Open search"
-            icon={<Search2Icon />}
-            onClick={toggleSearch}
-            top="-20px"
-            size="lg"
-            bg="white"
-            _dark={{ bg: "gray.800" }}
-            rounded="full"
-          />
+          <>
+            {/* 데스크톱: 아이콘은 유지, SearchBox는 아이콘 위에 덮임 */}
+            <IconButton
+              aria-label="Open search"
+              icon={<Search2Icon />}
+              top="-20px"
+              onClick={toggleSearch}
+              size="lg"
+              bg="white"
+              _dark={{ bg: "gray.800" }}
+              rounded="full"
+            />
+            {isSearchOpen && (
+              <Box position="absolute" top="0" left="0" width="100%" zIndex="30">
+                <InstantSearch searchClient={searchClient} indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME!}>
+                  <SearchBox
+                    onQueryChange={handleQueryChange}
+                    isMobile={isMobile}
+                    autoFocus={isSearchOpen && !isMobile}
+                  />
+                  {isFocused && query.trim() && <Hits query={query} isMobile={isMobile} />}
+                </InstantSearch>
+              </Box>
+            )}
+          </>
         )}
       </Box>
     </Box>
