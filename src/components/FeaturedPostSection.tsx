@@ -22,7 +22,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
   const { colorMode } = useColorMode();
 
   // 반응형으로 버튼 위치 조정
-  const arrowPosition = useBreakpointValue({ base: "-40px", md: "-40px" });
+  const arrowPosition = useBreakpointValue({ base: "-30px", md: "-40px" });
 
   const handleScroll = (direction: "left" | "right") => {
     if (!scrollContainerRef.current) return;
