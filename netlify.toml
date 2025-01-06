@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "https://jinsoolve.netlify.app/*"  # 리디렉션할 URL 패턴
+  to = "https://jinsoolve.com/:splat"       # 리디렉션 대상 URL
+  status = 301                              # HTTP 301 영구 리디렉션
+  force = true                              # 강제 적용
