@@ -137,6 +137,7 @@ const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostConte
 
       <Flex
         width="100%"
+        marginTop="7px"
         alignItems={flexDirection === "column" ? "end" : "baseline"}
         flexDirection={flexDirection}
         columnGap="15px"
