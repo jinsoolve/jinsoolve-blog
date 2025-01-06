@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Input,
   InputGroup,
@@ -6,7 +6,6 @@ import {
   Box,
   VStack,
   Text,
-  Link,
   IconButton,
   useMediaQuery,
 } from "@chakra-ui/react";
@@ -14,7 +13,6 @@ import { Search2Icon } from "@chakra-ui/icons";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, useSearchBox, useHits } from "react-instantsearch-hooks-web";
 
-// Algolia 클라이언트 설정
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID!,
   process.env.GATSBY_ALGOLIA_SEARCH_KEY!
@@ -64,6 +62,7 @@ const SearchBox = ({ onQueryChange, isMobile, autoFocus }: {
         onInput={handleInput} // onInput을 활용하여 입력 중에도 처리
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
+        onMouseDown={(e) => e.stopPropagation()}
         placeholder="제목이나 내용으로 검색..."
         borderRadius="lg"
         borderWidth="2px"
@@ -178,6 +177,8 @@ const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
               borderRadius="md"
               width="100%"
               _hover={{ bg: "gray.100", _dark: { bg: "gray.700" }, cursor: "pointer" }}
+              onMouseDown={(e) => e.stopPropagation()} // 추가: 클릭 이벤트 전파 방지
+              // onClick={() => setIsSearchOpen(false)} // 클릭 후 검색창 닫기
             >
               <Text fontSize="md" fontWeight="bold" _hover={{ textDecoration: "none" }}>
                 {matchingField?.field === "title"
@@ -205,12 +206,6 @@ const Search: React.FC = () => {
   const [isMobile] = useMediaQuery("(max-width: 630px)");
 
   const handleFocus = () => setIsFocused(true);
-  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      setIsFocused(false);
-      setIsSearchOpen(false);
-    }
-  };
 
   const handleQueryChange = (query: string) => {
     console.log("Updated Query:", query); // 디버깅용
@@ -221,6 +216,26 @@ const Search: React.FC = () => {
     setIsSearchOpen((prev) => !prev);
     setIsFocused(false);
   };
+
+  // 추가: 검색창 외부 클릭 감지
+  const handleClickOutside = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (!document.getElementById("search-container")?.contains(target)) {
+      setIsFocused(false);
+      setIsSearchOpen(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (isFocused) {
+      document.addEventListener("click", handleClickOutside); // 외부 클릭 감지 시작
+    } else {
+      document.removeEventListener("click", handleClickOutside); // 외부 클릭 감지 종료
+    }
+    return () => {
+      document.removeEventListener("click", handleClickOutside); // 컴포넌트 언마운트 시 정리
+    };
+  }, [isFocused]);
 
   return (
     <Box position="relative">
@@ -240,12 +255,12 @@ const Search: React.FC = () => {
       )}
 
       <Box
+        id="search-container" // 추가: 외부 클릭 감지를 위한 ID
         position="relative"
         zIndex="20"
         mx="auto"
         mt="10"
         maxW={isMobile ? "100%" : "600px"}
-        onBlur={handleBlur}
         onFocus={handleFocus}
         display="flex"
         justifyContent="center"
