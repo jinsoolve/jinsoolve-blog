@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/ML/ml-textbook-3/Untitled.mdx",
+                "file": "content/ML/ml-textbook-1/content.mdx",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "content"
             }
           }
         ],
@@ -181,18 +181,19 @@
   },
   "active": "b97daf3307b84fd9",
   "lastOpenFiles": [
+    "content/ML/ml-textbook-2/Untitled.mdx",
+    "content/ML/ml-textbook-3/Untitled.mdx",
+    "content/PS/boj-17407/content.mdx",
+    "content/PS/boj-1462/cover.png",
+    "content/PS/boj-1462/content.mdx",
     "public/page-data/posts/ml-textbook-1/page-data.json",
     "public/page-data/posts/ml-textbook-1",
-    "content/PS/boj-17407/content.mdx",
-    "content/PS/boj-1462/content.mdx",
-    "content/ML/ml-textbook-3/Untitled.mdx",
     "content/short/react-use-sync-external-store/content.mdx",
     "public/page-data/posts/ml-textbook-3/page-data.json",
     "public/page-data/posts/ml-textbook-3",
     "Pasted image 20250107043452.png",
     "content/ML/ml-textbook-1/content.mdx",
     "Untitled.mdx",
-    "content/ML/ml-textbook-2/Untitled.mdx",
     "Pasted image 20250107042400.png",
     "image-5.png",
     "content/ML/ml-textbook-2/content.md",
@@ -209,7 +210,6 @@
     "content/무제 파일.md",
     "content/PS/boj-17407/content1.md",
     "content/PS/boj-17407/content.mdx.md",
-    "content/PS/boj-1462/cover.png",
     "content/content.mdx.md",
     "content/diary/2024-summer-vacation-plan/무제 파일.md",
     "templates/무제 파일.md",
