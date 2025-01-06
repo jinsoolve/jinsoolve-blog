@@ -50,7 +50,7 @@ const SearchBox = ({ onQueryChange, isMobile, autoFocus }: {
     <InputGroup
       size="lg"
       position={isMobile ? "absolute" : "fixed"}
-      top={isMobile ? "50%" : "20px"}
+      top={isMobile ? "40%" : "25px"}
       left={isMobile ? "50%" : "unset"}
       transform={isMobile ? "translate(-50%, -50%)" : "unset"}
       right={isMobile ? "unset" : "40px"}
@@ -140,14 +140,14 @@ const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
       p={4}
       rounded="lg"
       spacing={4}
-      position={isMobile ? "absolute" : "fixed"}
-      top={isMobile ? "400px" : "100px"}
-      left={isMobile ? "50%" : "unset"}
-      transform={isMobile ? "translate(-50%, -50%)" : "unset"}
-      right={isMobile ? "unset" : "40px"}
+      position="absolute"
+      top={isMobile ? "calc(100% + 35px)" : "calc(100% + 55px)"} // SearchBox 바로 아래 5px 위치
+      left={isMobile ? "50%" : "unset"} // 모바일은 중앙 정렬
+      transform={isMobile ? "translateX(-50%)" : "unset"} // 모바일은 중앙 정렬을 위한 transform
+      right={isMobile ? "unset" : "-10"} // 데스크톱은 SearchBox의 오른쪽 끝에 맞춤
       zIndex="20"
       width={isMobile ? "90vw" : "500px"}
-      height="70vh"
+      maxHeight="70vh"
       overflowY="auto"
     >
       <Text fontSize="md" fontWeight="bold" mb={2}>
