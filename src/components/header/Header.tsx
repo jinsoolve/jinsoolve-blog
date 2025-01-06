@@ -24,7 +24,7 @@ const Header = () => {
     // 화면 너비 감지
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 580); // 580px 이하에서 모바일 메뉴로 전환
+            setIsMobile(window.innerWidth < 630); // 580px 이하에서 모바일 메뉴로 전환
         };
 
         // 초기 상태 설정

@@ -141,7 +141,7 @@ const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
       rounded="lg"
       spacing={4}
       position={isMobile ? "absolute" : "fixed"}
-      top={isMobile ? "480px" : "100px"}
+      top={isMobile ? "400px" : "100px"}
       left={isMobile ? "50%" : "unset"}
       transform={isMobile ? "translate(-50%, -50%)" : "unset"}
       right={isMobile ? "unset" : "40px"}
@@ -150,7 +150,7 @@ const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
       height="70vh"
       overflowY="auto"
     >
-      <Text fontSize="sm" fontWeight="bold" mb={2}>
+      <Text fontSize="md" fontWeight="bold" mb={2}>
         검색 결과 {hits.length}개
       </Text>
 
@@ -165,7 +165,9 @@ const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
 
           return (
             <Box
+              as="a"
               key={hit.objectID}
+              href={`/posts/${hit.slug}`}
               p={4}
               bg="white"
               borderColor="white"
@@ -174,12 +176,13 @@ const Hits = ({ query, isMobile }: { query: string; isMobile: boolean }) => {
               borderWidth="1.5px"
               borderRadius="md"
               width="100%"
+              _hover={{ bg: "gray.100", _dark: { bg: "gray.700" }, cursor: "pointer" }}
             >
-              <Link href={`/posts/${hit.slug}`} fontSize="md" _hover={{ textDecoration: "none" }}>
+              <Text fontSize="md" fontWeight="bold" _hover={{ textDecoration: "none" }}>
                 {matchingField?.field === "title"
                   ? truncateHighlightedValue(hit.title, query, true)
                   : hit.title}
-              </Link>
+              </Text>
               <Text mt={2} fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }}>
                 {matchingField && matchingField.field !== "title"
                   ? truncateHighlightedValue(matchingField.value, query)
@@ -198,7 +201,7 @@ const Search: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [query, setQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isMobile] = useMediaQuery("(max-width: 580px)");
+  const [isMobile] = useMediaQuery("(max-width: 630px)");
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
