@@ -284,6 +284,10 @@ const Search: React.FC = () => {
               bg="white"
               _dark={{ bg: "gray.800" }}
               rounded="full"
+              _hover={{
+                bg: "blackAlpha.200",
+                _dark: { bg: "whiteAlpha.200" },
+              }}
             />
             {isSearchOpen && (
               <Box position="absolute" top="0" left="0" width="100%" zIndex="30">
