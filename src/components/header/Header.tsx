@@ -71,7 +71,7 @@ const Header = () => {
             backgroundColor: "gray.800",
         }}
       >
-          <Logo />
+          <Logo isOpen={isOpen} onClose={onClose} />
           <Spacer />
 
           {isMobile ? (

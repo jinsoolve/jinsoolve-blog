@@ -15,6 +15,9 @@ const Categories = ({ fontSize = 14 }: CategoriesProps) => {
           fontWeight={800}
           padding={1}
           _active={{ bg: "transparent" }}
+          _hover={{
+            textDecoration: "underline",
+          }}
         >
           Categories
         </Text>

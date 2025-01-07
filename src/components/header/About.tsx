@@ -15,6 +15,9 @@ const Introduction = ({ fontSize = 14 }: IntroductionProps) => {
           fontWeight={800}
           padding={1}
           _active={{ bg: "transparent" }}
+          _hover={{
+            textDecoration: "underline",
+          }}
         >
           About
         </Text>

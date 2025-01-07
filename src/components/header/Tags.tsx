@@ -15,6 +15,9 @@ const Tags = ({ fontSize = 14 }: TagsProps) => {
           fontWeight={800}
           padding={1}
           _active={{ bg: "transparent" }}
+          _hover={{
+            textDecoration: "underline",
+          }}
         >
           Tags
         </Text>

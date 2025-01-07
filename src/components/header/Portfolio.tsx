@@ -32,6 +32,9 @@ const Portfolio = ({ fontSize = 14, dateText }: PortfolioProps) => {
             fontWeight={800}
             padding={1}
             _active={{ bg: "transparent" }}
+            _hover={{
+              textDecoration: "underline",
+            }}
           >
             Portfolio
           </Text>

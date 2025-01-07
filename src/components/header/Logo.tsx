@@ -2,9 +2,22 @@ import { Text } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import React from "react";
 
-const Logo = () => {
+const Logo = ({
+                isOpen,
+                onClose,
+              }: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  const handleClick = (e: React.MouseEvent) => {
+    if (isOpen) {
+      e.preventDefault(); // 페이지 이동 방지
+      onClose(); // 메뉴 닫기
+    }
+  };
+
   return (
-    <Link to="/">
+    <Link to="/" onClick={handleClick}>
       <Text
         fontSize={24}
         fontWeight="700"
