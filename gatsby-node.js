@@ -25,6 +25,60 @@ exports.onCreateWebpackConfig = ({ actions, plugins, reporter }) => {
   reporter.info(`Provided React in all files`);
 };
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+
+  createTypes(`
+    type MyTableOfContents {
+      depth: Int
+      value: String
+    }
+
+    type Mdx implements Node {
+      myTableOfContents: [MyTableOfContents!]
+    }
+  `);
+};
+
+exports.createResolvers = async ({ createResolvers }) => {
+  // 동적 import로 모듈 불러오기
+  const unified = (await import("unified")).unified;
+  const remarkParse = (await import("remark-parse")).default;
+  const { visit } = await import("unist-util-visit");
+
+  createResolvers({
+    Mdx: {
+      myTableOfContents: {
+        type: "[MyTableOfContents!]",
+        resolve: async (source) => {
+          const headers = [];
+          const markdownContent = source.body;
+
+          try {
+            // Unified로 remark 파싱
+            const processor = unified().use(remarkParse);
+            const tree = processor.parse(markdownContent); // Markdown을 파싱하여 Syntax Tree 생성
+            visit(tree, "heading", (node) => {
+              const text = node.children
+                .filter((child) => child.type === "text")
+                .map((child) => child.value)
+                .join("");
+              headers.push({
+                depth: node.depth,
+                value: text,
+              });
+            });
+          } catch (error) {
+            console.error("Error processing myTableOfContents:", error);
+          }
+
+          return headers;
+        },
+      },
+    },
+  });
+};
+
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const result = await graphql(`
     query {
@@ -41,9 +95,13 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
           internal {
             contentFilePath
           }
+          myTableOfContents {
+            depth
+            value
+          }
         }
       }
-      
+
       allFeaturedPosts: allMdx {
         group(field: { frontmatter: { categories: SELECT } }) {
           category: fieldValue
@@ -52,7 +110,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
           }
         }
       }
-      
+
       allCategories: allMdx {
         group(field: { frontmatter: { categories: SELECT } }) {
           category: fieldValue
@@ -81,7 +139,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
           contentFilePath
         }
       }
-      
+
       about_me: mdx(frontmatter: { title: { eq: "김진수에 대하여" } }) {
         id
         body
@@ -240,6 +298,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         tags: node.frontmatter.tags,
         slug: node.frontmatter.slug,
         id: node.id,
+        myTableOfContents: node.myTableOfContents,
         readingTime: readingTime(node.body, { wordsPerMinute: WORDS_PER_MINUTE }),
       },
     });
