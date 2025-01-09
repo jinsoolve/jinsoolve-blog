@@ -1,10 +1,12 @@
 // @refresh reset
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Button, Collapse, IconButton } from "@chakra-ui/react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
 import { getSrc } from "gatsby-plugin-image";
 import React from "react";
+import { ChevronLeftIcon } from "@chakra-ui/icons";
 
 import Giscus from "../components/Giscus";
 import Locales from "../components/Locales";
@@ -17,7 +19,6 @@ import { DOMAIN } from "../constants";
 import { fadeInFromLeft } from "../framer-motions";
 
 import { useBreakpointValue } from "@chakra-ui/react";
-
 
 export const query = graphql`
   query PostPage($id: String!, $categories: [String!]!, $slug: String!) {
@@ -87,9 +88,8 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const locales = data.otherLocalePost.nodes.map((node) => node.frontmatter?.locale || "ko");
   const currentLocale = data.post?.frontmatter?.locale || "ko";
   const currentSlug = data.post?.frontmatter?.slug!;
-
-  // 화면 크기에 따라 TOC 위치 결정 (작은 화면: 본문 아래, 큰 화면: 우측 고정)
   const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
+  const [isTOCOpen, setIsTOCOpen] = useState(false);
 
   return (
     <PostLayout tableOfContents={isLargeScreen ? data.post?.myTableOfContents : undefined}>
@@ -97,12 +97,43 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
         {/* ContentTitle */}
         <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
 
-        {/* 작은 화면에서만 ContentTitle 아래 TOC 렌더링 */}
+        {/* 작은 화면에서 TOC 버튼과 Collapse */}
         {!isLargeScreen && data.post?.myTableOfContents && (
-          <Box as="nav" marginTop="40px">
-            <TableOfContents tableOfContents={data.post.myTableOfContents} />
-          </Box>
+          <>
+            {/* 우측 상단 고정 아이콘 버튼 */}
+            <IconButton
+              aria-label="Toggle TOC"
+              icon={<ChevronLeftIcon boxSize={6} />}
+              position="fixed"
+              top="50%"
+              right="0"
+              transform="translateY(-50%)"
+              borderRadius="full"
+              zIndex="20"
+              onClick={() => setIsTOCOpen(!isTOCOpen)}
+            />
+
+            {/* TOC 슬라이드 애니메이션 */}
+            <Box
+              position="fixed"
+              top="0"
+              right={isTOCOpen ? "0" : "-300px"}
+              height="100vh"
+              width="300px"
+              bg="gray.800"
+              boxShadow="md"
+              transition="right 0.3s ease-in-out"
+              zIndex="10"
+              padding="20px"
+            >
+              <TableOfContents tableOfContents={data.post.myTableOfContents} />
+              <Button mt="20px" onClick={() => setIsTOCOpen(false)}>
+                Close TOC
+              </Button>
+            </Box>
+          </>
         )}
+
 
         {/* 다국어 지원 */}
         {locales.length > 1 && (
@@ -114,7 +145,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
           marginTop="40px"
           sx={{
             img: {
-              borderRadius: "10px", // 모든 img 태그에 borderRadius 적용
+              borderRadius: "10px",
             },
           }}
         >
@@ -156,13 +187,13 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
       <meta property="og:image" content={getSrc(ogimage)} />
       <meta property="og:locale" content={metaLocale} />
 
-      {/*  Twitter Meta categories  */}
+      {/* Twitter Meta categories */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="jinsoolve.netlify.app" />
       <meta property="twitter:url" content={`${DOMAIN}/posts/${data.post?.frontmatter?.slug}`} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={getSrc(ogimage)}></meta>
+      <meta name="twitter:image" content={getSrc(ogimage)} />
       <meta name="twitter:label1" content="Category" />
       <meta name="twitter:data1" content={`${devCategory} | ${data.post?.frontmatter?.categories![0]}`} />
       <meta
@@ -172,5 +203,5 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
     </>
   );
 };
-export default PostTemplate;
 
+export default PostTemplate;
