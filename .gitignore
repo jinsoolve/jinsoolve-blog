@@ -17,3 +17,5 @@ public
 
 gatsby-types.d.ts
 gatsby-schema.graphql
+.env.production
+.env.development
