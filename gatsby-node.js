@@ -45,7 +45,15 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.createResolvers = async ({ createResolvers }) => {
   const { unified } = await import("unified");
   const remarkParse = (await import("remark-parse")).default;
+  const remarkSlug = (await import("remark-slug")).default;
   const { visit } = await import("unist-util-visit");
+
+  const slugify = (text) =>
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-") // 공백 -> 하이픈
+      .replace(/[^a-z0-9가-힣\-]+/g, ""); // 알파벳/숫자/한글/하이픈 외 제거
 
   createResolvers({
     Mdx: {
@@ -56,29 +64,36 @@ exports.createResolvers = async ({ createResolvers }) => {
           const markdownContent = source.body;
 
           try {
-            const processor = unified().use(remarkParse);
+            const katex = (await import("katex")).default; // 동적 import
+
+            const processor = unified()
+              .use(remarkParse) // Markdown을 AST로 변환
+              .use(remarkSlug); // 기본 slug 지원
+
             const tree = processor.parse(markdownContent);
 
             visit(tree, "heading", (node) => {
               const text = node.children
-                .filter((child) => child.type === "text")
-                .map((child) => child.value)
+                .map((child) => {
+                  if (child.type === "inlineMath") {
+                    // KaTeX 렌더링
+                    return katex.renderToString(child.value, { throwOnError: false });
+                  }
+                  return child.value || "";
+                })
                 .join("");
 
-              // ID를 추출하거나 기존 구조에 따라 node의 ID를 활용
-              const id = text
-                .toLowerCase()
-                .replace(/\s+/g, "-") // 공백을 '-'로 변경
-                .replace(/[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\-]/g, "");
+              const id = slugify(text);
 
-              headers.push({
-                depth: node.depth,
-                title: text,
-                url: `#${id}`, // URL에 '#'와 ID를 조합
-              });
+              if (id) {
+                headers.push({
+                  depth: node.depth,
+                  title: text, // KaTeX 렌더링 결과를 포함한 텍스트
+                  url: `#${id}`,
+                });
+              }
             });
 
-            // 계층 구조로 변환
             const buildHierarchy = (nodes, depth = 1) => {
               const result = [];
               while (nodes.length > 0) {
@@ -100,7 +115,8 @@ exports.createResolvers = async ({ createResolvers }) => {
               return result;
             };
 
-            return buildHierarchy(headers);
+            const toc = buildHierarchy(headers);
+            return { items: toc };
           } catch (error) {
             console.error("Error processing myTableOfContents:", error);
             return null;

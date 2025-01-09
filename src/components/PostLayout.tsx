@@ -12,6 +12,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ children, tableOfContents }: LayoutProps) {
+  console.log(tableOfContents);
   return (
     <MDXProvider>
       <Header />
