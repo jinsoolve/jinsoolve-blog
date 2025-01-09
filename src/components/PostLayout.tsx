@@ -1,4 +1,5 @@
-import { Box } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
+import { ArrowUpIcon } from "@chakra-ui/icons"; // Chakra UI에서 제공하는 아이콘
 import React from "react";
 
 import Footer from "./Footer";
@@ -12,7 +13,11 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ children, tableOfContents }: LayoutProps) {
-  console.log(tableOfContents);
+  // "맨 위로 올라가기" 버튼 클릭 시 호출되는 함수
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+
   return (
     <MDXProvider>
       <Header />
@@ -23,7 +28,7 @@ export default function PostLayout({ children, tableOfContents }: LayoutProps) {
         position="relative" // TOC를 article 기준으로 배치하기 위해 relative 사용
         margin="50px auto"
         padding="20px"
-        maxWidth={{ base: "750px", "1.75xl": "900px" }}
+        maxWidth={{ base: "750px", "1.75xl": "800px", "4xl": "880px" }}
         wordBreak="keep-all"
         overflowWrap="break-word"
         lineHeight="1.7"
@@ -46,6 +51,23 @@ export default function PostLayout({ children, tableOfContents }: LayoutProps) {
           <TableOfContents tableOfContents={tableOfContents} />
         </Box>
       )}
+
+      {/* 맨 위로 올라가기 버튼 */}
+      <IconButton
+        icon={<ArrowUpIcon />}
+        aria-label="Go to top"
+        position="fixed"
+        bottom="30px"
+        right="30px"
+        size="md"
+        borderRadius="full"
+        boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)"
+        onClick={scrollToTop}
+        zIndex="999"
+        _dark={{
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
+        }}
+      />
 
       <Footer />
     </MDXProvider>

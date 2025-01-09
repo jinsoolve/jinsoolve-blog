@@ -23,10 +23,6 @@ const TableOfContentsItem: React.FC<{
   const { url, title, items } = tableOfContentsItem;
   const isActive = url === activeId;
 
-  console.log("url", url);
-  console.log("title", title);
-  console.log("items", items);
-
   return (
     <>
       <motion.div
