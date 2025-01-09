@@ -100,14 +100,31 @@ exports.createResolvers = async ({ createResolvers }) => {
               }
             });
 
-            const buildHierarchy = (nodes, depth = 1) => {
+            const buildHierarchy = (nodes) => {
+              const result = [];
+
+              for (let depth = 1; depth <= 6; depth++) {
+                // 각 depth에 대해 트리 구성 시도
+                const tempResult = processNodesAtDepth(nodes, depth);
+
+                if (tempResult.length > 0) {
+                  // 깊이에 해당하는 결과가 있으면, 해당 결과를 반환하고 종료
+                  return tempResult;
+                }
+              }
+
+              // 만약 모든 depth에 대해 빈 결과가 나왔으면 빈 배열 반환
+              return result;
+            };
+
+            const processNodesAtDepth = (nodes, depth) => {
               const result = [];
               while (nodes.length > 0) {
                 const current = nodes[0];
                 if (current.depth < depth) break;
                 if (current.depth === depth) {
-                  nodes.shift();
-                  const children = buildHierarchy(nodes, depth + 1);
+                  nodes.shift(); // 처리된 노드 제거
+                  const children = processNodesAtDepth(nodes, depth + 1);
                   result.push({
                     depth: current.depth,
                     title: current.title,
