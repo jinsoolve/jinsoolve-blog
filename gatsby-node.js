@@ -62,6 +62,7 @@ exports.createResolvers = async ({ createResolvers }) => {
         resolve: async (source) => {
           const headers = [];
           const markdownContent = source.body;
+          let headingCounter = 0;
 
           try {
             const katex = (await import("katex")).default; // 동적 import
@@ -83,7 +84,8 @@ exports.createResolvers = async ({ createResolvers }) => {
                 })
                 .join("");
 
-              const id = slugify(text);
+              headingCounter += 1; // 카운터 증가
+              const id = `my-heading-${headingCounter}`;
 
               if (id) {
                 headers.push({

@@ -31,6 +31,8 @@ const wrapESMPlugin = (name) =>
     };
   };
 
+const rehypeCustomSlug = require('./src/utils/rehype-custom-slug.js');
+
 module.exports = {
   siteMetadata: SITE_METADATA,
   graphqlTypegen: true,
@@ -67,7 +69,7 @@ module.exports = {
             wrapESMPlugin(`remark-breaks`), // wrapESMPlugin으로 ESM 모듈 처리
           ],
           rehypePlugins: [
-            [wrapESMPlugin(`rehype-slug`)],
+            rehypeCustomSlug, // 직접 불러온 rehypeCustomSlug 사용
             [
               wrapESMPlugin(`rehype-autolink-headings`),
               {
