@@ -2540,36 +2540,24 @@ type SitePluginSortInput = {
 };
 
 type SiteSiteMetadata = {
-  readonly algoliaAppId: Maybe<Scalars['String']>;
-  readonly algoliaIndexName: Maybe<Scalars['String']>;
-  readonly algoliaSearchKey: Maybe<Scalars['String']>;
   readonly description: Maybe<Scalars['String']>;
   readonly siteUrl: Maybe<Scalars['String']>;
   readonly title: Maybe<Scalars['String']>;
 };
 
 type SiteSiteMetadataFieldSelector = {
-  readonly algoliaAppId: InputMaybe<FieldSelectorEnum>;
-  readonly algoliaIndexName: InputMaybe<FieldSelectorEnum>;
-  readonly algoliaSearchKey: InputMaybe<FieldSelectorEnum>;
   readonly description: InputMaybe<FieldSelectorEnum>;
   readonly siteUrl: InputMaybe<FieldSelectorEnum>;
   readonly title: InputMaybe<FieldSelectorEnum>;
 };
 
 type SiteSiteMetadataFilterInput = {
-  readonly algoliaAppId: InputMaybe<StringQueryOperatorInput>;
-  readonly algoliaIndexName: InputMaybe<StringQueryOperatorInput>;
-  readonly algoliaSearchKey: InputMaybe<StringQueryOperatorInput>;
   readonly description: InputMaybe<StringQueryOperatorInput>;
   readonly siteUrl: InputMaybe<StringQueryOperatorInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
 };
 
 type SiteSiteMetadataSortInput = {
-  readonly algoliaAppId: InputMaybe<SortOrderEnum>;
-  readonly algoliaIndexName: InputMaybe<SortOrderEnum>;
-  readonly algoliaSearchKey: InputMaybe<SortOrderEnum>;
   readonly description: InputMaybe<SortOrderEnum>;
   readonly siteUrl: InputMaybe<SortOrderEnum>;
   readonly title: InputMaybe<SortOrderEnum>;

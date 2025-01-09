@@ -1641,12 +1641,14 @@ input SiteFieldSelector {
   children: NodeFieldSelector
   flags: SiteFlagsFieldSelector
   graphqlTypegen: SiteGraphqlTypegenFieldSelector
+  host: FieldSelectorEnum
   id: FieldSelectorEnum
   internal: InternalFieldSelector
   jsxRuntime: FieldSelectorEnum
   parent: NodeFieldSelector
   pathPrefix: FieldSelectorEnum
   polyfill: FieldSelectorEnum
+  port: FieldSelectorEnum
   siteMetadata: SiteSiteMetadataFieldSelector
   trailingSlash: FieldSelectorEnum
 }
@@ -1889,36 +1891,24 @@ input SitePageSortInput {
 }
 
 type SiteSiteMetadata {
-  algoliaAppId: String
-  algoliaIndexName: String
-  algoliaSearchKey: String
   description: String
   siteUrl: String
   title: String
 }
 
 input SiteSiteMetadataFieldSelector {
-  algoliaAppId: FieldSelectorEnum
-  algoliaIndexName: FieldSelectorEnum
-  algoliaSearchKey: FieldSelectorEnum
   description: FieldSelectorEnum
   siteUrl: FieldSelectorEnum
   title: FieldSelectorEnum
 }
 
 input SiteSiteMetadataFilterInput {
-  algoliaAppId: StringQueryOperatorInput
-  algoliaIndexName: StringQueryOperatorInput
-  algoliaSearchKey: StringQueryOperatorInput
   description: StringQueryOperatorInput
   siteUrl: StringQueryOperatorInput
   title: StringQueryOperatorInput
 }
 
 input SiteSiteMetadataSortInput {
-  algoliaAppId: SortOrderEnum
-  algoliaIndexName: SortOrderEnum
-  algoliaSearchKey: SortOrderEnum
   description: SortOrderEnum
   siteUrl: SortOrderEnum
   title: SortOrderEnum
@@ -1929,12 +1919,14 @@ input SiteSortInput {
   children: NodeSortInput
   flags: SiteFlagsSortInput
   graphqlTypegen: SiteGraphqlTypegenSortInput
+  host: SortOrderEnum
   id: SortOrderEnum
   internal: InternalSortInput
   jsxRuntime: SortOrderEnum
   parent: NodeSortInput
   pathPrefix: SortOrderEnum
   polyfill: SortOrderEnum
+  port: SortOrderEnum
   siteMetadata: SiteSiteMetadataSortInput
   trailingSlash: SortOrderEnum
 }
