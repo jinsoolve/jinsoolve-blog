@@ -67,16 +67,23 @@ export default function PostLayout({ children, tableOfContents }: LayoutProps) {
         icon={<ArrowUpIcon />}
         aria-label="Go to top"
         position="fixed"
-        bottom="30px"
-        right="30px"
+        bottom={{ base: "12px", sm: "15px", md: "30px" }}
+        right={{ base: "12px", sm: "15px", md: "30px" }}
         size="md"
         borderRadius="full"
         boxShadow="0 4px 6px rgba(0, 0, 0, 0.2)"
         onClick={scrollToTop}
         zIndex="999"
+        _light={{
+          backgroundColor: "transparent",  // 기본 배경을 투명하게 설정
+        }}
+        _focus={{
+          backgroundColor: "transparent",  // 포커스 시에도 배경 투명
+        }}
         _dark={{
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
         }}
+        transition="background-color 0.3s ease"  // 배경색 변화 부드럽게 처리
       />
 
       <Footer />

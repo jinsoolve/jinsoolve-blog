@@ -1891,24 +1891,36 @@ input SitePageSortInput {
 }
 
 type SiteSiteMetadata {
+  algoliaAppId: String
+  algoliaIndexName: String
+  algoliaSearchKey: String
   description: String
   siteUrl: String
   title: String
 }
 
 input SiteSiteMetadataFieldSelector {
+  algoliaAppId: FieldSelectorEnum
+  algoliaIndexName: FieldSelectorEnum
+  algoliaSearchKey: FieldSelectorEnum
   description: FieldSelectorEnum
   siteUrl: FieldSelectorEnum
   title: FieldSelectorEnum
 }
 
 input SiteSiteMetadataFilterInput {
+  algoliaAppId: StringQueryOperatorInput
+  algoliaIndexName: StringQueryOperatorInput
+  algoliaSearchKey: StringQueryOperatorInput
   description: StringQueryOperatorInput
   siteUrl: StringQueryOperatorInput
   title: StringQueryOperatorInput
 }
 
 input SiteSiteMetadataSortInput {
+  algoliaAppId: SortOrderEnum
+  algoliaIndexName: SortOrderEnum
+  algoliaSearchKey: SortOrderEnum
   description: SortOrderEnum
   siteUrl: SortOrderEnum
   title: SortOrderEnum
