@@ -1,12 +1,12 @@
 // @refresh reset
 import { Box, Flex, Button, Collapse, IconButton } from "@chakra-ui/react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
 import { getSrc } from "gatsby-plugin-image";
 import React from "react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { motion } from "framer-motion";
 
 import Giscus from "../components/Giscus";
 import Locales from "../components/Locales";
@@ -101,33 +101,50 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
         {!isLargeScreen && data.post?.myTableOfContents && (
           <>
             {/* 우측 상단 고정 아이콘 버튼 */}
-            <IconButton
-              aria-label="Toggle TOC"
-              icon={<ChevronLeftIcon boxSize={6} />}
-              position="fixed"
-              top="50%"
-              right="0"
-              transform="translateY(-50%)"
-              borderRadius="full"
-              zIndex="20"
-              onClick={() => setIsTOCOpen(!isTOCOpen)}
-            />
+            <motion.div
+              initial={{ right: 0 }}
+              animate={{ right: isTOCOpen ? "300px" : "0px" }}
+              transition={{ duration: 0.3 }}
+              style={{
+                position: "fixed",
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 20,
+              }}
+            >
+              <IconButton
+                aria-label="Toggle TOC"
+                icon={isTOCOpen ? <ChevronRightIcon boxSize={6} /> : <ChevronLeftIcon boxSize={6} />}
+                borderRadius="full"
+                onClick={() => setIsTOCOpen(!isTOCOpen)}
+                variant="ghost" // 배경 제거
+                _hover={{ bg: "transparent", color: "blue.400" }} // hover 시 배경 제거
+                _focus={{ boxShadow: "none", bg: "transparent" }} // focus 시 배경 제거
+              />
+            </motion.div>
 
             {/* TOC 슬라이드 애니메이션 */}
-            <Box
-              position="fixed"
-              top="0"
-              right={isTOCOpen ? "0" : "-300px"}
-              height="100vh"
-              width="300px"
-              bg="gray.800"
-              boxShadow="md"
-              transition="right 0.3s ease-in-out"
-              zIndex="10"
-              padding="20px"
+            <motion.div
+              initial={{ right: "-300px" }}
+              animate={{ right: isTOCOpen ? "0px" : "-300px" }}
+              transition={{ duration: 0.3 }}
+              style={{
+                position: "fixed",
+                top: 0,
+                height: "100vh",
+                width: "300px",
+                zIndex: 10,
+              }}
             >
-              <TableOfContents tableOfContents={data.post.myTableOfContents} />
-            </Box>
+              <Box
+                backgroundColor="gray.800" // 불투명한 배경색 지정
+                height="100%" // 부모(motion.div) 높이에 맞추기
+                boxShadow="md" // 그림자 유지
+                padding="20px"
+              >
+                <TableOfContents tableOfContents={data.post.myTableOfContents} />
+              </Box>
+            </motion.div>
           </>
         )}
 
