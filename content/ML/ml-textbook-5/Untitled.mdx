@@ -1,0 +1,176 @@
+---
+slug: ml-textbook-5
+title: 데이터 전처리
+description: 데이터 전처리에 대해서 정리해 보았다.
+thumbnail: 
+categories:
+  - ML
+tags: 
+createdAt: 2025/01/09
+updatedAt: 
+featured: false
+---
+해당 내용은 **머신러닝 교과서 with 파이썬, 사이킷런, 텐서플로**의 4장 내용을 기반으로 작성되었다.
+# 4.1 누락된 데이터 다루기
+- isnull().sum()등을 이용하여 누락된 값을 확인한다.
+
+- 누락된 값이 있는 샘플(행)이나 특성(열)을 제거한다.
+
+- 제거하면 데이터가 너무 적어질 수 있으니 대체를 시도하는 게 일반적이다.
+누락값 대체는 fillna나 SimpleImputer를 주로 사용해서 대체한다. 
+SimpleImputer에는 axis 파라미터가 없으므로 행 방향을 다루고 싶다면 FunctionTransformer를 사용할 수 있다.
+누락값은 대체로 평균값이나 최빈값으로 대체해준다.
+# 4.2 범주형 데이터 다루기
+범주형 데이터를 바꿀 때는 <u>1) 순서가 있는 특성</u>과 <u>2) 순서가 없는 특성</u> 을 나눠서 다뤄야 한다.
+## 4.2.1 순서가 있는 특성
+size = M, L, XL 처럼 순서가 있는 특성들이 있다. 파이썬의 dictionary를 이용해 매핑해준다.
+```python
+size_mapping = {'XL': 3,
+                'L': 2,
+                'M': 1}
+
+df['size'] = df['size'].map(size_mapping)
+df
+```
+### 클래스 레이블 인코딩
+간혹, 클래스 레이블(=타깃값)이 정수로 되어 있지 않는 경우도 있다. 마찬가지로 매핑으로 해결한다.
+```py
+import numpy as np
+
+# 클래스 레이블을 문자열에서 정수로 바꾸기 위해
+# 매핑 딕셔너리를 만듭니다
+class_mapping = {label: idx for idx, label in enumerate(np.unique(df['classlabel']))}
+class_mapping
+
+# 클래스 레이블을 문자열에서 정수로 바꿉니다
+df['classlabel'] = df['classlabel'].map(class_mapping)
+df
+```
+```py
+from sklearn.preprocessing import LabelEncoder
+
+# 사이킷런의 LabelEncoder을 사용한 레이블 인코딩
+class_le = LabelEncoder()
+y = class_le.fit_transform(df['classlabel'].values)
+y
+```
+2가지 방식으로 클래스 레이블 인코딩이 가능하다
+## 4.2.2 순서가 없는 특성
+color = blue, green, red 처럼 순서가 없는 특성들이 있다.
+하지만 순서가 있는 특성처럼 매핑하면 값의 크기 차이가 생기고 이는 데이터의 노이즈로 이어질 수 있기 때문에 사용하지 않는다.
+이는 one-hot encoding 을 이용해 해결한다. 
+
+<Callout type="info">
+### One-Hot Encoding이란?
+이진법을 사용해 encoding하는 기법이다.
+color = blue, green, red를 one-hot encoding하면, color_blue, color_green, color_red 특성이 만들어진다. 
+그래서 [color_blue, color_green, color_red]의 값이 [1,0,0] = blue, [0,1,0] = green, [0,0,1] = red가 되는 것이다. 
+그런데 이때 2개만 있어도 색 표현이 가능하다. [1,0] = blue, [0,1] = green, [0,0] = red 이렇게 생각하면 되기 때문이다. 
+다중 공산성으로 인해서 1개를 삭제해 주는 것이 좋다.
+(다중 공산성이란, 특성 간의 상관관계가 높아서 (역행렬을 계산하기 어려워진다) 계산이 불안정해지는 현상을 뜻한다.)
+</Callout>
+
+
+```py
+# 하나의 열을 변경할 때
+from sklearn.preprocessing import OneHotEncoder
+
+X = df[['color', 'size', 'price']].values
+color_ohe = OneHotEncoder()
+color_ohe.fit_transform(X[:, 0].reshape(-1, 1)).toarray()
+
+# 여러 개의 열 변경할 때
+from sklearn.compose import ColumnTransformer
+
+X = df[['color', 'size', 'price']].values
+c_transf = ColumnTransformer([ ('onehot', OneHotEncoder(), [0]),
+                               ('nothing', 'passthrough', [1, 2])])
+c_transf.fit_transform(X)
+```
+근데 이것보다는 pandas의 get_dummies() 함수를 사용하는 것이 훨씬 쉽다.
+```py
+# columns=['size']: 매개변수로 변환하려는 특성을 구체적으로 정할 수 있다.
+# drop_first=True: one-hot encoding으로 생성되는 첫번째 특성을 삭제한다. 
+pd.get_dummies(df[['price', 'color', 'size']], columns=['size'], drop_first=True)
+```
+# 4.3 데이터셋을 훈련 데이터셋과 테스트 데이터셋으로 나누기
+```py
+from sklearn.model_selection import train_test_split
+
+X, y = df_wine.iloc[:, 1:].values, df_wine.iloc[:, 0].values
+
+# test_size=0.3: train:test = 70:30으로 나눈다.
+# stratify=y: 각 클래스 레이블의 분포가 최대한 균일하도록 데이터를 분할한다.
+X_train, X_test, y_train, y_test =\
+    train_test_split(X, y, 
+                     test_size=0.3, 
+                     random_state=0, 
+                     stratify=y)
+```
+# 4.4 특성 스케일 맞추기
+- StandardSclaer
+	$x_{standard}^{(i)} = \dfrac{x^{(i)} - \mu}{\sigma}$
+- RobustScaler
+	$x_{robust}^{(i)} = \dfrac{x^{(i)} - q_2}{q_3 - q_1}$
+- MinMaxScaler
+	$x_{norm}^{(i)} = \frac{x^{(i)}-x_{min}}{x_{max}-x_{min}}$
+- MaxAbsScaler
+	각 특성별로 데이터를 최대 절댓값으로 나눈다. 각 특성의 최대값을 1로 스케일링한다.
+- Normalizer
+	주로 거리 기반 데이터에 사용되고 L1, L2 norm기반으로 [0,1] 범위로 스케일링한다.
+	L1은 차이의 절댓값을, L2는 차이의 제곱합에 루트를 씌운 값을 뜻한다.
+# 4.5 유용한 특성 선택
+과대적합을 해결할 수 있는 방법으로는 다음과 같다.
+- 더 많은 훈련데이터 수집
+- 규제로 복잡도 제한
+- (파라미터가 적은) 간단한 모델 채택
+- 데이터 차원 감소
+
+훈련 데이터를 더 수집하는 것은 불가능할 때가 많다. 특성 선택을 통해 차원을 축소하면 데이터에 학습되는 파라미터가 줄어들어 모델이 간단해진다. 
+## 4.5.1 L1 규제
+![](https://velog.velcdn.com/images/jinsoolve/post/0690f8c1-9b9f-42f5-9a38-b4f5a876f565/image.png)L1은 1차식이기 떄문에 다이아몬드 형태로 그려진다. 그렇기 때문에 축에 가깝게 최적점이 형성되고 이것이 희소성(데이터가 0이나 매우 작은 값으로 구성)이 나타나는 이유다.
+## 4.5.2 L2 규제
+![](https://velog.velcdn.com/images/jinsoolve/post/6fa756ed-fcf5-459f-b2c1-9418cdcba7d6/image.png)$\lambda$가 커질수록 규제가 강해지므로 이는 원을 작게 만든다. 
+## 4.5.3 순차 특성 선택 알고리즘
+그리디하게 관련이 가장 높은 특성을 선택하는 알고리즘이다.
+```py
+from sklearn.feature_selection import SequentialFeatureSelector
+
+sfs = SequentialFeatureSelector(knn, n_features_to_select=n_features, n_jobs=-1)
+sfs.fit(X_train_std, y_train)
+f_mask = sfs.support_ #선택된 특성의 True, False가 저장되어 있음
+knn.fit(X_train_std[: f_mask], y_train)
+```
+원래는 직접 Class를 작성했는데 최근에 추가된 SequentialFeatureSelector를 사용하면 편할 듯 하다.
+# 4.6 랜덤 포레스트의 특성 중요도 사용
+RandomForestClassifer 에서는 모든 결정 트리에 불순도 감소로 특성 중요도 측정 가능하다.
+이는 RandomForestClassifer 모델을 훈련한 후 feature\_importances_ 속성에서 확인 가능하다.
+
+랜덤 포레스트로 모델 해석을 한다면 주의해야 할 점이 있다.
+두 개 이상의 특성이 상관관계가 매우 높다면 하나의 특성은 매우 높은 순위를 갖지만 다른 특성 정보는 잡아내지 못할 수 있다.
+## 4.6.1 SelectFromModel
+학습된 랜덤 포레스트의 특성 중요도를 이용하여 특성을 골라낸다. threshold를 설정해서 그 이상으로 크다면 이를 골라낸다.
+```py
+from sklearn.feature_selection import SelectFromModel
+
+sfm = SelectFromModel(forest, threshold=0.1, prefit=True)
+X_selected = sfm.transform(X_train)
+print('이 임계 조건을 만족하는 샘플의 수:', 
+      X_selected.shape[1])
+```
+## 4.6.2 Recursive Feature Elimination
+RFE를 사용하여 선택한 특성의 개수가 남을 때까지 재귀적으로 삭제한다.
+rfe.ranking\_ 속성에는 기반모델이 선택한 특성의 우선순위 값이 들어있다.
+훈련된 기반 모델(random forest)는 estimator_ 속성에 있다.
+rfe.estimator_.importances\_에는 중요도 값이 들어있다.
+```py
+from sklearn.feature_selection import RFE
+
+rfe = RFE(forest, n_features_to_select=5)
+rfe.fit(X_train, y_train)
+
+rfe.ranking_ # 기반모델이 선택한 중요도 순위가 저장되어 있다. 1을 가지면 선택된 것이다.
+f_mask = rfe.support_ # 선택된 특성에 대한 True, False
+importances = rfe.estimator_.feature_importances_ # 중요도 값이 저장되어 있다.
+indices = np.argsort(importances)[::-1]
+```

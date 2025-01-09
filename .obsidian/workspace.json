@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/short/react-use-sync-external-store/content.mdx",
+                "file": "content/ML/ml-textbook-15/Untitled.mdx",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "content"
+              "title": "Untitled"
             }
           },
           {
@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/PS/boj-17407/content.mdx",
+                "file": "content/ML/ml-textbook-1/content.mdx",
                 "mode": "source",
                 "source": false
               },
@@ -35,8 +35,7 @@
               "title": "content"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -179,19 +178,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b97daf3307b84fd9",
+  "active": "6b725425fb4a3534",
   "lastOpenFiles": [
-    "yarn.lock",
-    "templates/default.mdx",
-    "templates",
-    "src/components/header/Search.tsx",
-    "src/assets/fonts/SB 어그로OTF L.otf",
-    "src/assets/fonts/SB 어그로OTF B.otf",
-    "netlify.toml",
-    "instantsearch-app/yarn.lock",
-    "instantsearch-app/tsconfig.json",
-    "instantsearch-app/src/index.css",
-    "instantsearch-app/src/global.d.ts",
+    "public/page-data/tags/Linear-Regression/page-data.json",
+    "public/page-data/tags/Linear-Regression",
+    "public/page-data/tags/앙상블/page-data.json",
+    "public/page-data/tags/앙상블",
+    "public/page-data/categories/ML/2/page-data.json",
+    "public/page-data/categories/ML/2",
+    "public/page-data/posts/ml-textbook-14/page-data.json",
+    "public/page-data/posts/ml-textbook-14",
+    "public/page-data/posts/ml-textbook-15/page-data.json",
+    "public/page-data/posts/ml-textbook-15",
+    "public/page-data/posts/ml-textbook-13/page-data.json",
+    "content/ML/content.md",
     "instantsearch-app/favicon.png",
     "instantsearch-app/README.md",
     "image-5.png",
@@ -204,7 +204,6 @@
     "Pasted image 20250107042400.png",
     "content/ML/why-logistic-cost/cover.png",
     "content/ML/ml-textbook-2/content.md",
-    "content/ML/content.md",
     "무제 파일.md",
     "content/PS/boj-17407/content.md",
     "content/PS/boj-17407/무제 파일 1.md",

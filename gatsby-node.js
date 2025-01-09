@@ -209,7 +209,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   // Categories/all-posts로 만들고
   // 메인 페이지는 진짜 메인 느낌나도록 따로 만들까 고민중
 
-  const POST_PER_PAGE = 10;
+  const POST_PER_PAGE = 9;
 
   // ALL POSTS 페이지네이션 생성
   const posts = result.data.allPosts.nodes;

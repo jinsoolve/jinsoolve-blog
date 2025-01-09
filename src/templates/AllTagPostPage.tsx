@@ -118,7 +118,7 @@ export default function AllPostPageTemplate({ data }: AllPostPageTemplateProps) 
       {/*</Flex>*/}
 
       <PostGrid posts={data.allMdx.nodes} />
-      {pageCount > 1 && <Pagenation currentPage={currentPage} pageCount={pageCount} />}
+      {pageCount > 1 && <Pagenation currentPage={currentPage} pageCount={pageCount} baseUrl="/tags" />}
       <Profile />
     </MainLayout>
   );

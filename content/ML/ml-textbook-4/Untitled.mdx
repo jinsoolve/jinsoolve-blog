@@ -1,0 +1,94 @@
+---
+slug: ml-textbook-4
+title: 표준화와 정규화
+description: 표준화와 정규화에 대해서 간단히 알아보자.
+thumbnail: 
+categories:
+  - ML
+tags:
+  - 표준화
+  - 정규화
+createdAt: 2025/01/09
+updatedAt: 
+featured: false
+---
+- 표준화
+    
+    ```python
+    ex = np.array([0, 1, 2, 3, 4, 5])
+    
+    print('표준화:', (ex - ex.mean()) / ex.std())
+    ```
+    
+    평균=0, 분산=1로 만든다.
+    
+- MinMaxScaler()
+    
+    ```python
+    from sklearn.preprocessing import MinMaxScaler
+    
+    mms = MinMaxScaler()
+    X_train_norm = mms.fit_transform(X_train)
+    X_test_norm = mms.transform(X_test)
+    ```
+    
+    $$
+    x_{norm}^{(i)} = \frac{x^{(i)}-x_{min}}{x_{max}-x_{min}}
+    $$
+    
+    정해진 범위의 값이 필요할 때 유용하게 사용된다.
+    
+    표준화는 이상치에 덜 민감한 반면,
+    최소-최대 스케일 변환은 이상치 정보가 유지된다.
+    
+- StandardScaler()
+    
+    sklearn으로 표준화함수를 사용할 수  있다.
+    
+    ```python
+    from sklearn.preprocessing import StandardScaler
+    
+    stdsc = StandardScaler()
+    X_train_std = stdsc.fit_transform(X_train)
+    X_test_std = stdsc.transform(X_test)
+    ```
+    
+- RobustScaler()
+    
+    이상치가 많은 작은 데이터셋을 다룰 때 좋다.
+    혹은 과대적합되기 쉽다면 이 scaler가 좋다.
+    
+    $$
+    x_{norm}^{(i)} = \frac{x^{(i)}-q_2}{q_3-q_1}
+    $$
+    
+    RobustScaler는 특성 열마다 독립적으로 작용하며 중간 값을 뺀 다음 25백분위수와 75백분위수를 사용해서 데이터셋의 스케일을 조정한다.
+    
+    ```python
+    from sklearn.preprocessing import RobustScaler
+    rbs = RobustScaler()
+    X_train_robust = rbs.fit_transform(X_train)
+    X_test_robust = rbs.fit_transform(X_test)
+    ```
+    
+- MaxAbsScaler()
+    
+    각 특성별로 데이터를 최대 절댓값으로 나눈다. 각 특성의 최대값을 1로 스케일링한다.
+    
+    ```python
+    from sklearn.preprocessing import MaxAbsScaler
+    mas = MaxAbsScaler()
+    X_train_maxabs = mas.fit_transform(X_train)
+    X_test_maxabs = mas.fit_transform(X_test)
+    ```
+    
+- Normalizer()
+    
+    특성이 아니라 샘플 별로 정규화시킨다.
+    
+    ```python
+    from sklearn.preprocessing import Normalizer
+    
+    nrm = Normalizer()
+    X_train_l2 = nrm.fit_transform(X_train)
+    ```

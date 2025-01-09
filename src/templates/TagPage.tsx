@@ -59,11 +59,13 @@ interface TagsProps {
 export default function TagsTemplate({ pageContext, data }: TagsProps) {
   const currentPage = data.allMdx.pageInfo.currentPage;
   const pageCount = data.allMdx.pageInfo.pageCount;
+  const baseUrl = `/tags/${pageContext.tag}`;
+
   return (
     <MainLayout>
       <Tags currentTag={pageContext.tag} />
       <PostGrid posts={data.allMdx.nodes} />
-      {pageCount > 1 && <Pagenation currentPage={currentPage} pageCount={pageCount} />}
+      {pageCount > 1 && <Pagenation currentPage={currentPage} pageCount={pageCount} baseUrl={baseUrl} />}
       <Profile />
     </MainLayout>
   );

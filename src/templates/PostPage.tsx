@@ -49,7 +49,6 @@ export const query = graphql`
     relatedPosts: allMdx(
       filter: { frontmatter: { categories: { in: $categories }, locale: { eq: null } }, id: { ne: $id } }
       sort: { frontmatter: { createdAt: DESC } }
-      limit: 4
     ) {
       nodes {
         frontmatter {

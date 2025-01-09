@@ -1,5 +1,6 @@
-import { Box, Center, Grid, GridItem, Heading } from "@chakra-ui/react";
-
+import { Box, Center, Grid, GridItem, Heading, useColorModeValue, Icon } from "@chakra-ui/react";
+import { Link } from "gatsby";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 import PostCard from "./PostCard";
 
 interface RelatedPostsProps {
@@ -8,6 +9,11 @@ interface RelatedPostsProps {
 
 const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
   const relatedPostsLength = relatedPosts?.nodes.length;
+  const postsToDisplay = relatedPosts?.nodes.slice(0, 4); // 6개만 표시
+
+  const textColor = useColorModeValue("white", "black");
+  const borderColor = useColorModeValue("gray.50", "#444548");
+  const hoverBorderColor = useColorModeValue("blue.500", "blue.400");
 
   return (
     <Box marginTop="200px">
@@ -34,23 +40,64 @@ const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
           </Heading>
         </Center>
       )}
-      {
-        <Grid mt="20px" templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={6}>
-          {relatedPosts.nodes.map((post) => (
-            <GridItem as="article" key={post?.frontmatter?.slug}>
-              <PostCard
-                title={post.frontmatter?.title!}
-                description={post.frontmatter?.description!}
-                slug={post.frontmatter?.slug!}
-                thumbnail={post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!}
-                createdAt={post.frontmatter?.createdAt!}
-                updatedAt={post.frontmatter?.updatedAt!}
-                categories={post.frontmatter?.categories!}
-              />
-            </GridItem>
-          ))}
-        </Grid>
-      }
+
+      <Grid
+        mt="20px"
+        templateColumns={{ sm_md: "repeat(2, 1fr)", lg: "repeat(2, 1fr)" }}
+        gap={6}
+        alignItems="center"
+        justifyContent="center"
+      >
+        {postsToDisplay?.map((post) => (
+          <GridItem
+            as="article"
+            key={post?.frontmatter?.slug}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <PostCard
+              title={post.frontmatter?.title!}
+              description={post.frontmatter?.description!}
+              slug={post.frontmatter?.slug!}
+              thumbnail={post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!}
+              createdAt={post.frontmatter?.createdAt!}
+              updatedAt={post.frontmatter?.updatedAt!}
+              categories={post.frontmatter?.categories!}
+            />
+          </GridItem>
+        ))}
+      </Grid>
+
+      {/* 더 보기 링크 */}
+      {relatedPostsLength > 6 && (
+        <Center mt="20px">
+          <Link to={`/categories/${relatedPosts.nodes[0].frontmatter.categories[0]}`}>
+            <Box
+              // color={textColor}
+              as="button"
+              mt="20px"
+              transition="all 0.25s ease"
+              padding="10px 20px"
+              borderRadius="12px"
+              fontWeight="bold"
+              boxShadow="xl"
+              borderWidth="2px"
+              borderColor={borderColor}
+              _hover={{
+                borderColor: hoverBorderColor,
+                boxShadow: "xl",
+                cursor: "pointer",
+              }}
+              display="flex"
+              alignItems="center"
+            >
+              더 많은 관련 포스트 보러가기
+              <Icon as={ChevronRightIcon} ml={2} w={5} h={5} />
+            </Box>
+          </Link>
+        </Center>
+      )}
     </Box>
   );
 };
