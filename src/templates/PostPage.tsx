@@ -127,9 +127,6 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
               padding="20px"
             >
               <TableOfContents tableOfContents={data.post.myTableOfContents} />
-              <Button mt="20px" onClick={() => setIsTOCOpen(false)}>
-                Close TOC
-              </Button>
             </Box>
           </>
         )}
