@@ -15,7 +15,17 @@ interface LayoutProps {
 export default function PostLayout({ children, tableOfContents }: LayoutProps) {
   // "맨 위로 올라가기" 버튼 클릭 시 호출되는 함수
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "auto" });
+    const scrollHeight = window.scrollY;
+    const scrollSpeed = 25; // 스크롤 속도 조정 (값을 작게 하면 더 빠름)
+    const scrollStep = Math.ceil(scrollHeight / scrollSpeed);
+
+    const scrollInterval = setInterval(() => {
+      if (window.scrollY <= 0) {
+        clearInterval(scrollInterval);
+      } else {
+        window.scrollBy(0, -scrollStep); // 위로 스크롤
+      }
+    }, 10);
   };
 
   return (
