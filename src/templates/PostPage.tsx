@@ -37,7 +37,7 @@ export const query = graphql`
           }
         }
       }
-      tableOfContents
+      myTableOfContents
     }
     otherLocalePost: allMdx(filter: { frontmatter: { slug: { eq: $slug } } }) {
       nodes {
@@ -93,15 +93,15 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
 
   return (
-    <PostLayout tableOfContents={isLargeScreen ? data.post?.tableOfContents : undefined}>
+    <PostLayout tableOfContents={isLargeScreen ? data.post?.myTableOfContents : undefined}>
       <Flex direction="column" width="100%">
         {/* ContentTitle */}
         <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
 
         {/* 작은 화면에서만 ContentTitle 아래 TOC 렌더링 */}
-        {!isLargeScreen && data.post?.tableOfContents && (
+        {!isLargeScreen && data.post?.myTableOfContents && (
           <Box as="nav" marginTop="40px">
-            <TableOfContents tableOfContents={data.post.tableOfContents} />
+            <TableOfContents tableOfContents={data.post.myTableOfContents} />
           </Box>
         )}
 

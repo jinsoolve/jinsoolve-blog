@@ -31,48 +31,80 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(`
     type MyTableOfContents {
       depth: Int
-      value: String
+      title: String
+      url: String
+      items: [MyTableOfContents]
     }
 
     type Mdx implements Node {
-      myTableOfContents: [MyTableOfContents!]
+      myTableOfContents: JSON
     }
   `);
 };
 
 exports.createResolvers = async ({ createResolvers }) => {
-  // 동적 import로 모듈 불러오기
-  const unified = (await import("unified")).unified;
+  const { unified } = await import("unified");
   const remarkParse = (await import("remark-parse")).default;
   const { visit } = await import("unist-util-visit");
 
   createResolvers({
     Mdx: {
       myTableOfContents: {
-        type: "[MyTableOfContents!]",
+        type: "JSON",
         resolve: async (source) => {
           const headers = [];
           const markdownContent = source.body;
 
           try {
-            // Unified로 remark 파싱
             const processor = unified().use(remarkParse);
-            const tree = processor.parse(markdownContent); // Markdown을 파싱하여 Syntax Tree 생성
+            const tree = processor.parse(markdownContent);
+
             visit(tree, "heading", (node) => {
               const text = node.children
                 .filter((child) => child.type === "text")
                 .map((child) => child.value)
                 .join("");
+
+              // ID를 추출하거나 기존 구조에 따라 node의 ID를 활용
+              const id = text
+                .toLowerCase()
+                .replace(/\s+/g, "-") // 공백을 '-'로 변경
+                .replace(/[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\-]/g, "");
+
               headers.push({
                 depth: node.depth,
-                value: text,
+                title: text,
+                url: `#${id}`, // URL에 '#'와 ID를 조합
               });
             });
+
+            // 계층 구조로 변환
+            const buildHierarchy = (nodes, depth = 1) => {
+              const result = [];
+              while (nodes.length > 0) {
+                const current = nodes[0];
+                if (current.depth < depth) break;
+                if (current.depth === depth) {
+                  nodes.shift();
+                  const children = buildHierarchy(nodes, depth + 1);
+                  result.push({
+                    depth: current.depth,
+                    title: current.title,
+                    url: current.url,
+                    items: children.length > 0 ? children : undefined,
+                  });
+                } else {
+                  break;
+                }
+              }
+              return result;
+            };
+
+            return buildHierarchy(headers);
           } catch (error) {
             console.error("Error processing myTableOfContents:", error);
+            return null;
           }
-
-          return headers;
         },
       },
     },
@@ -95,10 +127,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
           internal {
             contentFilePath
           }
-          myTableOfContents {
-            depth
-            value
-          }
+          myTableOfContents
         }
       }
 

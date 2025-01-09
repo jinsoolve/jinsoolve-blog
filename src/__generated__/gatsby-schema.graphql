@@ -1283,7 +1283,7 @@ type Mdx implements Node {
   frontmatter: MdxFrontmatter
   id: ID!
   internal: Internal!
-  myTableOfContents: [MyTableOfContents!]
+  myTableOfContents: JSON
   parent: Node
   tableOfContents(maxDepth: Int): JSON
 }
@@ -1313,7 +1313,7 @@ input MdxFieldSelector {
   frontmatter: MdxFrontmatterFieldSelector
   id: FieldSelectorEnum
   internal: InternalFieldSelector
-  myTableOfContents: MyTableOfContentsFieldSelector
+  myTableOfContents: FieldSelectorEnum
   parent: NodeFieldSelector
   tableOfContents: FieldSelectorEnum
 }
@@ -1325,7 +1325,7 @@ input MdxFilterInput {
   frontmatter: MdxFrontmatterFilterInput
   id: StringQueryOperatorInput
   internal: InternalFilterInput
-  myTableOfContents: MyTableOfContentsFilterListInput
+  myTableOfContents: JSONQueryOperatorInput
   parent: NodeFilterInput
   tableOfContents: JSONQueryOperatorInput
 }
@@ -1407,33 +1407,16 @@ input MdxSortInput {
   frontmatter: MdxFrontmatterSortInput
   id: SortOrderEnum
   internal: InternalSortInput
-  myTableOfContents: MyTableOfContentsSortInput
+  myTableOfContents: SortOrderEnum
   parent: NodeSortInput
   tableOfContents: SortOrderEnum
 }
 
 type MyTableOfContents {
   depth: Int
-  value: String
-}
-
-input MyTableOfContentsFieldSelector {
-  depth: FieldSelectorEnum
-  value: FieldSelectorEnum
-}
-
-input MyTableOfContentsFilterInput {
-  depth: IntQueryOperatorInput
-  value: StringQueryOperatorInput
-}
-
-input MyTableOfContentsFilterListInput {
-  elemMatch: MyTableOfContentsFilterInput
-}
-
-input MyTableOfContentsSortInput {
-  depth: SortOrderEnum
-  value: SortOrderEnum
+  items: [MyTableOfContents]
+  title: String
+  url: String
 }
 
 """Node Interface"""
@@ -1517,7 +1500,7 @@ type Query {
   directory(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: FloatQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): Directory
   file(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, childImageSharp: ImageSharpFilterInput, childMdx: MdxFilterInput, children: NodeFilterListInput, childrenImageSharp: ImageSharpFilterListInput, childrenMdx: MdxFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: FloatQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, publicURL: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): File
   imageSharp(children: NodeFilterListInput, fixed: ImageSharpFixedFilterInput, fluid: ImageSharpFluidFilterInput, gatsbyImageData: GatsbyImageDataQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, original: ImageSharpOriginalFilterInput, parent: NodeFilterInput, resize: ImageSharpResizeFilterInput): ImageSharp
-  mdx(body: StringQueryOperatorInput, children: NodeFilterListInput, excerpt: StringQueryOperatorInput, frontmatter: MdxFrontmatterFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, myTableOfContents: MyTableOfContentsFilterListInput, parent: NodeFilterInput, tableOfContents: JSONQueryOperatorInput): Mdx
+  mdx(body: StringQueryOperatorInput, children: NodeFilterListInput, excerpt: StringQueryOperatorInput, frontmatter: MdxFrontmatterFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, myTableOfContents: JSONQueryOperatorInput, parent: NodeFilterInput, tableOfContents: JSONQueryOperatorInput): Mdx
   site(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, flags: SiteFlagsFilterInput, graphqlTypegen: SiteGraphqlTypegenFilterInput, id: StringQueryOperatorInput, internal: InternalFilterInput, jsxRuntime: StringQueryOperatorInput, parent: NodeFilterInput, pathPrefix: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput, trailingSlash: StringQueryOperatorInput): Site
   siteBuildMetadata(buildTime: DateQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, parent: NodeFilterInput): SiteBuildMetadata
   siteFunction(absoluteCompiledFilePath: StringQueryOperatorInput, children: NodeFilterListInput, functionRoute: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, matchPath: StringQueryOperatorInput, originalAbsoluteFilePath: StringQueryOperatorInput, originalRelativeFilePath: StringQueryOperatorInput, parent: NodeFilterInput, pluginName: StringQueryOperatorInput, relativeCompiledFilePath: StringQueryOperatorInput): SiteFunction

@@ -1252,7 +1252,7 @@ type Mdx = Node & {
   readonly frontmatter: Maybe<MdxFrontmatter>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
-  readonly myTableOfContents: Maybe<ReadonlyArray<MyTableOfContents>>;
+  readonly myTableOfContents: Maybe<Scalars['JSON']>;
   readonly parent: Maybe<Node>;
   readonly tableOfContents: Maybe<Scalars['JSON']>;
 };
@@ -1319,7 +1319,7 @@ type MdxFieldSelector = {
   readonly frontmatter: InputMaybe<MdxFrontmatterFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
-  readonly myTableOfContents: InputMaybe<MyTableOfContentsFieldSelector>;
+  readonly myTableOfContents: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly tableOfContents: InputMaybe<FieldSelectorEnum>;
 };
@@ -1331,7 +1331,7 @@ type MdxFilterInput = {
   readonly frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
-  readonly myTableOfContents: InputMaybe<MyTableOfContentsFilterListInput>;
+  readonly myTableOfContents: InputMaybe<JSONQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly tableOfContents: InputMaybe<JSONQueryOperatorInput>;
 };
@@ -1440,33 +1440,16 @@ type MdxSortInput = {
   readonly frontmatter: InputMaybe<MdxFrontmatterSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
-  readonly myTableOfContents: InputMaybe<MyTableOfContentsSortInput>;
+  readonly myTableOfContents: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
   readonly tableOfContents: InputMaybe<SortOrderEnum>;
 };
 
 type MyTableOfContents = {
   readonly depth: Maybe<Scalars['Int']>;
-  readonly value: Maybe<Scalars['String']>;
-};
-
-type MyTableOfContentsFieldSelector = {
-  readonly depth: InputMaybe<FieldSelectorEnum>;
-  readonly value: InputMaybe<FieldSelectorEnum>;
-};
-
-type MyTableOfContentsFilterInput = {
-  readonly depth: InputMaybe<IntQueryOperatorInput>;
-  readonly value: InputMaybe<StringQueryOperatorInput>;
-};
-
-type MyTableOfContentsFilterListInput = {
-  readonly elemMatch: InputMaybe<MyTableOfContentsFilterInput>;
-};
-
-type MyTableOfContentsSortInput = {
-  readonly depth: InputMaybe<SortOrderEnum>;
-  readonly value: InputMaybe<SortOrderEnum>;
+  readonly items: Maybe<ReadonlyArray<Maybe<MyTableOfContents>>>;
+  readonly title: Maybe<Scalars['String']>;
+  readonly url: Maybe<Scalars['String']>;
 };
 
 /** Node Interface */
@@ -1736,7 +1719,7 @@ type Query_mdxArgs = {
   frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
-  myTableOfContents: InputMaybe<MyTableOfContentsFilterListInput>;
+  myTableOfContents: InputMaybe<JSONQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
   tableOfContents: InputMaybe<JSONQueryOperatorInput>;
 };
@@ -2699,7 +2682,7 @@ type PostPageQueryVariables = Exact<{
 }>;
 
 
-type PostPageQuery = { readonly post: { readonly tableOfContents: Record<string, unknown> | null, readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly locale: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null, readonly otherLocalePost: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly locale: string | null } | null }> }, readonly relatedPosts: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
+type PostPageQuery = { readonly post: { readonly myTableOfContents: Record<string, unknown> | null, readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly locale: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null, readonly otherLocalePost: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly locale: string | null } | null }> }, readonly relatedPosts: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
 
 type ProfileQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
