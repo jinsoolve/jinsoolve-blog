@@ -39,9 +39,8 @@ const TableOfContentsItem: React.FC<{
             <Text
               transform={isActive ? "scale(1.02)" : "scale(1)"}
               color={isActive ? "blue.500" : "GrayText"}
-            >
-              {title}
-            </Text>
+              dangerouslySetInnerHTML={{ __html: title }}
+            />
           </Link>
         </Box>
       </motion.div>

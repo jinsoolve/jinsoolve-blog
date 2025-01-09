@@ -46,7 +46,9 @@ exports.createResolvers = async ({ createResolvers }) => {
   const { unified } = await import("unified");
   const remarkParse = (await import("remark-parse")).default;
   const remarkSlug = (await import("remark-slug")).default;
+  const remarkMath = (await import("remark-math")).default; // remark-math 플러그인 추가
   const { visit } = await import("unist-util-visit");
+  const rehypeKatex = (await import("rehype-katex")).default; // rehype-katex 플러그인 추가
 
   const slugify = (text) =>
     text
@@ -69,7 +71,9 @@ exports.createResolvers = async ({ createResolvers }) => {
 
             const processor = unified()
               .use(remarkParse) // Markdown을 AST로 변환
-              .use(remarkSlug); // 기본 slug 지원
+              .use(remarkSlug) // 기본 slug 지원
+              .use(remarkMath) // remark-math 플러그인 추가
+              .use(rehypeKatex, { strict: false }); // rehype-katex 플러그인 추가
 
             const tree = processor.parse(markdownContent);
 

@@ -73,4 +73,12 @@ export default {
     marginTop: "10px",
     marginBottom: "10px",
   },
+
+  ".toc-title": {
+    fontFamily: "'Pretendard', sans-serif !important",
+    fontSize: "16px",
+    margin: "8px 0",
+    lineHeight: "1.5",
+    fontWeight: "bold",
+  },
 };
