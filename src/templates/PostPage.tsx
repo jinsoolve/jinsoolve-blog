@@ -1,10 +1,9 @@
-// @refresh reset
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, IconButton } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
 import { getSrc } from "gatsby-plugin-image";
-import React from "react";
+import React, { useState, useRef } from "react";
 
 import Giscus from "../components/Giscus";
 import Locales from "../components/Locales";
@@ -14,10 +13,10 @@ import Profile from "../components/Profile";
 import RelatedPosts from "../components/RelatedPosts";
 import TableOfContents from "../components/TableOfContents";
 import { DOMAIN } from "../constants";
-import { fadeInFromLeft } from "../framer-motions";
-
 import { useBreakpointValue } from "@chakra-ui/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
+const MotionBox = motion(Box);
 
 export const query = graphql`
   query PostPage($id: String!, $categories: [String!]!, $slug: String!) {
@@ -84,15 +83,41 @@ interface PostTemplateProps {
 }
 
 const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext }) => {
+  const [isTOCVisible, setTOCVisible] = useState(false); // TOC 표시 여부 상태
   const locales = data.otherLocalePost.nodes.map((node) => node.frontmatter?.locale || "ko");
   const currentLocale = data.post?.frontmatter?.locale || "ko";
   const currentSlug = data.post?.frontmatter?.slug!;
-
-  // 화면 크기에 따라 TOC 위치 결정 (작은 화면: 본문 아래, 큰 화면: 우측 고정)
   const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
 
+  const startX = useRef<number | null>(null);
+
+
+  // 드래그 시작
+  const handleDragStart = (event: React.MouseEvent | React.TouchEvent) => {
+    const clientX =
+      "touches" in event ? event.touches[0].clientX : event.clientX;
+    startX.current = clientX;
+  };
+
+  // 드래그 종료 및 동작
+  const handleDragEnd = (event: React.MouseEvent | React.TouchEvent) => {
+    if (startX.current === null) return;
+
+    const clientX =
+      "touches" in event ? event.changedTouches[0].clientX : event.clientX;
+    const offset = clientX - startX.current;
+
+    if (offset < -50) {
+      setTOCVisible(true); // 왼쪽으로 드래그하면 TOC 표시
+    } else if (offset > 50) {
+      setTOCVisible(false); // 오른쪽으로 드래그하면 TOC 숨김
+    }
+
+    startX.current = null; // 초기화
+  };
+
   return (
-    <PostLayout tableOfContents={isLargeScreen ? data.post?.myTableOfContents : undefined}>
+    <PostLayout>
       <Flex direction="column" width="100%">
         {/* ContentTitle */}
         <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
@@ -114,7 +139,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
           marginTop="40px"
           sx={{
             img: {
-              borderRadius: "10px", // 모든 img 태그에 borderRadius 적용
+              borderRadius: "10px",
             },
           }}
         >
@@ -125,6 +150,56 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
         <RelatedPosts relatedPosts={data.relatedPosts} />
         <Profile />
         <Giscus />
+
+        {/* TOC 드래그로 표시 */}
+        <>
+          {/* TOC 컴포넌트 */}
+          <MotionBox
+            drag="x"
+            dragConstraints={{ left: -300, right: 0 }} // 드래그 범위 제한
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            initial={{ x: isTOCVisible ? 0 : "100%" }}
+            animate={{ x: isTOCVisible ? 0 : "100%" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            position="fixed"
+            top={0}
+            right={0}
+            width="300px"
+            height="100vh"
+            bg="gray.100"
+            boxShadow="lg"
+            zIndex={100}
+            padding="20px"
+          >
+            <Box> {/* 여기에서 TOC 내용을 렌더링 */}
+              <TableOfContents tableOfContents={data.post?.myTableOfContents} />
+            </Box>
+          </MotionBox>
+
+          {/* 드래그 감지 및 아이콘 버튼 */}
+          <Box
+            position="fixed"
+            top="50%"
+            right={isTOCVisible ? "300px" : "0"} // TOC 위치에 따라 버튼 이동
+            transform="translateY(-50%)"
+            zIndex={101}
+          >
+            <IconButton
+              icon={isTOCVisible ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              aria-label="Toggle TOC"
+              onClick={() => setTOCVisible(!isTOCVisible)} // 버튼 클릭으로 열고 닫기
+              size="lg"
+              borderRadius="full"
+              bg="gray.200"
+              _hover={{ bg: "gray.300" }}
+              onMouseDown={handleDragStart} // 드래그 지원
+              onMouseUp={handleDragEnd}
+              onTouchStart={handleDragStart}
+              onTouchEnd={handleDragEnd}
+            />
+          </Box>
+        </>
       </Flex>
     </PostLayout>
   );
@@ -172,5 +247,5 @@ export const Head: HeadFC<Queries.PostPageQuery> = ({ data }) => {
     </>
   );
 };
-export default PostTemplate;
 
+export default PostTemplate;

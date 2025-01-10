@@ -2637,15 +2637,6 @@ type PortfolioPageQueryVariables = Exact<{
 
 type PortfolioPageQuery = { readonly post: { readonly tableOfContents: any | null, readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly description: string | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly locale: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null };
 
-type PostPageQueryVariables = Exact<{
-  id: Scalars['String'];
-  categories: ReadonlyArray<Scalars['String']> | Scalars['String'];
-  slug: Scalars['String'];
-}>;
-
-
-type PostPageQuery = { readonly post: { readonly myTableOfContents: any | null, readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly locale: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null, readonly otherLocalePost: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly locale: string | null } | null }> }, readonly relatedPosts: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
-
 type ProfileQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
