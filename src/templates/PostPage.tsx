@@ -131,13 +131,20 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   // 외부 클릭 감지
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (tocRef.current && !tocRef.current.contains(event.target as Node)) {
+      if (
+        (tocRef.current &&
+        !tocRef.current.contains(event.target as Node)) &&
+        (buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node))
+      ) {
         setIsTOCOpen(false);
       }
     };
+
     if (isTOCOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -161,7 +168,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 position: "fixed",
                 bottom: isMobile ? "40px" : "70px",
                 transform: "translateY(-50%)",
-                zIndex: 20,
+                zIndex: 10,
               }}
             >
 
