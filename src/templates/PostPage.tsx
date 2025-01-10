@@ -83,7 +83,8 @@ interface PostTemplateProps {
 
 const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext }) => {
   const locales = data.otherLocalePost.nodes.map((node) => node.frontmatter?.locale || "ko");
-  const isMobile = useBreakpointValue({ base: true, md: false }); // 모바일 여부 확인
+  const [isMobile, setIsMobile] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null); // 아이콘 버튼을 참조
   const currentLocale = data.post?.frontmatter?.locale || "ko";
   const currentSlug = data.post?.frontmatter?.slug!;
   const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
@@ -91,11 +92,10 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
 
   const [isTOCOpen, setIsTOCOpen] = useState(false);
   const tocRef = useRef<HTMLDivElement>(null);
-
-  const buttonRef = useRef<HTMLButtonElement>(null); // 아이콘 버튼을 참조
-  const [dragAreaStyle, setDragAreaStyle] = useState<React.CSSProperties>({});
-
   const [TOC_MAX_WIDTH, setTocMaxWidth] = useState(300); // 기본값
+
+  const rightValue = useBreakpointValue({ base: "12px", md: "15px" });
+
 
   useEffect(() => {
     const calculateWidth = () => {
@@ -111,49 +111,22 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
     return () => window.removeEventListener("resize", calculateWidth);
   }, []);
 
-  // 드래그 동작 설정
-  const bind = useDrag(({ swipe: [swipeX] }) => {
-    if (isMobile) {
-      if (swipeX === -1) setIsTOCOpen(true); // 우 -> 좌 드래그: 열기
-      if (swipeX === 1) setIsTOCOpen(false); // 좌 -> 우 드래그: 닫기
-    }
-  });
-
-  // 드래그 영역 업데이트 함수
-  const updateDragArea = () => {
-    if (buttonRef.current && isMobile) {
-      const buttonRect = buttonRef.current.getBoundingClientRect();
-      const tocOffset = isTOCOpen ? TOC_MAX_WIDTH : 0; // TOC가 열릴 때 이동 거리
-      setDragAreaStyle({
-        position: "fixed",
-        top: `${buttonRect.top - window.innerHeight * 0.25}px`, // 버튼 위쪽 25vh
-        left: `${buttonRect.left - 50 + tocOffset}px`, // 버튼 왼쪽 (닫힘일 때 위치 보정)
-        width: `${buttonRect.width + 80}px`, // 버튼 너비 + 좌우 여백
-        height: `${buttonRect.height + window.innerHeight * 0.5}px`, // 버튼 높이 + 위아래 25vh
-        cursor: "grab",
-        zIndex: 30,
-        background: "rgba(123, 123, 123, 1)", // 투명 배경 (투명도 조정 가능)
-      });
-    }
-  };
-
-  // TOC 열림/닫힘 상태가 변경될 때 드래그 영역 업데이트
-  useEffect(() => {
-    updateDragArea();
-  }, [isTOCOpen, TOC_MAX_WIDTH]); // TOC_MAX_WIDTH 추가
-
-  // 창 크기 변경 시 드래그 영역 업데이트
+  // 화면 너비 감지
   useEffect(() => {
     const handleResize = () => {
-      updateDragArea();
+      setIsMobile(window.innerWidth < 630); // 580px 이하에서 모바일 메뉴로 전환
     };
 
+    // 초기 상태 설정
+    handleResize();
+
+    // 윈도우 크기 변경 이벤트 리스너 추가
     window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isTOCOpen, isMobile, TOC_MAX_WIDTH]); // 종속성 배열에 필요한 상태 추가
-
+  }, []);
 
   // 외부 클릭 감지
   useEffect(() => {
@@ -179,11 +152,6 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
         {/* 작은 화면에서 TOC 버튼과 Collapse */}
         {!isLargeScreen && data.post?.myTableOfContents && (
           <>
-            {/* 드래그 가능한 제한된 영역 */}
-            {isMobile && (
-              <motion.div {...bind()} style={dragAreaStyle} />
-            )}
-
             {/* TOC 버튼 */}
             <motion.div
               initial={{ right: "0px" }}
@@ -191,7 +159,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
               transition={{ duration: 0.3 }}
               style={{
                 position: "fixed",
-                top: "50%",
+                top: "90px",
                 transform: "translateY(-50%)",
                 zIndex: 20,
               }}
@@ -202,6 +170,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 icon={isTOCOpen ? <ChevronRightIcon boxSize={iconSize} /> : <ChevronLeftIcon boxSize={iconSize} />}
                 borderRadius="full"
                 size="lg"
+                right={rightValue}
                 onClick={() => setIsTOCOpen(!isTOCOpen)} // 버튼 클릭 동작
                 variant="ghost"
                 _hover={{ bg: "transparent", color: "blue.400" }}
@@ -223,7 +192,6 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 maxWidth: "80vw",
                 zIndex: 10,
               }}
-              onAnimationComplete={() => updateDragArea()} // 애니메이션 완료 후 호출
             >
               <Box
                 backgroundColor="white"
