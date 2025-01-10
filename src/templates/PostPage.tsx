@@ -95,8 +95,21 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const buttonRef = useRef<HTMLButtonElement>(null); // 아이콘 버튼을 참조
   const [dragAreaStyle, setDragAreaStyle] = useState<React.CSSProperties>({});
 
-  const TOC_MAX_WIDTH = Math.min(window.innerWidth * 0.8, 300); // TOC의 최대 너비 계산 (80vw 또는 300px 중 작은 값)
+  const [TOC_MAX_WIDTH, setTocMaxWidth] = useState(300); // 기본값
 
+  useEffect(() => {
+    const calculateWidth = () => {
+      if (typeof window !== "undefined") {
+        const vwWidth = window.innerWidth * 0.8; // 80vw 계산
+        const calculatedWidth = Math.min(vwWidth, 300); // 80vw와 300 중 작은 값
+        setTocMaxWidth(calculatedWidth);
+      }
+    };
+
+    calculateWidth(); // 초기 계산
+    window.addEventListener("resize", calculateWidth); // 창 크기 변경 시 재계산
+    return () => window.removeEventListener("resize", calculateWidth);
+  }, []);
 
   // 드래그 동작 설정
   const bind = useDrag(({ swipe: [swipeX] }) => {
@@ -106,36 +119,42 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
     }
   });
 
-  // 버튼 위치에 따른 드래그 영역 계산
+  // 드래그 영역 업데이트 함수
   const updateDragArea = () => {
     if (buttonRef.current && isMobile) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
-      const tocOffset = isTOCOpen ? TOC_MAX_WIDTH : 0; // TOC가 열릴 때 아이콘 버튼이 이동한 거리
+      const tocOffset = isTOCOpen ? TOC_MAX_WIDTH : 0; // TOC가 열릴 때 이동 거리
       setDragAreaStyle({
         position: "fixed",
         top: `${buttonRect.top - window.innerHeight * 0.25}px`, // 버튼 위쪽 25vh
-        left: `${buttonRect.left - 50 - tocOffset}px`, // 버튼 왼쪽 50px + TOC 이동 거리
-        width: `${buttonRect.width + 80}px`, // 버튼 너비 + 좌우 여백 (50px + 30px)
+        left: `${buttonRect.left - 50 + tocOffset}px`, // 버튼 왼쪽 (닫힘일 때 위치 보정)
+        width: `${buttonRect.width + 80}px`, // 버튼 너비 + 좌우 여백
         height: `${buttonRect.height + window.innerHeight * 0.5}px`, // 버튼 높이 + 위아래 25vh
         cursor: "grab",
         zIndex: 30,
-        background: "rgba(0, 0, 0, 0)", // 투명 배경
+        background: "rgba(123, 123, 123, 1)", // 투명 배경 (투명도 조정 가능)
       });
     }
   };
 
-  // TOC 열림/닫힘 상태나 창 크기 변경 시 드래그 영역 업데이트
+  // TOC 열림/닫힘 상태가 변경될 때 드래그 영역 업데이트
   useEffect(() => {
     updateDragArea();
-  }, [isTOCOpen, isMobile]);
+  }, [isTOCOpen, TOC_MAX_WIDTH]); // TOC_MAX_WIDTH 추가
 
   // 창 크기 변경 시 드래그 영역 업데이트
   useEffect(() => {
-    window.addEventListener("resize", updateDragArea);
-    return () => {
-      window.removeEventListener("resize", updateDragArea);
+    const handleResize = () => {
+      updateDragArea();
     };
-  }, []);
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isTOCOpen, isMobile, TOC_MAX_WIDTH]); // 종속성 배열에 필요한 상태 추가
+
+
   // 외부 클릭 감지
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -204,6 +223,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 maxWidth: "80vw",
                 zIndex: 10,
               }}
+              onAnimationComplete={() => updateDragArea()} // 애니메이션 완료 후 호출
             >
               <Box
                 backgroundColor="white"
