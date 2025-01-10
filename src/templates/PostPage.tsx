@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, IconButton, useBreakpointValue, Icon } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
@@ -6,7 +6,7 @@ import { getSrc } from "gatsby-plugin-image";
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
-import { useDrag } from "react-use-gesture";
+import { MdList, MdOutlineMenu } from "react-icons/md";
 
 import Giscus from "../components/Giscus";
 import Locales from "../components/Locales";
@@ -94,7 +94,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const tocRef = useRef<HTMLDivElement>(null);
   const [TOC_MAX_WIDTH, setTocMaxWidth] = useState(300); // 기본값
 
-  const rightValue = useBreakpointValue({ base: "12px", md: "15px" });
+  const rightValue = useBreakpointValue({ base: "16px", md: "30px" });
 
 
   useEffect(() => {
@@ -159,22 +159,36 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
               transition={{ duration: 0.3 }}
               style={{
                 position: "fixed",
-                top: "90px",
+                bottom: isMobile ? "40px" : "70px",
                 transform: "translateY(-50%)",
                 zIndex: 20,
               }}
             >
+
               <IconButton
-                ref={buttonRef} // 버튼에 ref 연결
                 aria-label="Toggle TOC"
-                icon={isTOCOpen ? <ChevronRightIcon boxSize={iconSize} /> : <ChevronLeftIcon boxSize={iconSize} />}
                 borderRadius="full"
                 size="lg"
                 right={rightValue}
-                onClick={() => setIsTOCOpen(!isTOCOpen)} // 버튼 클릭 동작
+                onClick={() => setIsTOCOpen(!isTOCOpen)}
                 variant="ghost"
                 _hover={{ bg: "transparent", color: "blue.400" }}
                 _focus={{ boxShadow: "none", bg: "transparent" }}
+                icon={
+                  <Flex alignItems="center" justifyContent="center">
+                    {isTOCOpen ? (
+                      <>
+                        <ChevronRightIcon boxSize="20px" ml={-1} />
+                        <Icon as={MdOutlineMenu} boxSize="24px" ml={-1} /> {/* React Icons의 List 아이콘 사용 */}
+                      </>
+                    ) : (
+                      <>
+                        <ChevronLeftIcon boxSize="20px" ml={-1} />
+                        <Icon as={MdOutlineMenu} boxSize="24px" ml={-1} /> {/* React Icons의 List 아이콘 사용 */}
+                      </>
+                    )}
+                  </Flex>
+                }
               />
             </motion.div>
 
