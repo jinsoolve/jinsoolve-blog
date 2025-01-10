@@ -104,7 +104,7 @@ export default function TableOfContents({
   }, [setActiveId, tableOfContents.items]);
 
   return (
-    <Box as="nav" position="sticky" top="150px" width="100%">
+    <Box as="nav" position="sticky" top="150px" width="100%" maxWidth={{ base: "100%", "1.75xl": "90%", "4xl": "100%" }}>
       <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
         <Heading as="h2" fontSize={h2FontSize}>
           ON THIS PAGE

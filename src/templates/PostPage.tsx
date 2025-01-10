@@ -1,11 +1,10 @@
-// @refresh reset
 import { Box, Flex, Button, Collapse, IconButton } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
 import { getSrc } from "gatsby-plugin-image";
 import React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
 
 import Giscus from "../components/Giscus";
@@ -90,6 +89,22 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const currentSlug = data.post?.frontmatter?.slug!;
   const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
   const [isTOCOpen, setIsTOCOpen] = useState(false);
+  const tocRef = useRef<HTMLDivElement>(null);
+
+  // 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tocRef.current && !tocRef.current.contains(event.target as Node)) {
+        setIsTOCOpen(false);
+      }
+    };
+    if (isTOCOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isTOCOpen]);
 
   return (
     <PostLayout tableOfContents={isLargeScreen ? data.post?.myTableOfContents : undefined}>
@@ -102,7 +117,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
           <>
             {/* 우측 상단 고정 아이콘 버튼 */}
             <motion.div
-              initial={{ right: 0 }}
+              initial={{ right: "0px" }}
               animate={{ right: isTOCOpen ? "300px" : "0px" }}
               transition={{ duration: 0.3 }}
               style={{
@@ -117,9 +132,9 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 icon={isTOCOpen ? <ChevronRightIcon boxSize={6} /> : <ChevronLeftIcon boxSize={6} />}
                 borderRadius="full"
                 onClick={() => setIsTOCOpen(!isTOCOpen)}
-                variant="ghost" // 배경 제거
-                _hover={{ bg: "transparent", color: "blue.400" }} // hover 시 배경 제거
-                _focus={{ boxShadow: "none", bg: "transparent" }} // focus 시 배경 제거
+                variant="ghost"
+                _hover={{ bg: "transparent", color: "blue.400" }}
+                _focus={{ boxShadow: "none", bg: "transparent" }}
               />
             </motion.div>
 
@@ -128,26 +143,48 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
               initial={{ right: "-300px" }}
               animate={{ right: isTOCOpen ? "0px" : "-300px" }}
               transition={{ duration: 0.3 }}
+              ref={tocRef} // ref 추가
               style={{
                 position: "fixed",
                 top: 0,
                 height: "100vh",
                 width: "300px",
+                maxWidth: "80vw",
                 zIndex: 10,
               }}
             >
               <Box
-                backgroundColor="gray.800" // 불투명한 배경색 지정
-                height="100%" // 부모(motion.div) 높이에 맞추기
-                boxShadow="md" // 그림자 유지
-                padding="20px"
+                backgroundColor="white"
+                height="100%"
+                boxShadow="md"
+                padding="0px 20px"
+                position="relative"
+                _dark={{
+                  backgroundColor: "gray.800",
+                }}
               >
-                <TableOfContents tableOfContents={data.post.myTableOfContents} />
+                {/* Close 버튼 */}
+                <IconButton
+                  aria-label="Close TOC"
+                  icon={<CloseIcon />}
+                  position="absolute"
+                  top="10px"
+                  right="10px"
+                  onClick={() => setIsTOCOpen(false)}
+                  size="sm"
+                  backgroundColor="transparent"
+                  color="black"
+                  _dark={{
+                    color: "white",
+                  }}
+                />
+                <Box pt={"60px"}>
+                  <TableOfContents tableOfContents={data.post.myTableOfContents} />
+                </Box>
               </Box>
             </motion.div>
           </>
         )}
-
 
         {/* 다국어 지원 */}
         {locales.length > 1 && (
