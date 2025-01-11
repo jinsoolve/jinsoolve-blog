@@ -28,6 +28,7 @@ export const query = graphql`
       categories
       tags
     }
+    excerpt(pruneLength: 100)
   }
 
   query AllPostPageTemplate($limit: Int, $skip: Int) {

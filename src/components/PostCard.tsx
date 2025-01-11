@@ -14,6 +14,7 @@ interface PostCardProps {
   updatedAt?: string;
   categories: readonly (string | null)[];
   thumbnail?: IGatsbyImageData;
+  excerpt?: string;
 }
 
 const PostCard = ({
@@ -23,6 +24,7 @@ const PostCard = ({
                     thumbnail,
                     title,
                     updatedAt,
+                    excerpt,
                   }: PostCardProps) => {
   const diffMs = useMemo(
     () => new Date().getTime() - new Date(createdAt).getTime(),
@@ -85,7 +87,7 @@ const PostCard = ({
               {title}
             </Heading>
             <Text fontSize="16px" color="gray.600" noOfLines={2} marginBottom="10px">
-              {description}
+              {description || excerpt}
             </Text>
           </Box>
 

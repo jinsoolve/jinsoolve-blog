@@ -29,6 +29,7 @@ const PostGrid = ({ posts }: PostGridProps) => {
             createdAt: posts.frontmatter?.createdAt!,
             updatedAt: posts.frontmatter?.updatedAt!,
             categories: posts.frontmatter?.categories!,
+            excerpt: posts.excerpt!,
           };
 
           return (

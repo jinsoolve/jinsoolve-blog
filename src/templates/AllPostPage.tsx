@@ -28,6 +28,7 @@ export const query = graphql`
       categories
       tags
     }
+    excerpt(pruneLength: 100)
   }
 
   query AllPostPageTemplate($limit: Int, $skip: Int) {
@@ -111,7 +112,7 @@ export default function AllPostPageTemplate({ data }: AllPostPageTemplateProps) 
         maxWidth={{ base: "95%", md: "800px", lg_xl: "85%", xl: "100%" }}
         direction={{ base: "column", lg_xl: "row" }}
         justifyContent="center"
-        alignItems={{ base: "center", lg_xl: "flex-start" }}  // 좁을 때 중앙정렬
+        alignItems={{ base: "center", lg_xl: "flex-start" }} // 좁을 때 중앙정렬
         marginTop="40px"
         gap={{ base: "10px", lg_xl: "40px" }}
       >
