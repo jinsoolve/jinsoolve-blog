@@ -1,0 +1,184 @@
+---
+slug: boj-33007
+title: 백준 33007 - Greatest of the Greatest Common Divisors
+description: 
+thumbnail: 
+categories:
+  - PS
+tags:
+  - 수학
+  - 정수론
+  - 세그먼트-트리
+  - 오프라인-쿼리
+createdAt: 2025/01/11
+updatedAt: 
+featured: false
+---
+# [백준 33007 - Greatest of the Greatest Common Divisors](https://www.acmicpc.net/problem/33007)
+
+## 핵심 아이디어
+오프라인 쿼리 방식으로, r을 순차적으로 증가시키면서 **r을 새롭게 포함시킬 때 해당 인덱스 r과 어떤 인덱스 l을 추가하면 어떤 gcdVal을 얻을 수 있는 지를 미리 저장해 놓았다가 이를 포함**시킨다.
+그리고 query의 오른쪽 끝이 r인 쿼리들에 대해서 정답을 업데이트 시켜준다.
+
+
+## 풀이
+
+1. 소인수 분해를 전처리를 해준다. 
+   수의 개수와 수의 크기가 모두 최대 $10^5$ 이므로 총 $10^{7.5}$ 만에 모든 수의 소인수분해를 할 수 있다.
+   `divs[x] := { x로 나뉘어지는 모든 수들의 인덱스` 형식으로 저장한다.
+2. 위 전처리 결과를 이용해서 숫자 i를 소인수 분해로 갖는 수들의 목록을 얻을 수 있다.
+   이때 이 수들에 대한 모든 쌍을 볼 필요 없이, 인접한 쌍끼리만 확인하면 된다. 왜냐하면 이 중 어느 2개의 수만 쿼리가 포함하면 숫자 i를 gcd로 가질 수 있기 때문이다. 
+   따라서 가장 가까운 두 쌍에 대해서만 `pre[r].emplace_back(l, i)`  이런 식으로 저장해주면 된다.
+3. 쿼리도 마찬가지로 `queries[r].emplace_back(l, i)` 이런 식으로 저장해준다. 여기서 i는 쿼리 번호이다. 오프라인 쿼리 방식으로 처리해줄 것이다.
+	1. 이제 모든 r을 순차적으로 증가시키면서 세그먼트 트리를 업데이트 시켜준다.
+	   `for(auto [l, gcdVal]: pre[r])` 이런 식으로 r을 포함시켰을 때, 어떤 l을 포함하면 어떤 gcdVal을 얻을 수 있는 지를 세그먼트 트리에 업데이트 시켜준다.
+	2. 쿼리도 `for(auto [l, query_num]: queries[r])` 이런 식으로 쿼리의 범위 끝이 r인 쿼리들에 대한 답을 업데이트 해준다.
+
+## 코드
+```cpp
+#include <bits/stdc++.h>  
+  
+#define endl "\n"  
+#define all(v) (v).begin(), (v).end()  
+#define all1(v) (v).begin()+1, (v).end()  
+#define For(i, a, b) for(int i=(a); i<(b); i++)  
+#define FOR(i, a, b) for(int i=(a); i<=(b); i++)  
+#define Bor(i, a, b) for(int i=(a)-1; i>=(b); i--)  
+#define BOR(i, a, b) for(int i=(a); i>=(b); i--)  
+#define ft first  
+#define sd second  
+  
+using namespace std;  
+using ll = long long;  
+using lll = __int128_t;  
+using ulll = __uint128_t;  
+using ull = unsigned long long;  
+using ld = long double;  
+using pii = pair<int, int>;  
+using pll = pair<ll, ll>;  
+using ti3 = tuple<int, int, int>;  
+using tl3 = tuple<ll, ll, ll>;  
+  
+template<typename T> using ve = vector<T>;  
+template<typename T> using vve = vector<vector<T>>;  
+  
+template<class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }  
+template<class T> bool ckmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }  
+  
+const int INF = 987654321;  
+const int INF0 = numeric_limits<int>::max();  
+const ll LNF = 987654321987654321;  
+const ll LNF0 = numeric_limits<ll>::max();  
+  
+class Segment {  
+public:  
+    vector<int> tree; //tree[node] := a[start ~ end] 의 합  
+  
+    Segment() {}  
+    Segment(int size) {  
+        this->resize(size);  
+    }  
+    void resize(int size) {  
+        size = (int) floor(log2(size)) + 2;  
+        size = pow(2, size);  
+        tree.resize(size, 1);  
+    }  
+    int query(int node, int start, int end, int left, int right) {  
+        if(right < start || end < left) return 1;  
+        if(left <= start && end <= right) return tree[node];  
+        return max(query(node * 2, start, (start + end) / 2, left, right),  
+                   query(node * 2 + 1, (start + end) / 2 + 1, end, left, right));  
+    }  
+    void update(int node, int start, int end, int index, int value) {  
+        if(index < start || end < index) return;  
+        if(start == end) ckmax(tree[node], value);  
+        else {  
+            update(node * 2, start, (start + end) / 2, index, value);  
+            update(node * 2 + 1, (start + end) / 2 + 1, end, index, value);  
+            tree[node] = max(tree[2*node], tree[2*node+1]);  
+        }  
+    }  
+};  
+  
+const int mxn = 1e5+1;  
+int n, q;  
+ve<int> a;  
+vve<int> divs(mxn);  
+vve<pii> pre, queries;  
+ve<int> ans;  
+  
+ll gcd(ll a, ll b) {  
+    if(b == 0) return a;  
+    return gcd(b, a%b);  
+}  
+  
+void solve() {  
+    cin >> n;  
+    a = ve<int>(n+1);  
+    pre = vve<pii>(n+1);  
+    queries = vve<pii>(n+1);  
+    FOR(i,1,n) cin >> a[i];  
+  
+    // 모든 소인수들에 대해서 어떤 a[인덱스]를 나눌 수 있는지를 모두 저장. 즉, 미리 소인수분해를 해 놓는다.  
+    FOR(i,1,n) {  
+        for(int j=1; j*j<=a[i]; j++) {  
+            if(a[i]%j == 0) {  
+                divs[j].emplace_back(i);  
+                if(j*j != a[i]) divs[a[i]/j].emplace_back(i);  
+            }  
+        }  
+    }  
+  
+    // 모든 i에 대하여 i로 나눠지는 l,r (여기서 l,r은 인접한 애들)을 저장해준다.  
+    FOR(i,1,mxn) {  
+        for(int j=1; j<divs[i].size(); j++) {  
+            int l=divs[i][j-1], r=divs[i][j];  
+            if (gcd(a[l], a[r]) == i) pre[r].emplace_back(l,i);  
+        }  
+    }  
+  
+    cin >> q;  
+    ans = ve<int>(q+1, 1);  
+    FOR(i,1,q) {  
+        int l, r; cin >> l >> r;  
+        queries[r].emplace_back(l,i);  
+    }  
+  
+  
+    Segment seg(n);  
+    // 1 ~ r 에 대한 수들만 처리하고, 그에 대한 쿼리만 순차대로 처리해준다.  
+    FOR(r,1,n) {  
+        // pre[r] 정보들을 세그먼트 트리에 업데이트시켜준다.  
+        for(auto [l, gcdVal]: pre[r]) {  
+            seg.update(1,1,n,l,gcdVal);  
+        }  
+  
+        // r이 r인 쿼리들에 대한 정답을 계산해준다.  
+        for(auto [l, qn]: queries[r]) {  
+            ckmax(ans[qn], seg.query(1,1,n,l,r));  
+        }  
+    }  
+  
+    FOR(i,1,q) cout << ans[i] << endl;  
+}  
+  
+int main(void) {  
+    ios_base::sync_with_stdio(false);  
+    cin.tie(nullptr);  
+    cout.tie(nullptr);  
+  
+    int TC=1;  
+//    cin >> TC;  
+    FOR(tc, 1, TC) {  
+//        cout << "Case #" << tc << ": ";  
+        solve();  
+    }  
+  
+  
+    return 0;  
+}
+```
+
+
+# 참고
+- [구사과님의 깃허브](https://github.com/koosaga/olympiad/blob/master/ICPC/Japan/icpc2024_i.cpp)
