@@ -4,25 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "fbec7b7b854fd6cc",
+        "id": "a394c5f93916b37d",
         "type": "tabs",
         "children": [
           {
-            "id": "ffe81348a07dbed1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "content/ML/ml-textbook-1/content.en.mdx",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "content.en"
-            }
-          },
-          {
-            "id": "620d5caa2d18abee",
+            "id": "37e6e78f527b8e1b",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -178,8 +164,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "ffe81348a07dbed1",
+  "active": "37e6e78f527b8e1b",
   "lastOpenFiles": [
+    "content/ML/ml-textbook-1/content.mdx",
+    "content/ML/ml-textbook-1/content.en.mdx",
+    "content/diary/2024-summer-vacation-plan/cover.png",
     "public/rss.xml",
     "public/posts/ml-textbook-8/index.html",
     "public/posts/ml-textbook-8",
@@ -188,9 +177,6 @@
     "public/posts/boj-1462/index.html",
     "public/posts/boj-1462",
     "public/posts/ml-textbook-5/index.html",
-    "public/posts/ml-textbook-5",
-    "public/posts/ml-textbook-7/index.html",
-    "public/posts/ml-textbook-7",
     "public/static/0703f6b50eeae1051c3706da0c86f95c/1096b/CV.jpg",
     "public/static/0703f6b50eeae1051c3706da0c86f95c/e5166/CV.jpg",
     "public/static/0703f6b50eeae1051c3706da0c86f95c/4b190/CV.jpg",
@@ -200,7 +186,6 @@
     "public/static/d7c4287b62379008bb2950729e98b73d/772e8/3.png",
     "public/static/3edce1d7889f533c4de2a0fe0b15e5a0/772e8/4.png",
     "public/static/dd832cb0947d0d529ad54f8be0308392/c1b63/1.png",
-    "public/static/dd832cb0947d0d529ad54f8be0308392/5a190/1.png",
     "node_modules/react-use-gesture/README.md",
     "node_modules/react-use-gesture/CHANGELOG.md",
     "node_modules/react-swipeable/README.md",
