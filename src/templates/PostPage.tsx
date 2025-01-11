@@ -94,7 +94,6 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const tocRef = useRef<HTMLDivElement>(null);
   const [TOC_MAX_WIDTH, setTocMaxWidth] = useState(300); // 기본값
 
-  const rightValue = useBreakpointValue({ base: "16px", md: "30px" });
 
 
   // 화면 너비 감지
@@ -162,7 +161,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 aria-label="Toggle TOC"
                 borderRadius="full"
                 size="lg"
-                right={rightValue}
+                right={{ base: "12px", sm: "15px", md: "30px" }}
                 onClick={() => setIsTOCOpen(!isTOCOpen)}
                 variant="ghost"
                 _hover={{ bg: "transparent", color: "blue.400" }}
