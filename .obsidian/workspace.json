@@ -11,14 +11,10 @@
             "id": "37e6e78f527b8e1b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "content/ML/ml-textbook-1/content.en.mdx",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "content.en"
+              "title": "새 탭"
             }
           }
         ]
@@ -166,26 +162,26 @@
   },
   "active": "37e6e78f527b8e1b",
   "lastOpenFiles": [
-    "content/ML/ml-textbook-1/content.mdx",
     "content/ML/ml-textbook-1/content.en.mdx",
+    "content/short/ml-textbook-1/cover.png",
+    "content/short/ml-textbook-1/content.mdx",
+    "content/short/ml-textbook-1/content.en.mdx",
+    "content/short/ml-textbook-1/4.png",
+    "content/short/ml-textbook-1/3.png",
+    "content/short/ml-textbook-1/1.png",
+    "content/short/ml-textbook-1/2.png",
+    "content/short/ml-textbook-1",
+    "content/ML/ml-textbook-1/content.mdx",
     "content/diary/2024-summer-vacation-plan/cover.png",
     "public/rss.xml",
     "public/posts/ml-textbook-8/index.html",
     "public/posts/ml-textbook-8",
     "public/posts/ml-textbook-9/index.html",
     "public/posts/ml-textbook-9",
-    "public/posts/boj-1462/index.html",
-    "public/posts/boj-1462",
-    "public/posts/ml-textbook-5/index.html",
     "public/static/0703f6b50eeae1051c3706da0c86f95c/1096b/CV.jpg",
     "public/static/0703f6b50eeae1051c3706da0c86f95c/e5166/CV.jpg",
     "public/static/0703f6b50eeae1051c3706da0c86f95c/4b190/CV.jpg",
     "public/static/0703f6b50eeae1051c3706da0c86f95c/066f9/CV.jpg",
-    "public/static/0703f6b50eeae1051c3706da0c86f95c/e07e9/CV.jpg",
-    "public/static/0fdb7df3ba770f87765ea93a834122c1/2685c/cover.png",
-    "public/static/d7c4287b62379008bb2950729e98b73d/772e8/3.png",
-    "public/static/3edce1d7889f533c4de2a0fe0b15e5a0/772e8/4.png",
-    "public/static/dd832cb0947d0d529ad54f8be0308392/c1b63/1.png",
     "node_modules/react-use-gesture/README.md",
     "node_modules/react-use-gesture/CHANGELOG.md",
     "node_modules/react-swipeable/README.md",
