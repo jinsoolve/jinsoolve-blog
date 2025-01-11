@@ -11,10 +11,14 @@
             "id": "6b725425fb4a3534",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "content/ML/ml-textbook-15/Untitled.mdx",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "Untitled"
             }
           }
         ]

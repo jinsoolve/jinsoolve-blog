@@ -166,37 +166,50 @@ const CodeBlock = (props: any) => {
 
 const customComponents = {
   h1: (props: HeadingProps) => <Heading as="h1" fontSize={36} mt="80px" {...props} />,
-  h2: (props: HeadingProps) => <Heading as="h2" fontSize={32} mt="80px" mb="40px" {...props} />,
-  h3: (props: HeadingProps) => <Heading as="h3" fontSize={24} mt="60px" mb="30px" {...props} />,
+  h2: (props: HeadingProps) => <Heading as="h2" fontSize={32} mt="60px" mb="30px" {...props} />,
+  h3: (props: HeadingProps) => <Heading as="h3" fontSize={24} mt="60px" mb="20px" {...props} />,
   h4: (props: HeadingProps) => <Heading as="h4" fontSize={20} mt="40px" mb="20px" {...props} />,
-  p: (props: TextProps) => <Text fontSize={16} mt="16px" lineHeight="2" {...props} />,
+  p: (props: TextProps) => <Text fontSize={16} mt="16px" lineHeight="1.8" {...props} />,
   li: (props: BoxProps) => (
     <Box
       as="li"
       sx={{
-        listStyleType: "disc", // 기본 bullet 사용
-        listStylePosition: "inside", // bullet이 텍스트와 같은 시작점에 위치
-        marginBottom: "8px", // 항목 간 간격
-        wordBreak: "break-word", // 단어가 너무 길 경우 줄바꿈
-        lineHeight: "1.6", // 텍스트의 줄 간격
+        wordBreak: "break-word", // 텍스트가 너무 길 경우 줄바꿈
+        marginLeft: "20px",
+        lineHeight: "1.4",
       }}
+      m={"10px 0"}
       fontSize={16}
       {...props}
     />
   ),
-  ol: (props: BoxProps) => <Box as="ol" fontSize={16} mt="16px" listStylePos="inside" {...props} />,
+  ol: (props: BoxProps) => (
+    <Box
+      as="ol"
+      sx={{
+        listStylePosition: "inside", // 숫자 위치를 텍스트와 맞춤
+        listStyleType: "decimal", // 숫자 리스트 스타일
+        textIndent: "-1.2em", // 첫 줄의 들여쓰기 제거
+        "* > ol": {
+          margin: 0,
+        },
+      }}
+      {...props}
+    />
+  ),
   ul: (props: BoxProps) => (
     <Box
       as="ul"
       sx={{
+        listStylePosition: "outside", // 숫자 위치를 텍스트와 맞춤
+        listStyleType: "disc", // 기본 bullet 스타일
+        marginLeft: "-2px",
+        // textIndent: "-2.4em", // 첫 줄의 들여쓰기 제거
         "* > ul": {
           margin: 0,
-          marginLeft: "20px",
+          padding: 0,
         },
       }}
-      fontSize={16}
-      mt="16px"
-      listStylePos="inside"
       {...props}
     />
   ),

@@ -84,4 +84,11 @@ export default {
     lineHeight: "1.5",
     fontWeight: "bold",
   },
+
+  // "li > ol": {
+  //   listStyleType: "lower-alpha", // 하위 레벨 숫자 리스트 스타일 (예: a, b, c...)
+  // },
+  // "li > ul": {
+  //   listStyleType: "circle", // 하위 레벨 bullet point 스타일
+  // },
 };
