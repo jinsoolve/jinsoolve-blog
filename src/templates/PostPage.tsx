@@ -97,20 +97,6 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const rightValue = useBreakpointValue({ base: "16px", md: "30px" });
 
 
-  useEffect(() => {
-    const calculateWidth = () => {
-      if (typeof window !== "undefined") {
-        const vwWidth = window.innerWidth * 0.8; // 80vw 계산
-        const calculatedWidth = Math.min(vwWidth, 300); // 80vw와 300 중 작은 값
-        setTocMaxWidth(calculatedWidth);
-      }
-    };
-
-    calculateWidth(); // 초기 계산
-    window.addEventListener("resize", calculateWidth); // 창 크기 변경 시 재계산
-    return () => window.removeEventListener("resize", calculateWidth);
-  }, []);
-
   // 화면 너비 감지
   useEffect(() => {
     const handleResize = () => {
@@ -133,7 +119,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
     const handleClickOutside = (event: MouseEvent) => {
       if (
         (tocRef.current &&
-        !tocRef.current.contains(event.target as Node)) &&
+        !tocRef.current.contains(event.target as Node)) ||
         (buttonRef.current &&
         !buttonRef.current.contains(event.target as Node))
       ) {
@@ -162,7 +148,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
             {/* TOC 버튼 */}
             <motion.div
               initial={{ right: "0px" }}
-              animate={{ right: isTOCOpen ? "300px" : "0px" }}
+              animate={{ right: isTOCOpen ? "0px" : "0px" }}
               transition={{ duration: 0.3 }}
               style={{
                 position: "fixed",
@@ -181,6 +167,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 variant="ghost"
                 _hover={{ bg: "transparent", color: "blue.400" }}
                 _focus={{ boxShadow: "none", bg: "transparent" }}
+                display={isTOCOpen ? "none" : "block"}
                 icon={
                   <Flex alignItems="center" justifyContent="center">
                     {isTOCOpen ? (
