@@ -157,14 +157,37 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
       }
     };
 
+    const handleTouchMove = (event: TouchEvent) => {
+      if (!tocRef.current) return;
+
+      const toc = tocRef.current;
+      const isInsideTOC = toc.contains(event.target as Node);
+
+      if (isInsideTOC) {
+        const isAtTop = toc.scrollTop === 0;
+        const isAtBottom =
+          Math.ceil(toc.scrollTop + toc.clientHeight) >= toc.scrollHeight;
+
+        if ((isAtTop && event.touches[0].clientY > 0) || (isAtBottom && event.touches[0].clientY < 0)) {
+          // TOC가 스크롤 한계에 도달하면 터치 이벤트를 body로 전달하지 않음
+          event.preventDefault();
+        }
+      } else {
+        // TOC 외부에서의 터치 이벤트는 정상 동작
+        return;
+      }
+    };
+
     if (isTOCOpen) {
-      // TOC가 열렸을 때 wheel 이벤트 리스너 추가
+      // TOC가 열렸을 때 wheel 이벤트와 touchmove 이벤트 리스너 추가
       document.addEventListener("wheel", handleWheel, { passive: false });
+      document.addEventListener("touchmove", handleTouchMove, { passive: false });
     }
 
     return () => {
-      // TOC가 닫히면 wheel 이벤트 리스너 제거
+      // TOC가 닫히면 wheel 이벤트와 touchmove 이벤트 리스너 제거
       document.removeEventListener("wheel", handleWheel);
+      document.removeEventListener("touchmove", handleTouchMove);
     };
   }, [isTOCOpen]);
 
