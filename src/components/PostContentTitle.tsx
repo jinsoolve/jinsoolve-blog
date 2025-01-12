@@ -62,8 +62,8 @@ const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostConte
   const { colorMode } = useColorMode();
   const flexDirection = useBreakpointValue({ base: "column", "1.75xl": "column" });
   const boxShadowColor = useColorModeValue(
-    "0 4px 6px rgba(0, 0, 0, 0.3)",
-    "0 4px 6px rgba(255, 255, 255, 0.3)"
+    "lg",
+    "dark-lg"
   );
 
   return (
