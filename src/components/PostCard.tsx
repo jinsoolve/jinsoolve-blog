@@ -57,7 +57,9 @@ const PostCard = ({
         borderRadius="20px"
         overflow="hidden"
         width="300px"
-        height={cardHeight}
+        maxWidth="90vw"
+        minHeight={cardHeight}
+        height="100%"
         boxShadow="xl"
         borderWidth="2px"
         borderColor={borderColor}
@@ -70,7 +72,11 @@ const PostCard = ({
         {/* 썸네일 */}
         <GatsbyImage
           objectFit="cover"
-          style={{ height: "45%", width: "100%"}}
+          style={{
+            maxHeight: "171px",
+            height: "45%",
+            width: "100%"
+          }}
           image={thumbnail}
           alt={`${slug} cover image`}
         />

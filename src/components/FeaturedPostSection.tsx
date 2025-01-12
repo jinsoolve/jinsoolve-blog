@@ -91,7 +91,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
             style={{
               flex: "0 0 auto",
               scrollSnapAlign: "start",
-              width: "300px",
+              width: "290px",
             }}
           >
             <FeaturedPostCard
@@ -104,6 +104,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
               thumbnail={
                 post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!
               }
+              excerpt={post.excerpt!}
             />
           </motion.div>
         ))}

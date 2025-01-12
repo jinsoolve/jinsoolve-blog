@@ -15,6 +15,7 @@ interface FeaturedPostCardProps {
   updatedAt: string;
   categories: readonly (string | null)[];
   thumbnail?: IGatsbyImageData;
+  excerpt: string;
 }
 
 const FeaturedPostCard = ({
@@ -25,6 +26,7 @@ const FeaturedPostCard = ({
                             thumbnail,
                             title,
                             updatedAt,
+                            excerpt,
                           }: FeaturedPostCardProps) => {
   const diffMs = useMemo(() => new Date().getTime() - new Date(createdAt).getTime(), [createdAt]);
   const isNewPost = useMemo(() => Math.floor(diffMs / (1000 * 60 * 60 * 24)) <= 10, [diffMs]);
@@ -44,8 +46,9 @@ const FeaturedPostCard = ({
         position="relative"
         borderRadius="20px"
         overflow="hidden"
-        width="300px"
-        height="380px"
+        width="290px"
+        minHeight="380px"
+        height="100%"
         transition="all 0.25s ease"
         boxShadow="xl"
         borderWidth="2px"
@@ -60,14 +63,22 @@ const FeaturedPostCard = ({
         {thumbnail ? (
           <GatsbyImage
             objectFit="cover"
-            style={{ height: "45%", width: "100%" }}
+            style={{
+              maxHeight: "171px",
+              height: "45%",
+              width: "100%"
+            }}
             image={thumbnail}
             alt={`${slug} cover image`}
           />
         ) : (
           <GatsbyImage
             objectFit="cover"
-            style={{ height: "45%", width: "100%" }}
+            style={{
+              maxHeight: "171px",
+              height: "45%",
+              width: "100%"
+            }}
             image={thumbnail}
             alt={`${slug} cover image`}
           />
@@ -97,7 +108,7 @@ const FeaturedPostCard = ({
               {title}
             </Heading>
             <Text fontSize="16px" color="gray.600" noOfLines={2} marginBottom="10px">
-              {description}
+              {description || excerpt}
             </Text>
           </Box>
 

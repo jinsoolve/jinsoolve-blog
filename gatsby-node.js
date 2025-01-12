@@ -46,16 +46,40 @@ exports.createResolvers = async ({ createResolvers }) => {
   const { unified } = await import("unified");
   const remarkParse = (await import("remark-parse")).default;
   const remarkSlug = (await import("remark-slug")).default;
-  const remarkMath = (await import("remark-math")).default; // remark-math 플러그인 추가
+  const remarkMath = (await import("remark-math")).default;
   const { visit } = await import("unist-util-visit");
-  const rehypeKatex = (await import("rehype-katex")).default; // rehype-katex 플러그인 추가
+  const rehypeKatex = (await import("rehype-katex")).default;
 
   const slugify = (text) =>
     text
       .toLowerCase()
       .trim()
-      .replace(/\s+/g, "-") // 공백 -> 하이픈
-      .replace(/[^a-z0-9가-힣\-]+/g, ""); // 알파벳/숫자/한글/하이픈 외 제거
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9가-힣\-]+/g, "");
+
+  const extractTextFromNode = (node, katex) => {
+    if (!node) return "";
+
+    if (node.type === "text") {
+      return node.value || "";
+    }
+
+    if (node.type === "inlineMath") {
+      // KaTeX 렌더링
+      return katex.renderToString(node.value, { throwOnError: false });
+    }
+
+    if (node.type === "link" || node.type === "linkReference") {
+      // 링크 내부 텍스트 추출 (링크 주소는 무시)
+      return node.children.map((child) => extractTextFromNode(child, katex)).join("");
+    }
+
+    if (node.children && Array.isArray(node.children)) {
+      return node.children.map((child) => extractTextFromNode(child, katex)).join("");
+    }
+
+    return "";
+  };
 
   createResolvers({
     Mdx: {
@@ -67,34 +91,26 @@ exports.createResolvers = async ({ createResolvers }) => {
           let headingCounter = 0;
 
           try {
-            const katex = (await import("katex")).default; // 동적 import
+            const katex = (await import("katex")).default;
 
             const processor = unified()
-              .use(remarkParse) // Markdown을 AST로 변환
-              .use(remarkSlug) // 기본 slug 지원
-              .use(remarkMath) // remark-math 플러그인 추가
-              .use(rehypeKatex, { strict: false }); // rehype-katex 플러그인 추가
+              .use(remarkParse)
+              .use(remarkSlug)
+              .use(remarkMath)
+              .use(rehypeKatex, { strict: false });
 
             const tree = processor.parse(markdownContent);
 
             visit(tree, "heading", (node) => {
-              const text = node.children
-                .map((child) => {
-                  if (child.type === "inlineMath") {
-                    // KaTeX 렌더링
-                    return katex.renderToString(child.value, { throwOnError: false });
-                  }
-                  return child.value || "";
-                })
-                .join("");
+              const text = extractTextFromNode(node, katex);
 
-              headingCounter += 1; // 카운터 증가
+              headingCounter += 1;
               const id = `my-heading-${headingCounter}`;
 
               if (id) {
                 headers.push({
                   depth: node.depth,
-                  title: text, // KaTeX 렌더링 결과를 포함한 텍스트
+                  title: text,
                   url: `#${id}`,
                 });
               }
@@ -104,16 +120,13 @@ exports.createResolvers = async ({ createResolvers }) => {
               const result = [];
 
               for (let depth = 1; depth <= 6; depth++) {
-                // 각 depth에 대해 트리 구성 시도
                 const tempResult = processNodesAtDepth(nodes, depth);
 
                 if (tempResult.length > 0) {
-                  // 깊이에 해당하는 결과가 있으면, 해당 결과를 반환하고 종료
                   return tempResult;
                 }
               }
 
-              // 만약 모든 depth에 대해 빈 결과가 나왔으면 빈 배열 반환
               return result;
             };
 
@@ -123,7 +136,7 @@ exports.createResolvers = async ({ createResolvers }) => {
                 const current = nodes[0];
                 if (current.depth < depth) break;
                 if (current.depth === depth) {
-                  nodes.shift(); // 처리된 노드 제거
+                  nodes.shift();
                   const children = processNodesAtDepth(nodes, depth + 1);
                   result.push({
                     depth: current.depth,
