@@ -92,6 +92,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
               flex: "0 0 auto",
               scrollSnapAlign: "start",
               width: "290px",
+              maxWidth: "85vw",
             }}
           >
             <FeaturedPostCard
