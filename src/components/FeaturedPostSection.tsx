@@ -91,7 +91,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
             style={{
               flex: "0 0 auto",
               scrollSnapAlign: "start",
-              width: "290px",
+              width: "300px",
               maxWidth: "85vw",
             }}
           >

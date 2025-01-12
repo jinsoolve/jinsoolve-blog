@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, useBreakpointValue, Icon } from "@chakra-ui/react";
+import { Box, Flex, IconButton, useBreakpointValue, Icon, useColorMode } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
@@ -94,7 +94,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   const tocRef = useRef<HTMLDivElement>(null);
   const [TOC_MAX_WIDTH, setTocMaxWidth] = useState(300); // 기본값
 
-
+  const {colorMode} = useColorMode();
 
   // 화면 너비 감지
   useEffect(() => {
@@ -132,6 +132,40 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isTOCOpen]);
+
+  useEffect(() => {
+    const handleTOCScroll = (event: WheelEvent) => {
+      if (!tocRef.current) return;
+
+      const toc = tocRef.current;
+      const isScrollingInTOC =
+        toc.contains(event.target as Node) &&
+        toc.scrollHeight > toc.clientHeight;
+
+      if (isScrollingInTOC) {
+        // TOC 내부에서만 스크롤 허용
+        const isAtTop = toc.scrollTop === 0;
+        const isAtBottom =
+          Math.ceil(toc.scrollTop + toc.clientHeight) >= toc.scrollHeight;
+
+        if (isAtTop && event.deltaY < 0) {
+          event.preventDefault();
+        } else if (isAtBottom && event.deltaY > 0) {
+          event.preventDefault();
+        }
+      }
+    };
+
+    if (isTOCOpen) {
+      // TOC가 열렸을 때 wheel 이벤트 리스너 추가
+      document.addEventListener("wheel", handleTOCScroll, { passive: false });
+    }
+
+    return () => {
+      // TOC가 닫히면 wheel 이벤트 리스너 제거
+      document.removeEventListener("wheel", handleTOCScroll);
     };
   }, [isTOCOpen]);
 
@@ -198,14 +232,16 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 width: "300px",
                 maxWidth: "80vw",
                 zIndex: 10,
+                overflowY: "auto", // 세로 스크롤 활성화
+                overflowX: "hidden", // 가로 스크롤 숨김
               }}
             >
               <Box
                 backgroundColor="white"
-                height="100%"
                 boxShadow="md"
-                padding="0px 20px"
                 position="relative"
+                height="100%"
+                width="300px"
                 _dark={{
                   backgroundColor: "gray.800",
                 }}
@@ -225,7 +261,16 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                     color: "white",
                   }}
                 />
-                <Box pt={"60px"}>
+                <Box
+                  pt={"60px"}
+                  pb={"20px"}
+                  pl={"20px"}
+                  width="300px"
+                  backgroundColor="white"
+                  _dark={{
+                    backgroundColor: "gray.800",
+                  }}
+                >
                   <TableOfContents tableOfContents={data.post.myTableOfContents} />
                 </Box>
               </Box>
