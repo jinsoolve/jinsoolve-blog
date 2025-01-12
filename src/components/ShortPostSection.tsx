@@ -20,7 +20,7 @@ const ShortPostSection = ({ posts }: ShortPostSectionProps) => {
       <Flex
         direction="column"
         as="ul"
-        maxHeight="570px"
+        maxHeight="400px"
         overflowY="auto"
         overscrollBehavior="contain"
         marginTop="20px"

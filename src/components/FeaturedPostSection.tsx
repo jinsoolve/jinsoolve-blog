@@ -45,7 +45,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
     <Box
       // width={isLarge ? "90%" : "80%"} // boolean 값에 따라 width 변경
       width="90%"
-      maxWidth={isLarge ? "1200px" : "660px"}
+      maxWidth={isLarge ? "950px" : "660px"}
       mx="auto"
       py="20px"
       position="relative" // 버튼이 이 컨테이너 기준으로 배치됨

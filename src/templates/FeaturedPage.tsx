@@ -10,6 +10,7 @@ import Categories from "../components/DefaultCategories";
 import FeaturedPostSection from "../components/FeaturedPostSection";
 import { Box, Flex, Container } from "@chakra-ui/react";
 import { DOMAIN } from "../constants";
+import ShortPostSection from "../components/ShortPostSection";
 
 export const query = graphql`
   query CategoryPageTemplate($category: String!, $limit: Int, $skip: Int) {
@@ -48,6 +49,29 @@ export const query = graphql`
     profileImage: imageSharp(fluid: { originalName: { eq: "profile.jpg" } }) {
       gatsbyImageData
     }
+    
+     # locale은 null인것만 가져옴 (ko)
+    shortPosts: allMdx(
+      filter: { 
+        frontmatter: { 
+          categories: { in: [$category] },
+          locale: { eq: null }
+        }
+      },
+      sort: { frontmatter: { createdAt: DESC } }
+      limit: 15
+    ) {
+      nodes {
+        frontmatter {
+          title
+          updatedAt
+          createdAt
+          slug
+          tags
+          categories
+        }
+      }
+    }
 
     featuredPosts: allMdx(
       filter: { frontmatter: { categories: { in: [$category] }, featured: { eq: true }, locale: { eq: null } } }
@@ -83,19 +107,38 @@ export default function CategoriesTemplate({ pageContext, data }: CategoriesProp
   const currentPage = data.allMdx.pageInfo.currentPage;
   const pageCount = data.allMdx.pageInfo.pageCount;
   const featuredPosts = data.featuredPosts.nodes;
+  const shortPosts = data.shortPosts.nodes.filter(post =>
+    post.frontmatter.categories.includes(pageContext.category) &&
+    post.frontmatter.categories.includes("short")
+  );
+  const baseUrl = "/allFeaturedPosts/" + pageContext.category;
+  const isLarge = shortPosts.length == 0;
 
   return (
     <MainLayout>
       <Categories currentCategory={pageContext.category} />
 
       {featuredPosts.length > 0 && (
-        <Container maxW="none" centerContent padding="20px">
-          <FeaturedPostSection posts={featuredPosts} isLarge={true} />
-        </Container>
+        <Flex
+          width="100%"
+          maxWidth={{ base: "95%", md: "800px", lg: "85%", xl: "100%" }}
+          direction={{ base: "column", lg: "row" }}
+          justifyContent="center"
+          alignItems={{ base: "center", lg: "flex-start" }}  // 좁을 때 중앙정렬
+          marginTop="40px"
+          gap={{ base: "20px", lg: "60px" }}
+        >
+          <FeaturedPostSection posts={featuredPosts} isLarge={isLarge} />
+          {shortPosts.length > 0 && (
+            <ShortPostSection posts={shortPosts} />
+          )}
+        </Flex>
       )}
 
       <PostGrid posts={data.allMdx.nodes} />
-      {pageCount > 1 && <Pagenation currentPage={currentPage} pageCount={pageCount} baseUrl="" />}
+      {pageCount > 1 && (
+        <Pagenation currentPage={currentPage} pageCount={pageCount} baseUrl={baseUrl} />
+      )}
       <Profile />
     </MainLayout>
   );
