@@ -136,36 +136,35 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
   }, [isTOCOpen]);
 
   useEffect(() => {
-    const handleTOCScroll = (event: WheelEvent) => {
+    const handleWheel = (event: WheelEvent) => {
       if (!tocRef.current) return;
 
       const toc = tocRef.current;
-      const isScrollingInTOC =
-        toc.contains(event.target as Node) &&
-        toc.scrollHeight > toc.clientHeight;
+      const isInsideTOC = toc.contains(event.target as Node);
 
-      if (isScrollingInTOC) {
-        // TOC 내부에서만 스크롤 허용
+      if (isInsideTOC) {
         const isAtTop = toc.scrollTop === 0;
         const isAtBottom =
           Math.ceil(toc.scrollTop + toc.clientHeight) >= toc.scrollHeight;
 
-        if (isAtTop && event.deltaY < 0) {
-          event.preventDefault();
-        } else if (isAtBottom && event.deltaY > 0) {
+        if ((isAtTop && event.deltaY < 0) || (isAtBottom && event.deltaY > 0)) {
+          // TOC가 스크롤 한계에 도달하면 스크롤 이벤트를 body로 전달하지 않음
           event.preventDefault();
         }
+      } else {
+        // TOC 외부에서의 스크롤은 정상 동작
+        return;
       }
     };
 
     if (isTOCOpen) {
       // TOC가 열렸을 때 wheel 이벤트 리스너 추가
-      document.addEventListener("wheel", handleTOCScroll, { passive: false });
+      document.addEventListener("wheel", handleWheel, { passive: false });
     }
 
     return () => {
       // TOC가 닫히면 wheel 이벤트 리스너 제거
-      document.removeEventListener("wheel", handleTOCScroll);
+      document.removeEventListener("wheel", handleWheel);
     };
   }, [isTOCOpen]);
 
