@@ -3,14 +3,15 @@ import { Link } from "gatsby";
 
 interface ShortPostSectionProps {
   posts: GatsbyTypes.AllPostPageTemplateQuery["shortPosts"]["nodes"];
+  isLarge?: boolean; // boolean prop 추가 (optional)
 }
 
-const ShortPostSection = ({ posts }: ShortPostSectionProps) => {
+const ShortPostSection = ({ posts, isLarge = false }: ShortPostSectionProps) => {
   return (
     <Flex
       marginTop={{ base: "100px", lg: "0px" }}
       marginLeft={{ base: "10vw", md: "150px", lg: "0px" }}
-      width={{ base: "100%", lg: "240px" }}
+      width={isLarge ? "100%" : { base: "100%", lg: "240px" }}
       direction="column"
       alignSelf={{ base: "center", lg: "flex-start" }} // 좁을 때만 중앙정렬
     >

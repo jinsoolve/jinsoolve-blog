@@ -44,7 +44,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
   return (
     <Box
       // width={isLarge ? "90%" : "80%"} // boolean 값에 따라 width 변경
-      width="90%"
+      width="100%"
       maxWidth={isLarge ? "950px" : "660px"}
       mx="auto"
       py="20px"

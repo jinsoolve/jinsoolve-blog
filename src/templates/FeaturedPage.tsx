@@ -130,8 +130,22 @@ export default function CategoriesTemplate({ pageContext, data }: CategoriesProp
         >
           <FeaturedPostSection posts={featuredPosts} isLarge={isLarge} />
           {shortPosts.length > 0 && (
-            <ShortPostSection posts={shortPosts} />
+            <ShortPostSection posts={shortPosts} isLagre={"true"} />
           )}
+        </Flex>
+      )}
+
+      {pageContext.category !== "short" && featuredPosts.length == 0 && shortPosts.length > 0 && (
+        <Flex
+          width="100%"
+          maxWidth={{ base: "95%", md: "800px", lg: "85%" }}
+          direction={{ base: "column", lg: "row" }}
+          justifyContent="center"
+          alignItems={{ base: "center", lg: "flex-start" }}  // 좁을 때 중앙정렬
+          marginTop="40px"
+          gap={{ base: "20px", lg: "60px" }}
+        >
+          <ShortPostSection posts={shortPosts} isLarge={"true"} />
         </Flex>
       )}
 
