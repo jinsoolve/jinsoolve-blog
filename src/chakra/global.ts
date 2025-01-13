@@ -39,7 +39,7 @@ export default {
   ".katex": {
     overflowX: "auto",
     overflowY: "hidden",
-    margin: "0 auto !important",
+    margin: "auto !important",
   },
 
   // react-syntax-highlighter 줄 번호 스타일
@@ -71,8 +71,8 @@ export default {
   },
 
   img: {
-    marginTop: "10px",
-    marginBottom: "10px",
+    marginTop: "20px",
+    marginBottom: "-10px",
     marginRight: "auto",
     marginLeft: "auto",
   },

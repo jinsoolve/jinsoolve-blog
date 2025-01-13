@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "a394c5f93916b37d",
+        "id": "e70dd1659dc3822b",
         "type": "tabs",
         "children": [
           {
-            "id": "37e6e78f527b8e1b",
+            "id": "63ddf29abbdec37c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/ML/ml-textbook-10/Untitled.mdx",
+                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx",
                 "mode": "source",
                 "source": false
               },
@@ -52,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:누적합",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "ec33c89a1666536c",
@@ -93,9 +93,9 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "diary/2024-summer-vacation-plan/content.mdx",
-                "collapseAll": false,
-                "extraContext": false,
+                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx",
+                "collapseAll": true,
+                "extraContext": true,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
@@ -103,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "content의 백링크"
+              "title": "Untitled의 백링크"
             }
           },
           {
@@ -112,12 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "diary/2024-summer-vacation-plan/content.mdx",
+                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "content의 나가는 링크"
+              "title": "Untitled의 나가는 링크"
             }
           },
           {
@@ -139,13 +139,14 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "diary/2024-summer-vacation-plan/content.mdx"
+                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx"
               },
               "icon": "lucide-list",
-              "title": "content 개요"
+              "title": "Untitled 개요"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -164,29 +165,33 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "37e6e78f527b8e1b",
+  "active": "63ddf29abbdec37c",
   "lastOpenFiles": [
-    "public/static/3edce1d7889f533c4de2a0fe0b15e5a0/5b158/4.png",
-    "public/static/3edce1d7889f533c4de2a0fe0b15e5a0/5b158",
-    "public/static/e5ab237afa674c720360aaaf6a6b2c38/08a84/2.png",
-    "public/static/d7c4287b62379008bb2950729e98b73d/9f933/3.png",
-    "public/static/d7c4287b62379008bb2950729e98b73d/9f933",
-    "public/static/e5ab237afa674c720360aaaf6a6b2c38/08a84",
-    "public/static/dd832cb0947d0d529ad54f8be0308392/e8e04/1.png",
-    "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07/cover.webp",
-    "public/static/dd832cb0947d0d529ad54f8be0308392/e8e04",
-    "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07",
-    "public/page-data/categories/page-data.json",
-    "public/page-data/about/page-data.json",
-    "public/page-data/about",
-    "public/page-data/portfolio/page-data.json",
-    "public/page-data/portfolio",
+    "public/page-data/posts/ml-textbook-1/page-data.json",
+    "public/page-data/posts/ml-textbook-1",
+    "public/page-data/posts/ml-textbook-14/page-data.json",
+    "public/page-data/posts/ml-textbook-14",
+    "public/page-data/posts/ml-textbook-13/page-data.json",
+    "public/page-data/posts/ml-textbook-13",
+    "public/page-data/posts/ml-textbook-8/page-data.json",
+    "public/page-data/posts/ml-textbook-8",
+    "public/page-data/posts/ml-textbook-7/page-data.json",
+    "public/page-data/posts/ml-textbook-7",
+    "public/page-data/posts/ml-textbook-15/page-data.json",
     "public/static/201cc421e8cc1d2696531c37c8d028b4/75d07/cover.webp",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
+    "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
     "public/favicon-32x32.png",
-    "public/icons/icon-96x96.png",
-    "public/icons/icon-72x72.png",
-    "public/icons/icon-512x512.png",
+    "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07/cover.webp",
+    "public/static/c8138af222d0a534b9d3f8006c1ec625/94672/cover.webp",
+    "public/static/c8138af222d0a534b9d3f8006c1ec625/e91f5/cover.webp",
+    "public/static/201cc421e8cc1d2696531c37c8d028b4/94672/cover.webp",
+    "public/static/201cc421e8cc1d2696531c37c8d028b4/e91f5/cover.webp",
+    "public/static/201cc421e8cc1d2696531c37c8d028b4/c497a/cover.png",
+    "instantsearch-app/node_modules/flat-cache/changelog.md",
+    "node_modules/typescript/README.md",
+    "node_modules/clipboard/readme.md",
+    "content/diary/2024-winter-vacation-plan.md",
     "node_modules/react-use-gesture/README.md",
     "node_modules/react-use-gesture/CHANGELOG.md",
     "node_modules/react-swipeable/README.md",

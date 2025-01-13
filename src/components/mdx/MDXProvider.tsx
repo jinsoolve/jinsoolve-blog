@@ -169,16 +169,16 @@ const customComponents = {
   h2: (props: HeadingProps) => <Heading as="h2" fontSize={32} mt="60px" mb="30px" {...props} />,
   h3: (props: HeadingProps) => <Heading as="h3" fontSize={24} mt="60px" mb="20px" {...props} />,
   h4: (props: HeadingProps) => <Heading as="h4" fontSize={20} mt="40px" mb="20px" {...props} />,
-  p: (props: TextProps) => <Text fontSize={16} mt="16px" lineHeight="1.8" {...props} />,
+  p: (props: TextProps) => <Text fontSize={16} mt="20px" lineHeight="1.8" {...props} />,
   li: (props: BoxProps) => (
     <Box
       as="li"
       sx={{
         wordBreak: "break-word", // 텍스트가 너무 길 경우 줄바꿈
-        marginLeft: "20px",
+        marginLeft: "24px",
         lineHeight: "1.8",
       }}
-      m={"10px 0"}
+      m={"4px 0"}
       fontSize={16}
       {...props}
     />
