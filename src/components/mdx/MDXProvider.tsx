@@ -201,13 +201,13 @@ const customComponents = {
     <Box
       as="ul"
       sx={{
-        listStylePosition: "outside", // 숫자 위치를 텍스트와 맞춤
+        listStylePosition: "inside", // 숫자 위치를 텍스트와 맞춤
         listStyleType: "disc", // 기본 bullet 스타일
-        marginLeft: "-2px",
-        // textIndent: "-2.4em", // 첫 줄의 들여쓰기 제거
+        // marginLeft: "0px",
+        textIndent: "-1.2em", // 첫 줄의 들여쓰기 제거
         "* > ul": {
           margin: 0,
-          padding: 0,
+          // padding: 0,
         },
       }}
       {...props}

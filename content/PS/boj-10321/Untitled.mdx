@@ -1,0 +1,208 @@
+---
+slug: boj-10321
+title: 백준 10321 - 요새 건설
+description: ""
+thumbnail:
+categories:
+  - PS
+tags:
+  - 기하학
+  - convex-hull
+createdAt: 2025/01/13
+updatedAt:
+featured: false
+locale:
+---
+# [백준 10321 - 요새 건설](https://www.acmicpc.net/problem/10321)
+
+## 핵심 아이디어
+껍질에 있는 점들을 대상으로 임의의 대각선에 대해서 해당 대각선에서 가장 먼 점 2개를 고르면 해당 대각선으로 만들 수 있는 가장 큰 영역이다. 이때 먼점 2개는 대각선을 기준으로 서로 다른 영역에 있음을 가정한다.
+
+## 풀이
+1. Graham Scan을 이용해서 Convex Hull을 구한다. 이때 Hull에 있는 점들은 반시계 방향 순서대로 정렬되어 있다.
+2. Hull(껍질)에 있는 점들에 대해서 임의의 2개의 점을 고르고 2점을 이어서 만든 대각선에 대해 가장 먼 점 2개를 고른다. (이때 먼 점 2개는 대각선을 기준으로 서로 다른 영역에 있음을 의미함.)
+	- 임의의 2개 점을 i, j라 하자. i를 고정시키고 j를 반시계 방향으로 증가시키면서 이동한다고 가정하자.
+	- 각 영역의 가장 먼 점을 a, b라 하자.
+	- j가 반시계 방향으로 이동하면 a와 b 모두 반 시계 방향으로 이동할 수 밖에 없다. 따라서 a,b의 이동횟수는 한 개의 i에 대해서 n번 씩이다.
+	- 따라서 $O(n^2)$ 만에 모든 대각선들에 대한 영역을 검사할 수 있다.
+
+## 코드
+```cpp
+#include <bits/stdc++.h>
+
+#define endl "\n"
+#define all(v) (v).begin(), (v).end()
+#define all1(v) (v).begin()+1, (v).end()
+#define For(i, a, b) for(int i=(a); i<(b); i++)
+#define FOR(i, a, b) for(int i=(a); i<=(b); i++)
+#define Bor(i, a, b) for(int i=(a)-1; i>=(b); i--)
+#define BOR(i, a, b) for(int i=(a); i>=(b); i--)
+#define ft first
+#define sd second
+
+using namespace std;
+using ll = long long;
+using lll = __int128_t;
+using ulll = __uint128_t;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using ti3 = tuple<int, int, int>;
+using tl3 = tuple<ll, ll, ll>;
+
+template<typename T> using ve = vector<T>;
+template<typename T> using vve = vector<vector<T>>;
+
+template<class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template<class T> bool ckmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
+
+const int INF = 987654321;
+const int INF0 = numeric_limits<int>::max();
+const ll LNF = 987654321987654321;
+const ll LNF0 = numeric_limits<ll>::max();
+
+struct Point {
+    ll x, y;
+
+    Point() {}
+    Point(ll _x, ll _y) : x(_x), y(_y) {}
+    ll cross(Point other) {
+        return x*other.y - y*other.x;
+    }
+    ll crossSign(Point other) {
+        ll res = this->cross(other);
+        if(res > 0) return 1;
+        else if(res < 0) return -1;
+        return 0;
+    }
+    ll dist(Point other) {
+        return pow(x-other.x,2) + pow(y-other.y,2);
+    }
+    Point operator-(Point other) const {
+        return Point(x-other.x, y-other.y);
+    }
+    bool operator==(Point other) const {
+        return x == other.x && y == other.y;
+    }
+    bool operator<(Point other) const {
+        if(x == other.x) return y < other.y;
+        return x < other.x;
+    }
+    void print() {
+        cout << x << ' ' << y << ' ';
+    }
+};
+
+Point reference;
+
+vector<Point> Graham_Scan(vector<Point> &points) {
+    sort(all(points)); points.erase(unique(all(points)), points.end());
+    reference = points[0];
+    auto cmp = [&](Point a, Point b) {
+        ll res = (a - reference).cross(b - reference);
+        if(res != 0) return res > 0;
+        return reference.dist(a) < reference.dist(b);
+    };
+    sort(points.begin()+1, points.end(), cmp);
+
+    vector<Point> convex;
+    for(Point p3 : points) {
+        while(convex.size() >= 2) {
+            Point p2 = convex.back();
+            Point p1 = convex[convex.size() - 2];
+            ll ccw = (p2-p1).cross(p3-p2);
+            if(ccw > 0) break;
+            convex.pop_back();
+        }
+        convex.emplace_back(p3);
+    }
+    return convex;
+}
+
+ll triangle(Point &p1, Point &p2, Point &p3) {
+    ll res = abs(p1.x*p2.y + p2.x*p3.y + p3.x*p1.y - p2.x*p1.y - p3.x*p2.y - p1.x*p3.y);
+//    if(res % 2 == 0) return (ld)((ll)(res/2));
+//    return (ld)((ll)(res/2) + 0.5);
+    return res;
+}
+
+int n;
+ve<Point> v;
+
+void solve() {
+    cin >> n;
+    ve<Point>tmp(n);
+    For(i,0,n) cin >> tmp[i].x >> tmp[i].y;
+    v = Graham_Scan(tmp);
+
+//    for(auto x:v) {
+//        x.print();
+//        cout << endl;
+//    }
+
+    n = v.size();
+   if(n == 3) {
+        ll res = triangle(v[0], v[1], v[2]);
+        if(res%2 == 0) cout << res/2 << endl;
+        else cout << res/2 << ".5\n";
+        return;
+    }
+
+
+    ll ret = 0;
+    For(i,0,n) {
+        int a=(i+1)%n, b=(i+3)%n;
+        For(j, i+2, n) {
+            while(true) {
+                int na = (a+1)%n;
+                if(na == j) break;
+                if(triangle(v[i], v[j], v[a]) < triangle(v[i], v[j], v[na])) a = na;
+                else break;
+            }
+            while(true) {
+                int nb = (b+1)%n;
+                if(nb == i) break;
+                if(triangle(v[i],v[j],v[b]) < triangle(v[i],v[j],v[nb])) b = nb;
+                else break;
+            }
+            ckmax(ret, triangle(v[i],v[j],v[a]) + triangle(v[i],v[j],v[b]));
+        }
+
+    }
+
+    if(ret%2 == 0) cout << ret/2 << endl;
+    else cout << ret/2 << ".5\n";
+}
+
+int main(void) {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    cout << fixed << setprecision(1);
+
+    int TC=1;
+    cin >> TC;
+    FOR(tc, 1, TC) {
+//        cout << "Case #" << tc << ": ";
+        solve();
+    }
+
+
+    return 0;
+}
+```
+
+
+
+## 오답노트
+
+1. 처음에는 한 점에 대해서 가장 먼 점을 구하면 해당 대각선으로 만든 영역 중 가장 큰 것이 해당 점을 기주으로 했을 때 최선이라 가정했으나, 이 가정을 증명할 수 없어서 틀렸다. 
+   모든 대각선에 대해서 검사하고 a,b가 n번 씩 밖에 움직일 필요가 없음을 이용해야 했다.
+2. 위 풀이대로 구현하였는데 틀렸습니다가 나왔다. ret을 -1로 초기화했는데, ret이 한번도 업데이트되지 않는 경우가 존재한 모양이다. (심지어 $n < 3$ 일 때 0을 반환해주도록 했는데, 그 외의 경우도 있는 듯 하다.)
+   
+
+
+# 참고
+- https://justicehui.github.io/icpc/2019/02/04/BOJ10321/

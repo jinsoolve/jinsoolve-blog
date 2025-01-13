@@ -1,0 +1,116 @@
+---
+slug: boj-24491
+title: 백준 24491 - Searching for Soulmates
+description: 
+thumbnail: 
+categories:
+  - PS
+tags:
+  - 애드-혹
+  - 비트마스킹
+createdAt: 2025/01/13
+updatedAt: 
+featured: false
+locale:
+---
+# [문제](https://www.acmicpc.net/problem/24491)
+각 테스트케이스마다 2개의 1 ~ $10^{18}$의 수 a, b가 주어질 때, a를 b로 만드는데 드는 최소의 연산 횟수를 구하는 문제이다.
+
+이때 연산은 $\times 2$, $\div 2$(짝수일 때만), $+1$이 가능하다.
+
+# 해결
+## 핵심 아이디어
+2개의 숫자를 2진수로 바꿔서 생각해보자.
+
+예를 들어, $1010$을 $101001$으로 만들고 싶다고 할 때, prefix가 같으므로 이때의 최소 연산 횟수는 쉽게 구할 수 있고 고정되어 있다고 할 수 있다.
+$$
+1010 → 10100 → 101000 → 101001
+$$
+이 횟수를 잘 생각해보면 **prefix 길이를 뺀 나머지 길이**(여기서는 2), **prefix가 아닌 부분에서의 1비트 개수**(여기서는 1)을 합하면 쉽게 구할 수 있다.
+
+그럼 예를 들어서  a와 b가 주어지고, b=$1011$ 인 상황이라고 하자.
+a에서 $1011$, $101$, $10$, $1$을 만드는데 드는 최소 연산 횟수를 구하고 나면 각 수에서 원래의 b로 만드는 최소 횟수를 구하는 건 위에서 얘기한 것처럼 prefix가 같으므로 쉽게 구할 수 있다.
+
+따라서 a를 위 수들로 만드는 횟수만 구하면 된다.
+a가 만약 목표로 하는 수들보다 작다면  그냥 1로 더해서 만들어준다. 어차피 우리는 목표로 하는 수만 도달하면 저기부터는 알아서 최적의 루트로 b로 만들어주므로 그냥 만들어주기만 하면된다.
+반면, a가 목표로 하는 수보다 큰 경우는 $\div 2$을 해줘서 구해준다. 물론 이때 홀수라면 $+1$을 해준다.
+
+이런 식으로 모든 목표 수를 만들고 났을 때의 연산 횟수와 b로 증가시키는 횟수를 더해서 그 중 최솟값을 구하면 그것이 정답이 된다.
+
+## 코드
+```cpp
+#include <bits/stdc++.h>
+
+#define endl "\n"
+#define all(v) (v).begin(), (v).end()
+#define all1(v) (v).begin()+1, (v).end()
+#define For(i, a, b) for(int i=(a); i<(b); i++)
+#define FOR(i, a, b) for(int i=(a); i<=(b); i++)
+#define Bor(i, a, b) for(int i=(a)-1; i>=(b); i--)
+#define BOR(i, a, b) for(int i=(a); i>=(b); i--)
+#define ft first
+#define sd second
+
+using namespace std;
+using ll = long long;
+using lll = __int128_t;
+using ulll = __uint128_t;
+using ull = unsigned long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using ti3 = tuple<int, int, int>;
+using tl3 = tuple<ll, ll, ll>;
+
+template<typename T> using ve = vector<T>;
+template<typename T> using vve = vector<vector<T>>;
+
+template<class T> bool ckmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template<class T> bool ckmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
+
+const int INF = 987654321;
+const int INF0 = numeric_limits<int>::max();
+const ll LNF = 987654321987654321;
+const ll LNF0 = numeric_limits<ll>::max();
+
+void solve() {
+    ll a, b; cin >> a >> b;
+    ll ans = LNF;
+    ll psum=0;
+
+    for(ll remove=0; (b>>remove)>0; remove++) {
+        ll prefix = b>>remove;
+        while(a > prefix) {
+            if(a%2 == 1) {
+                a++;
+                psum++;
+            }
+            a/=2;
+            psum++;
+        }
+        ll sum = psum;
+        sum += prefix - a;
+        sum += remove;
+        sum += __builtin_popcountll(b & ((1<<remove) - 1));
+
+        ckmin(ans, sum);
+    }
+    cout << ans << endl;
+}
+
+int main(void) {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    int TC=1;
+    cin >> TC;
+    FOR(tc, 1, TC) {
+//        cout << "Case #" << tc << ": ";
+        solve();
+    }
+
+
+    return 0;
+}
+```
