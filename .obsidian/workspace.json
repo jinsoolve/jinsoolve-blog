@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx",
+                "file": "content/ML/ml-textbook-15/Untitled.mdx",
                 "mode": "source",
                 "source": false
               },
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx",
+                "file": "content/ML/ml-textbook-15/Untitled.mdx",
                 "collapseAll": true,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -112,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx",
+                "file": "content/ML/ml-textbook-15/Untitled.mdx",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/diary/2024-winter-vacation-plan/Untitled.mdx"
+                "file": "content/ML/ml-textbook-15/Untitled.mdx"
               },
               "icon": "lucide-list",
               "title": "Untitled 개요"
@@ -167,27 +167,27 @@
   },
   "active": "63ddf29abbdec37c",
   "lastOpenFiles": [
-    "public/page-data/posts/ml-textbook-1/page-data.json",
-    "public/page-data/posts/ml-textbook-1",
-    "public/page-data/posts/ml-textbook-14/page-data.json",
-    "public/page-data/posts/ml-textbook-14",
-    "public/page-data/posts/ml-textbook-13/page-data.json",
-    "public/page-data/posts/ml-textbook-13",
-    "public/page-data/posts/ml-textbook-8/page-data.json",
-    "public/page-data/posts/ml-textbook-8",
-    "public/page-data/posts/ml-textbook-7/page-data.json",
-    "public/page-data/posts/ml-textbook-7",
-    "public/page-data/posts/ml-textbook-15/page-data.json",
+    "public/page-data/posts/ml-textbook-5/page-data.json",
+    "public/page-data/posts/ml-textbook-5",
+    "public/page-data/allFeaturedPosts/PS/page-data.json",
+    "public/page-data/allFeaturedPosts/PS",
+    "public/static/12b3c4faf3563db53ebc414f85f60b9a/5cffb/cover.webp",
+    "public/static/12b3c4faf3563db53ebc414f85f60b9a/5cffb",
+    "public/static/12b3c4faf3563db53ebc414f85f60b9a",
+    "content/diary/2024-summer-vacation-plan/cover.jpg",
+    "content/diary/2024-summer-vacation-plan/010345081648784708.1595.jpg",
+    "public/static/12c918c3165199985f0044ac2891b740/72fb6/cover.webp",
+    "public/static/12c918c3165199985f0044ac2891b740/72fb6",
+    "public/static/12c918c3165199985f0044ac2891b740",
+    "content/diary/2024-summer-vacation-plan/cover.jpg.sb-99db7ca2-bf534g",
+    "public/static/8b1773cae06381211b7a743730c6a48d/ec403/cover.webp",
+    "public/static/8b1773cae06381211b7a743730c6a48d/ec403",
+    "public/static/8b1773cae06381211b7a743730c6a48d",
+    "public/static/2b45d267a74022d0b93115eb83a75f51/7e669/cover.webp",
+    "public/static/f86d67ef335512599c896df132d3d046/8d77c/cover.webp",
+    "content/diary/2024-summer-vacation-plan/4239.jpg",
     "public/static/201cc421e8cc1d2696531c37c8d028b4/75d07/cover.webp",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
-    "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
-    "public/favicon-32x32.png",
-    "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07/cover.webp",
-    "public/static/c8138af222d0a534b9d3f8006c1ec625/94672/cover.webp",
-    "public/static/c8138af222d0a534b9d3f8006c1ec625/e91f5/cover.webp",
-    "public/static/201cc421e8cc1d2696531c37c8d028b4/94672/cover.webp",
-    "public/static/201cc421e8cc1d2696531c37c8d028b4/e91f5/cover.webp",
-    "public/static/201cc421e8cc1d2696531c37c8d028b4/c497a/cover.png",
     "instantsearch-app/node_modules/flat-cache/changelog.md",
     "node_modules/typescript/README.md",
     "node_modules/clipboard/readme.md",

@@ -1347,7 +1347,7 @@ type MdxFrontmatter = {
   readonly locale: Maybe<Scalars['String']>;
   readonly slug: Maybe<Scalars['String']>;
   readonly tags: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
-  readonly thumbnail: Maybe<File>;
+  readonly thumbnail: Maybe<Scalars['String']>;
   readonly title: Maybe<Scalars['String']>;
   readonly updatedAt: Maybe<Scalars['String']>;
 };
@@ -1360,7 +1360,7 @@ type MdxFrontmatterFieldSelector = {
   readonly locale: InputMaybe<FieldSelectorEnum>;
   readonly slug: InputMaybe<FieldSelectorEnum>;
   readonly tags: InputMaybe<FieldSelectorEnum>;
-  readonly thumbnail: InputMaybe<FileFieldSelector>;
+  readonly thumbnail: InputMaybe<FieldSelectorEnum>;
   readonly title: InputMaybe<FieldSelectorEnum>;
   readonly updatedAt: InputMaybe<FieldSelectorEnum>;
 };
@@ -1373,7 +1373,7 @@ type MdxFrontmatterFilterInput = {
   readonly locale: InputMaybe<StringQueryOperatorInput>;
   readonly slug: InputMaybe<StringQueryOperatorInput>;
   readonly tags: InputMaybe<StringQueryOperatorInput>;
-  readonly thumbnail: InputMaybe<FileFilterInput>;
+  readonly thumbnail: InputMaybe<StringQueryOperatorInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
   readonly updatedAt: InputMaybe<StringQueryOperatorInput>;
 };
@@ -1386,7 +1386,7 @@ type MdxFrontmatterSortInput = {
   readonly locale: InputMaybe<SortOrderEnum>;
   readonly slug: InputMaybe<SortOrderEnum>;
   readonly tags: InputMaybe<SortOrderEnum>;
-  readonly thumbnail: InputMaybe<FileSortInput>;
+  readonly thumbnail: InputMaybe<SortOrderEnum>;
   readonly title: InputMaybe<SortOrderEnum>;
   readonly updatedAt: InputMaybe<SortOrderEnum>;
 };
@@ -2611,54 +2611,10 @@ type WebPOptions = {
   readonly quality: InputMaybe<Scalars['Int']>;
 };
 
-type MdxContentFragment = { readonly excerpt: string | null, readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
-
-type AllPostPageTemplateQueryVariables = Exact<{
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-}>;
-
-
-type AllPostPageTemplateQuery = { readonly allMdx: { readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly excerpt: string | null, readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }>, readonly pageInfo: { readonly currentPage: number, readonly pageCount: number } }, readonly ogimage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly profileImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly shortPosts: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly slug: string | null, readonly tags: ReadonlyArray<string | null> | null } | null }> }, readonly featuredPosts: { readonly nodes: ReadonlyArray<{ readonly excerpt: string | null, readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
-
-type CategoryPageTemplateQueryVariables = Exact<{
-  category: Scalars['String'];
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-}>;
-
-
-type CategoryPageTemplateQuery = { readonly allMdx: { readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }>, readonly pageInfo: { readonly currentPage: number, readonly pageCount: number } }, readonly ogimage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly profileImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null };
-
-type PortfolioPageQueryVariables = Exact<{
-  id: Scalars['String'];
-}>;
-
-
-type PortfolioPageQuery = { readonly post: { readonly tableOfContents: any | null, readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly description: string | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly locale: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null };
-
-type PostPageQueryVariables = Exact<{
-  id: Scalars['String'];
-  categories: ReadonlyArray<Scalars['String']> | Scalars['String'];
-  slug: Scalars['String'];
-}>;
-
-
-type PostPageQuery = { readonly post: { readonly myTableOfContents: any | null, readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly locale: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null } | null, readonly otherLocalePost: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly locale: string | null } | null }> }, readonly relatedPosts: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly slug: string | null, readonly title: string | null, readonly description: string | null, readonly categories: ReadonlyArray<string | null> | null, readonly tags: ReadonlyArray<string | null> | null, readonly createdAt: string | null, readonly updatedAt: string | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }> } };
-
 type ProfileQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type ProfileQueryQuery = { readonly profileImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null };
-
-type TagPageTemplateQueryVariables = Exact<{
-  tag: Scalars['String'];
-  limit: InputMaybe<Scalars['Int']>;
-  skip: InputMaybe<Scalars['Int']>;
-}>;
-
-
-type TagPageTemplateQuery = { readonly allMdx: { readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly title: string | null, readonly updatedAt: string | null, readonly createdAt: string | null, readonly description: string | null, readonly slug: string | null, readonly tags: ReadonlyArray<string | null> | null, readonly thumbnail: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null }>, readonly pageInfo: { readonly currentPage: number, readonly pageCount: number } }, readonly ogimage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null, readonly profileImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null };
 
 type TagsQueryVariables = Exact<{ [key: string]: never; }>;
 
