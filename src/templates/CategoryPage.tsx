@@ -32,6 +32,7 @@ export const query = graphql`
           slug
           categories
         }
+        excerpt(pruneLength: 100)
       }
 
       pageInfo {

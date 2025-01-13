@@ -3,5 +3,6 @@
   "templater-obsidian",
   "mdx",
   "obsidian-git",
-  "obsidian-imgur-plugin"
+  "obsidian-imgur-plugin",
+  "obsidian-latex-suite"
 ]

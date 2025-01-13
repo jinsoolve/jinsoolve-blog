@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/PS/boj-24491/Untitled.mdx",
+                "file": "content/short/count-bit-in-cpp/Untitled.mdx",
                 "mode": "source",
                 "source": false
               },
@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 425.5
   },
   "right": {
     "id": "ec33c89a1666536c",
@@ -167,19 +167,20 @@
   },
   "active": "63ddf29abbdec37c",
   "lastOpenFiles": [
-    "public/page-data/allFeaturedPosts/diary/page-data.json",
-    "public/page-data/allFeaturedPosts/diary",
-    "public/page-data/allFeaturedPosts",
+    "public/page-data/allFeaturedPosts/ML/page-data.json",
+    "public/page-data/allFeaturedPosts/ML",
+    "public/page-data/allFeaturedPosts/PS/page-data.json",
+    "public/page-data/allFeaturedPosts/PS",
+    "public/page-data/posts/how-to-calculate-triangle-area/page-data.json",
+    "public/page-data/posts/how-to-calculate-triangle-area",
+    "public/page-data/posts/ml-textbook-1/page-data.json",
+    "public/page-data/posts/ml-textbook-1",
+    "public/page-data/tags/회귀/page-data.json",
+    "public/page-data/tags/회귀",
+    "public/page-data/tags/정규화/page-data.json",
     "public/static/12b3c4faf3563db53ebc414f85f60b9a/5cffb/cover.webp",
-    "public/static/12b3c4faf3563db53ebc414f85f60b9a/5cffb",
-    "public/page-data/posts/ml-textbook-7/page-data.json",
-    "public/page-data/posts/ml-textbook-7",
-    "public/page-data/posts/ml-textbook-5/page-data.json",
-    "public/page-data/posts/ml-textbook-5",
-    "public/page-data/posts/ml-textbook-8/page-data.json",
-    "public/page-data/posts/ml-textbook-8",
-    "public/page-data/tags/차원축소/page-data.json",
     "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
+    "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07/cover.webp",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
     "public/favicon-32x32.png",
     "public/icons/icon-512x512.png",
@@ -187,7 +188,6 @@
     "public/icons/icon-256x256.png",
     "public/icons/icon-192x192.png",
     "public/icons/icon-144x144.png",
-    "public/icons/icon-96x96.png",
     "content/PS/content.md",
     "instantsearch-app/node_modules/flat-cache/changelog.md",
     "node_modules/typescript/README.md",
