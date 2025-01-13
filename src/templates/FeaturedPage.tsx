@@ -35,6 +35,7 @@ export const query = graphql`
           slug
           categories
         }
+        excerpt(pruneLength: 100)
       }
 
       pageInfo {
@@ -70,6 +71,7 @@ export const query = graphql`
           tags
           categories
         }
+        excerpt(pruneLength: 100)
       }
     }
 
@@ -91,6 +93,7 @@ export const query = graphql`
           slug
           categories
         }
+        excerpt(pruneLength: 100)
       }
     }
   }
@@ -121,7 +124,7 @@ export default function CategoriesTemplate({ pageContext, data }: CategoriesProp
       {featuredPosts.length > 0 && (
         <Flex
           width="100%"
-          maxWidth={{ base: "95%", md: "800px", lg: "85%", xl: "100%" }}
+          maxWidth={{ base: "85%", md: "800px", lg: "85%", xl: "100%" }}
           direction={{ base: "column", lg: "row" }}
           justifyContent="center"
           alignItems={{ base: "center", lg: "flex-start" }}  // 좁을 때 중앙정렬
