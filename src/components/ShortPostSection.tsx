@@ -12,7 +12,7 @@ const ShortPostSection = ({ posts, isLarge = false }: ShortPostSectionProps) => 
       marginTop={{ base: "100px", lg: "0px" }}
       marginLeft={{ base: "3vw", md: "150px", lg: "0px" }}
       paddingRight={{ base: "3vw", md: "150px", lg: "0px" }}
-      width={isLarge ? "100%" : { base: "100%", lg: "240px" }}
+      width={isLarge ? { base: "85%", sm_md: "95%" } : { base: "100%", lg: "240px" }}
       direction="column"
       alignSelf={{ base: "center", lg: "flex-start" }} // 좁을 때만 중앙정렬
     >

@@ -22,7 +22,7 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
   const { colorMode } = useColorMode();
 
   // 반응형으로 버튼 위치 조정
-  const arrowPosition = useBreakpointValue({ base: "-30px", md: "-40px" });
+  const arrowPosition = useBreakpointValue({ base: "-25px", md: "-40px" });
 
   const handleScroll = (direction: "left" | "right") => {
     if (!scrollContainerRef.current) return;
@@ -44,8 +44,8 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
   return (
     <Box
       // width={isLarge ? "90%" : "80%"} // boolean 값에 따라 width 변경
-      width="100%"
-      maxWidth={isLarge ? "950px" : "660px"}
+      width={isLarge ? {base: "500px", sm_md: "610px", lg: "920px"} : "660px"}
+      maxWidth={{ base: "85vw", sm_md: "85vw", lg: "85vw" }}
       mx="auto"
       py="20px"
       position="relative" // 버튼이 이 컨테이너 기준으로 배치됨
@@ -64,6 +64,8 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
         scrollSnapType="x mandatory"
         scrollBehavior="smooth"
         gap="20px"
+        maxWidth={{ base: "95%", md: "100%" }}
+        margin="auto"
         css={{
           paddingBottom: "16px",
           scrollbarColor: `${colorMode === "dark" ? "#555 transparent" : "#aaa transparent"}`, // 평소 투명
@@ -91,7 +93,6 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
             style={{
               flex: "0 0 auto",
               scrollSnapAlign: "start",
-              width: "300px",
               maxWidth: "85vw",
             }}
           >
