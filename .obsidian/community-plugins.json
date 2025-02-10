@@ -4,5 +4,8 @@
   "mdx",
   "obsidian-git",
   "obsidian-imgur-plugin",
-  "obsidian-latex-suite"
+  "obsidian-latex-suite",
+  "obsidian-plugin-toc",
+  "insta-toc",
+  "meld-encrypt"
 ]

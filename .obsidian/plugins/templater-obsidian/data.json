@@ -23,7 +23,7 @@
   "file_templates": [
     {
       "regex": ".*",
-      "template": "templates/default.mdx"
+      "template": "templates/default.md"
     }
   ],
   "syntax_highlighting": true,
@@ -32,6 +32,6 @@
     "templates/default.mdx"
   ],
   "startup_templates": [
-    "templates/default.mdx"
+    "templates/default.md"
   ]
 }

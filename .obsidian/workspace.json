@@ -1,19 +1,19 @@
 {
   "main": {
-    "id": "7fc50c865d71db6e",
+    "id": "deef7a34782dc8cd",
     "type": "split",
     "children": [
       {
-        "id": "e70dd1659dc3822b",
+        "id": "dce3604137a5418e",
         "type": "tabs",
         "children": [
           {
-            "id": "63ddf29abbdec37c",
+            "id": "0e402a400e127d45",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/short/count-bit-in-cpp/Untitled.mdx",
+                "file": "content/short/descending-order-binary-search/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -27,27 +27,28 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "ebfb6a50a4551d24",
+    "id": "d463c63abb73fa62",
     "type": "split",
     "children": [
       {
-        "id": "8397b94655c91298",
+        "id": "eb82c9d09de3d3b2",
         "type": "tabs",
         "children": [
           {
-            "id": "ad1bd0b1fe9b6663",
+            "id": "2bb948e0b0e2c1a0",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "파일 탐색기"
             }
           },
           {
-            "id": "0bd7d6066d83614d",
+            "id": "14b5c0c7744adc23",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -64,38 +65,37 @@
             }
           },
           {
-            "id": "31644cffcf5a9bd9",
+            "id": "55e443f22b1abc98",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
               "state": {},
               "icon": "lucide-bookmark",
-              "title": "Bookmarks"
+              "title": "북마크"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 425.5
+    "width": 300
   },
   "right": {
-    "id": "ec33c89a1666536c",
+    "id": "70d3a3b795a461b7",
     "type": "split",
     "children": [
       {
-        "id": "f3d334e2115ae0ba",
+        "id": "6fb52902ddc212f6",
         "type": "tabs",
         "children": [
           {
-            "id": "f9fd432c61529ff2",
+            "id": "e2ff66cb6542ecd9",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/ML/ml-textbook-15/Untitled.mdx",
-                "collapseAll": true,
-                "extraContext": true,
+                "collapseAll": false,
+                "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
@@ -103,50 +103,52 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Untitled의 백링크"
+              "title": "백링크"
             }
           },
           {
-            "id": "cf90d76f661336e8",
+            "id": "1108f3ecbd28f3d5",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/ML/ml-textbook-15/Untitled.mdx",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Untitled의 나가는 링크"
+              "title": "나가는 링크"
             }
           },
           {
-            "id": "77113ac3d72795fe",
+            "id": "fe5091c554bef5b8",
             "type": "leaf",
             "state": {
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
-              "title": "Tags"
+              "title": "태그"
             }
           },
           {
-            "id": "a1c189c89c121d73",
+            "id": "52b110e697a62eb1",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/ML/ml-textbook-15/Untitled.mdx"
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Untitled 개요"
+              "title": "개요"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -155,62 +157,42 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:퀵 스위처 열기": false,
+      "switcher:빠른 전환기 열기": false,
       "graph:그래프 뷰 열기": false,
       "canvas:새 캔버스 만들기": false,
-      "daily-notes:오늘의 데일리 노트 열기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
       "templates:템플릿 삽입": false,
       "command-palette:명령어 팔레트 열기": false,
       "templater-obsidian:Templater": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "meld-encrypt:New encrypted note": false,
+      "meld-encrypt:Convert to or from an Encrypted note": false,
+      "meld-encrypt:Encrypt/Decrypt": false
     }
   },
-  "active": "63ddf29abbdec37c",
+  "active": "0e402a400e127d45",
   "lastOpenFiles": [
-    "public/page-data/tags/2025-겨울방학-계획/page-data.json",
-    "public/page-data/tags/2025-겨울방학-계획",
-    "public/page-data/tags/학부연구생/page-data.json",
-    "public/page-data/tags/학부연구생",
-    "public/page-data/tags/차원축소/page-data.json",
-    "public/page-data/tags/차원축소",
-    "public/page-data/tags/수학-공식/page-data.json",
-    "public/page-data/tags/수학-공식",
-    "public/page-data/tags/PCA/page-data.json",
-    "public/page-data/tags/PCA",
-    "public/page-data/tags/감정-분석/page-data.json",
-    "public/static/12b3c4faf3563db53ebc414f85f60b9a/5cffb/cover.webp",
-    "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
+    "public/page-data/posts/ml-textbook-1/page-data.json",
+    "public/page-data/posts/ml-textbook-1",
+    "public/page-data/posts/ml-textbook-4/page-data.json",
+    "public/page-data/posts/ml-textbook-4",
+    "public/page-data/posts/count-bit-in-cpp/page-data.json",
+    "public/page-data/posts/count-bit-in-cpp",
     "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07/cover.webp",
+    "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07",
+    "public/page-data/posts/boj-33007/page-data.json",
+    "public/page-data/posts/boj-33007",
+    "public/page-data/posts/2025-winter-vacation-plan/page-data.json",
+    "public/page-data/posts/2025-winter-vacation-plan",
+    "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
+    "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
     "public/favicon-32x32.png",
     "public/icons/icon-512x512.png",
     "public/icons/icon-384x384.png",
     "public/icons/icon-256x256.png",
     "public/icons/icon-192x192.png",
     "public/icons/icon-144x144.png",
-    "content/PS/content.md",
-    "instantsearch-app/node_modules/flat-cache/changelog.md",
-    "node_modules/typescript/README.md",
-    "node_modules/clipboard/readme.md",
-    "content/diary/2024-winter-vacation-plan.md",
-    "node_modules/react-use-gesture/README.md",
-    "node_modules/react-use-gesture/CHANGELOG.md",
-    "node_modules/react-swipeable/README.md",
-    "content/ML/content.md",
-    "instantsearch-app/README.md",
-    "content/ML/ml-textbook-2/content.md",
-    "무제 파일.md",
-    "content/PS/boj-17407/content.md",
-    "content/PS/boj-17407/무제 파일 1.md",
-    "content/무제 파일.md",
-    "content/PS/boj-17407/content1.md",
-    "content/PS/boj-17407/content.mdx.md",
-    "content/content.mdx.md",
-    "content/diary/2024-summer-vacation-plan/무제 파일.md",
-    "templates/무제 파일.md",
-    "content/ML/why-logistic-cost/무제 파일.md",
-    "content/PS/무제 폴더/무제 파일.md",
-    "무제 파일 1.md",
-    "default.md"
+    "content/short/descending-order-binary-search/Untitled.md"
   ]
 }

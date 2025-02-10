@@ -1,8 +1,1 @@
-{
-  "promptDelete": false,
-  "livePreview": true,
-  "userIgnoreFilters": [
-    "node_modules/",
-    "instantsearch-app/"
-  ]
-}
+{}

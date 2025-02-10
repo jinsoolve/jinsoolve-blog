@@ -1,3 +1,5 @@
 {
-  "cssTheme": "Things"
+  "cssTheme": "Simple",
+  "theme": "moonstone",
+  "accentColor": "#589ef9"
 }

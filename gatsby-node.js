@@ -116,18 +116,30 @@ exports.createResolvers = async ({ createResolvers }) => {
               }
             });
 
-            const buildHierarchy = (nodes) => {
-              const result = [];
+            const buildHierarchy = (headers) => {
+              if (!headers.length) return [];
 
-              for (let depth = 1; depth <= 6; depth++) {
-                const tempResult = processNodesAtDepth(nodes, depth);
+              const root = { depth: 0, items: [] };
+              const stack = [root];
 
-                if (tempResult.length > 0) {
-                  return tempResult;
+              headers.forEach((header) => {
+                while (stack.length > 1 && stack[stack.length - 1].depth >= header.depth) {
+                  stack.pop(); // 현재 header보다 같거나 큰 depth는 스택에서 제거
                 }
-              }
 
-              return result;
+                const parent = stack[stack.length - 1];
+                const newNode = {
+                  depth: header.depth,
+                  title: header.title,
+                  url: header.url,
+                  items: [],
+                };
+
+                parent.items.push(newNode);
+                stack.push(newNode);
+              });
+
+              return root.items;
             };
 
             const processNodesAtDepth = (nodes, depth) => {
