@@ -76,7 +76,7 @@ const CodeBlock = (props: any) => {
   const match = /language-(\w+)/.exec(className || "");
   const { colorMode } = useColorMode();
   const theme = colorMode === "dark" ? oneDark : oneLight;
-
+  const language = match ? match[1] : "text"; // 언어가 없을 경우 기본값 "text"
   const [fontSize, setFontSize] = useState(14);
 
   useEffect(() => {
@@ -100,10 +100,10 @@ const CodeBlock = (props: any) => {
     };
   }, []);
 
-  if (!match) {
-    // 인라인 코드일 경우 InlineCode 컴포넌트 사용
-    return <InlineCode>{children}</InlineCode>;
-  }
+  // if (!match) {
+  //   // 인라인 코드일 경우 InlineCode 컴포넌트 사용
+  //   return <InlineCode>{children}</InlineCode>;
+  // }
 
   return (
     <Box
@@ -118,26 +118,47 @@ const CodeBlock = (props: any) => {
           : "0px 4px 12px rgba(0, 0, 0, 0.2)"
       }
     >
+      {/* 상단 바 */}
       <Box
         bg={theme['code[class*="language-"]']?.background || "inherit"}
         height="40px"
         px="10px"
         display="flex"
         alignItems="center"
+        justifyContent="space-between"  // 좌우 배치 정렬
         borderBottom={`1px solid ${colorMode === "dark" ? "gray.700" : "gray.400"}`}
         paddingLeft="20px"
         paddingTop="25px"
         paddingBottom="25px"
       >
-        <Box display="flex" gap="8px">
-          <Box width="12px" height="12px" borderRadius="full" bg="red.500" />
-          <Box width="12px" height="12px" borderRadius="full" bg="yellow.500" />
-          <Box width="12px" height="12px" borderRadius="full" bg="green.500" />
+        {/* Mac 버튼 + 언어명 그룹 */}
+        <Box display="flex" alignItems="baseline" gap="12px">
+          {/* Mac 버튼 */}
+          <Box display="flex" gap="8px">
+            <Box width="12px" height="12px" borderRadius="full" bg="red.500" />
+            <Box width="12px" height="12px" borderRadius="full" bg="yellow.500" />
+            <Box width="12px" height="12px" borderRadius="full" bg="green.500" />
+          </Box>
+
+          {/* 언어명 표시 (Mac 버튼 오른쪽) */}
+          <Text
+            fontSize="14px"
+            fontWeight="bold"
+            textTransform="uppercase"
+            color={colorMode === "dark" ? "whiteAlpha.800" : "gray.700"}
+            padding="2px 8px"
+            borderRadius="5px"
+          >
+            {language}
+          </Text>
         </Box>
+
+        {/* 복사 버튼 */}
+        <CopyButton text={String(children).replace(/\n$/, "")} />
       </Box>
 
+      {/* 코드 영역 */}
       <Box>
-        <CopyButton text={String(children).replace(/\n$/, "")} />
         <SyntaxHighlighter
           style={theme}
           customStyle={{
@@ -154,7 +175,7 @@ const CodeBlock = (props: any) => {
             fontSize: `${fontSize - 2}px`,
           }}
           PreTag="div"
-          language={match[1]}
+          language={language}
           {...props}
         >
           {String(children).replace(/\n$/, "")}
