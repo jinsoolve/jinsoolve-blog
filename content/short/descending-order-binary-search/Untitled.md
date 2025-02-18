@@ -13,10 +13,9 @@ locale:
 ---
 내림차순 정렬이 되어있을 때의 lower_bound와 upper_bound 사용법
 
-```c++
+```cpp
 lower_bound(v.begin(), v.end(), num, greater<int>());
 ```
-
 - `lower_bound` := `num`과 같거나 작은 원소들 중 첫번째 원소
 - `upper_bound` := `num`보다 작은 원소들 중 첫번째 원소
 

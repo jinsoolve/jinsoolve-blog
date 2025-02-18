@@ -19,10 +19,6 @@ gatsby-types.d.ts
 gatsby-schema.graphql
 .env.production
 .env.development
-content/diary/2024-summer-vacation-plan/content.mdx
-content/diary/2024-summer-vacation-plan/cover.png
 /src/__generated__
 /.obsidian
 src/__generated__/gatsby-types.d.ts
-content/paper/PoisonedRAG/Untitled.md
-content/paper/PoisonedRAG/cover.png

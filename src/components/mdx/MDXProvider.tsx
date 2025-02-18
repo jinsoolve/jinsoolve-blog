@@ -100,10 +100,10 @@ const CodeBlock = (props: any) => {
     };
   }, []);
 
-  // if (!match) {
-  //   // 인라인 코드일 경우 InlineCode 컴포넌트 사용
-  //   return <InlineCode>{children}</InlineCode>;
-  // }
+  if (!match) {
+    // 인라인 코드일 경우 InlineCode 컴포넌트 사용
+    return <InlineCode>{children}</InlineCode>;
+  }
 
   return (
     <Box
@@ -125,14 +125,14 @@ const CodeBlock = (props: any) => {
         px="10px"
         display="flex"
         alignItems="center"
-        justifyContent="space-between"  // 좌우 배치 정렬
+        justifyContent="space-between" // 좌우 배치 정렬
         borderBottom={`1px solid ${colorMode === "dark" ? "gray.700" : "gray.400"}`}
         paddingLeft="20px"
         paddingTop="25px"
         paddingBottom="25px"
       >
         {/* Mac 버튼 + 언어명 그룹 */}
-        <Box display="flex" alignItems="baseline" gap="12px">
+        <Box display="flex" alignItems="baseline">
           {/* Mac 버튼 */}
           <Box display="flex" gap="8px">
             <Box width="12px" height="12px" borderRadius="full" bg="red.500" />
@@ -141,16 +141,17 @@ const CodeBlock = (props: any) => {
           </Box>
 
           {/* 언어명 표시 (Mac 버튼 오른쪽) */}
-          <Text
+          <Box
             fontSize="14px"
             fontWeight="bold"
             textTransform="uppercase"
             color={colorMode === "dark" ? "whiteAlpha.800" : "gray.700"}
-            padding="2px 8px"
+            padding="2px 12px"
             borderRadius="5px"
+            textAlign="left"
           >
             {language}
-          </Text>
+          </Box>
         </Box>
 
         {/* 복사 버튼 */}

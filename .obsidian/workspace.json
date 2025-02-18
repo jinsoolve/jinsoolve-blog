@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/PS/boj-25315/Untitled.md",
+                "file": "content/paper/PoisonedRAG/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -94,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "content/paper/PoisonedRAG/Untitled.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "백링크"
+              "title": "Untitled 의 백링크"
             }
           },
           {
@@ -152,8 +153,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -172,30 +172,30 @@
   },
   "active": "0e402a400e127d45",
   "lastOpenFiles": [
-    "public/page-data/about/page-data.json",
-    "public/page-data/about",
-    "README.md",
-    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
-    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc",
+    "content/ML/ml-textbook-4/Untitled.mdx",
     "public/page-data/posts/boj-25315/page-data.json",
     "public/page-data/posts/boj-25315",
-    "public/page-data/posts",
-    "public/page-data/dev-404-page/page-data.json",
-    "public/page-data/index/page-data.json",
-    "public/page-data/404.html/page-data.json",
-    "public/page-data/dev-404-page",
-    "public/page-data/index",
+    "public/page-data/about/page-data.json",
+    "public/page-data/about",
+    "content/short/descending-order-binary-search/Untitled.md",
+    "content/short/count-bit-in-cpp/Untitled.mdx",
+    "content/short/how-to-calculate-triangle-area/Untitled.mdx",
+    "public/page-data/categories/page-data.json",
+    "public/page-data/categories",
+    "public/page-data/tags/page-data.json",
+    "public/page-data/tags/표준화/page-data.json",
+    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
+    "public/static/c8138af222d0a534b9d3f8006c1ec625/75d07/cover.webp",
+    "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
+    "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
     "public/favicon-32x32.png",
     "public/icons/icon-512x512.png",
     "public/icons/icon-384x384.png",
     "public/icons/icon-256x256.png",
     "public/icons/icon-192x192.png",
     "public/icons/icon-144x144.png",
-    "public/icons/icon-96x96.png",
-    "public/icons/icon-72x72.png",
-    "public/icons/icon-48x48.png",
     "content/PS/boj-25315/Untitled.md",
-    "content/short/descending-order-binary-search/Untitled.md",
+    "README.md",
     "content/PS/무제.canvas"
   ]
 }
