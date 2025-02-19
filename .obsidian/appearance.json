@@ -1,5 +1,6 @@
 {
   "cssTheme": "Simple",
   "theme": "moonstone",
-  "accentColor": "#589ef9"
+  "accentColor": "#589ef9",
+  "baseFontSize": 17
 }
