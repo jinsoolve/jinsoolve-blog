@@ -64,6 +64,7 @@ const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
               createdAt={post.frontmatter?.createdAt!}
               updatedAt={post.frontmatter?.updatedAt!}
               categories={post.frontmatter?.categories!}
+              excerpt={post.excerpt!}
             />
           </GridItem>
         ))}

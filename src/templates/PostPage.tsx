@@ -63,6 +63,7 @@ export const query = graphql`
             }
           }
         }
+        excerpt(pruneLength: 100)
       }
     }
   }
