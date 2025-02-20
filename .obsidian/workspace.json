@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/short/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/Untitled.md",
+                "file": "content/PS/boj-1155/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/short/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/Untitled.md",
+                "file": "content/PS/boj-1155/Untitled.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -172,6 +172,7 @@
   },
   "active": "0e402a400e127d45",
   "lastOpenFiles": [
+    "content/short/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/Untitled.md",
     "public/page-data/posts/boj-1155/page-data.json",
     "public/page-data/posts/boj-1155",
     "public/page-data/posts/boj-25315/page-data.json",
@@ -182,7 +183,6 @@
     "public/page-data/posts/PoisonedRAG",
     "public/page-data/posts/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/page-data.json",
     "public/page-data/posts/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle",
-    "public/page-data/posts",
     "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
     "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
@@ -193,7 +193,6 @@
     "public/icons/icon-192x192.png",
     "public/icons/icon-144x144.png",
     "public/icons/icon-96x96.png",
-    "content/short/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/Untitled.md",
     "content/PS/boj-1155/Untitled.md",
     "content/paper/PoisonedRAG/Untitled.md",
     "content/short/descending-order-binary-search/Untitled.md",
