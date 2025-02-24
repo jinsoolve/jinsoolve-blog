@@ -13,7 +13,7 @@ updatedAt:
 featured: false
 locale:
 ---
-위 포스트는 [백준 1155 - 변형 하노이](https://www.acmicpc.net/problem/1155) 문제의 해셜입니다.
+위 포스트는 [백준 1155 - 변형 하노이](https://www.acmicpc.net/problem/1155) 문제의 해설입니다.
 
 # 핵심 아이디어
 ## 아이디어 1
