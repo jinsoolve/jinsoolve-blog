@@ -5,7 +5,10 @@ description:
 thumbnail: 
 categories:
   - PS
-tags: 
+tags:
+  - 다이나믹-프로그래밍
+  - 트리
+  - 재귀
 createdAt: 2025/02/26
 updatedAt: 
 featured: false
@@ -64,6 +67,8 @@ string go(int n, ll dst) {
 	1. go(n,from) 길이만큼의 "U"를 반복시키고
 	2. go(n,to)을 그 뒤에다가 붙여주면 그것이 정답이 된다.
 
+
+# 코드
 위 내용을 코드로 작성해보면 아래와 같다.
 
 ```cpp
