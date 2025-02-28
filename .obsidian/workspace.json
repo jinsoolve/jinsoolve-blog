@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "dce3604137a5418e",
+        "id": "1b9402a1a07c7005",
         "type": "tabs",
         "children": [
           {
-            "id": "0e402a400e127d45",
+            "id": "9db6a78fc7aacdf8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/PS/boj-24979/Untitled.md",
+                "file": "content/PS/boj-6569/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -173,21 +173,22 @@
       "meld-encrypt:Encrypt/Decrypt": false
     }
   },
-  "active": "0e402a400e127d45",
+  "active": "9db6a78fc7aacdf8",
   "lastOpenFiles": [
-    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
-    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc",
+    "public/page-data/posts/boj-6569/page-data.json",
+    "public/page-data/posts/boj-6569",
     "public/page-data/posts/boj-24979/page-data.json",
     "public/page-data/posts/boj-24979",
     "public/page-data/posts",
+    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
+    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc",
     "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
     "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
     "public/static/6fb75eab4e07db27e99a999159c25605/eb588",
     "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394",
-    "public/page-data/404.html/page-data.json",
-    "public/page-data/404.html",
     "public/page-data/index/page-data.json",
-    "public/page-data/index",
+    "public/page-data/dev-404-page/page-data.json",
+    "public/page-data/404.html/page-data.json",
     "public/favicon-32x32.png",
     "public/icons/icon-512x512.png",
     "public/icons/icon-384x384.png",
@@ -195,10 +196,10 @@
     "public/icons/icon-192x192.png",
     "public/icons/icon-144x144.png",
     "public/icons/icon-96x96.png",
-    "public/icons/icon-72x72.png",
+    "content/PS/boj-24979/Untitled.md",
+    "content/PS/boj-6569/Untitled.md",
     "content/PS/boj-25315/Untitled.md",
     "content/PS/boj-1646/Untitled.md",
-    "content/PS/boj-24979/Untitled.md",
     "content/PS/boj-24979/무제.md",
     "content/PS/boj-1155/Untitled.md",
     "content/short/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/Untitled.md",

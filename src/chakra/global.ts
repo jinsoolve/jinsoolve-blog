@@ -91,4 +91,22 @@ export default {
   // "li > ul": {
   //   listStyleType: "circle", // 하위 레벨 bullet point 스타일
   // },
+
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    borderSpacing: "0",
+    border: "1px solid gray",
+    marginTop: "15px",
+  },
+
+  "th, td": {
+    border: "1px solid gray",
+    padding: "4px 0px",
+  },
+
+  // th: {
+  //   backgroundColor: "#f4f4f4",
+  //   fontWeight: "bold",
+  // },
 };
