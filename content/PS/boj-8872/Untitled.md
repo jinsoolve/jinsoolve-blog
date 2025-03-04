@@ -5,7 +5,11 @@ description:
 thumbnail: 
 categories:
   - PS
-tags: 
+tags:
+  - 트리
+  - 그래프-탐색
+  - 그래프-이론
+  - 깊이-우선-탐색
 createdAt: 2025/03/04
 updatedAt: 
 featured: false
