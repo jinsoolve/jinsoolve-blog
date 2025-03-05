@@ -10,7 +10,7 @@ tags:
   - 학부연구생
 createdAt: 2025/01/13
 updatedAt: 
-featured: true
+featured: false
 locale:
 ---
 # 서론
