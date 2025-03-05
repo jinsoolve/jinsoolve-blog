@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/PS/boj-8872/Untitled.md",
+                "file": "content/PS/boj-1787/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -141,7 +141,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/PS/boj-8872/Untitled.md",
+                "file": "content/PS/boj-1787/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -174,19 +174,19 @@
   },
   "active": "9db6a78fc7aacdf8",
   "lastOpenFiles": [
-    "public/page-data/posts/boj-6569/page-data.json",
-    "public/page-data/posts/boj-6569",
+    "public/page-data/posts/boj-1787/page-data.json",
+    "public/page-data/posts/boj-1787",
     "public/page-data/posts/boj-8872/page-data.json",
     "public/page-data/posts/boj-8872",
     "public/page-data/posts",
-    "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
-    "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
-    "public/static/6fb75eab4e07db27e99a999159c25605/eb588",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc",
+    "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
+    "public/static/6fb75eab4e07db27e99a999159c25605/eb588",
+    "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394/cover.webp",
     "public/static/ee7b601ff0aceb452fa381950cd8d8c7/da394",
     "public/page-data/dev-404-page/page-data.json",
-    "public/page-data/dev-404-page",
+    "public/page-data/index/page-data.json",
     "public/page-data/404.html/page-data.json",
     "public/favicon-32x32.png",
     "public/icons/icon-512x512.png",
@@ -195,8 +195,9 @@
     "public/icons/icon-192x192.png",
     "public/icons/icon-144x144.png",
     "public/icons/icon-96x96.png",
-    "content/PS/boj-6569/Untitled.md",
     "content/PS/boj-8872/Untitled.md",
+    "content/PS/boj-1787/Untitled.md",
+    "content/PS/boj-6569/Untitled.md",
     "content/PS/boj-24979/Untitled.md",
     "content/PS/boj-25315/Untitled.md",
     "content/PS/boj-1646/Untitled.md",
