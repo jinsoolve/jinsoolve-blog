@@ -13,6 +13,20 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "content/paper/Quantized Side Tuning/Untitled.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Untitled"
+            }
+          },
+          {
+            "id": "77c4ed1437b9e49a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "content/ML/intro-to-nlp-2/Untitled.md",
                 "mode": "source",
                 "source": false
@@ -20,8 +34,23 @@
               "icon": "lucide-file",
               "title": "Untitled"
             }
+          },
+          {
+            "id": "c9da409b6b07e282",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/paper/Quantized Side Tuning/Untitled.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Untitled"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -78,7 +107,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "70d3a3b795a461b7",
@@ -141,7 +171,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/ML/intro-to-nlp-2/Untitled.md",
+                "file": "content/paper/Quantized Side Tuning/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -172,30 +202,34 @@
       "meld-encrypt:Encrypt/Decrypt": false
     }
   },
-  "active": "9db6a78fc7aacdf8",
+  "active": "c9da409b6b07e282",
   "lastOpenFiles": [
-    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9/cover.webp",
-    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9",
-    "content/ML/intro-to-nlp-2/cover.png",
-    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6",
-    "content/ML/intro-to-nlp-2/Untitled.md",
-    "public/page-data/posts/boj-1787/page-data.json",
-    "public/page-data/posts/boj-1787",
-    "public/page-data/allFeaturedPosts/paper/page-data.json",
-    "public/page-data/allFeaturedPosts/paper",
-    "public/page-data/allFeaturedPosts",
-    "public/page-data/posts/PoisonedRAG/page-data.json",
-    "public/page-data/posts/PoisonedRAG",
-    "public/page-data/posts/boj-1055/page-data.json",
-    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
+    "public/page-data/posts/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/page-data.json",
+    "public/page-data/posts/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle",
+    "public/page-data/posts/intro-to-nlp-3/page-data.json",
+    "public/page-data/posts/intro-to-nlp-3",
+    "public/page-data/posts/ml-textbook-1/page-data.json",
+    "public/page-data/posts/ml-textbook-1",
+    "public/page-data/posts/intro-to-nlp-2/page-data.json",
+    "public/page-data/posts/intro-to-nlp-2",
+    "public/page-data/categories/paper/page-data.json",
+    "public/page-data/categories/paper",
+    "public/page-data/categories",
+    "무제.md",
+    "content/paper/Quantized Side Tuning/Untitled.md",
     "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
+    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
+    "public/static/f566903779599cee1d9c25328b1d3436/21a7f/cover.webp",
+    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9/cover.webp",
     "public/favicon-32x32.png",
     "public/icons/icon-512x512.png",
     "public/icons/icon-384x384.png",
     "public/icons/icon-256x256.png",
     "public/icons/icon-192x192.png",
     "public/icons/icon-144x144.png",
-    "public/icons/icon-96x96.png",
+    "content/ML/intro-to-nlp-3/Untitled.md",
+    "content/ML/intro-to-nlp-2/Untitled.md",
+    "content/paper/PoisonedRAG/Untitled.md",
     "content/PS/boj-1055/Untitled.md",
     "content/ML/무제.canvas",
     "content/PS/boj-6569/Untitled.md",
@@ -208,7 +242,6 @@
     "content/PS/boj-24979/무제.md",
     "content/PS/boj-1155/Untitled.md",
     "content/short/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/Untitled.md",
-    "content/paper/PoisonedRAG/Untitled.md",
     "content/short/descending-order-binary-search/Untitled.md",
     "README.md",
     "content/PS/무제.canvas"

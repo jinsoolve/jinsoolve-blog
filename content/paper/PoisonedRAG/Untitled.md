@@ -8,7 +8,7 @@ categories:
 tags: 
 createdAt: 2025/01/14
 updatedAt: 
-featured: true
+featured: false
 locale:
 ---
 위 글은 [PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generationof Large Language Models](https://arxiv.org/pdf/2402.07867) 논문을 리뷰한 글이다.
