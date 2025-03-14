@@ -41,7 +41,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/paper/Quantized Side Tuning/Untitled.md",
+                "file": "content/paper/Quantized-Side-Tuning/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -107,8 +107,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "70d3a3b795a461b7",
@@ -171,7 +170,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/paper/Quantized Side Tuning/Untitled.md",
+                "file": "content/paper/Quantized-Side-Tuning/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -202,31 +201,31 @@
       "meld-encrypt:Encrypt/Decrypt": false
     }
   },
-  "active": "c9da409b6b07e282",
+  "active": "2bb948e0b0e2c1a0",
   "lastOpenFiles": [
-    "public/page-data/posts/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/page-data.json",
-    "public/page-data/posts/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle",
-    "public/page-data/posts/intro-to-nlp-3/page-data.json",
-    "public/page-data/posts/intro-to-nlp-3",
-    "public/page-data/posts/ml-textbook-1/page-data.json",
-    "public/page-data/posts/ml-textbook-1",
-    "public/page-data/posts/intro-to-nlp-2/page-data.json",
-    "public/page-data/posts/intro-to-nlp-2",
-    "public/page-data/categories/paper/page-data.json",
-    "public/page-data/categories/paper",
-    "public/page-data/categories",
-    "무제.md",
-    "content/paper/Quantized Side Tuning/Untitled.md",
+    "public/rss.xml",
+    "public/tags/그래프-이론/index.html",
+    "public/tags/그래프-이론",
+    "public/tags/규제/index.html",
+    "public/tags/규제",
+    "public/tags/그래프-탐색/index.html",
+    "public/tags/그래프-탐색",
+    "public/tags/그리디/index.html",
+    "public/tags/그리디",
+    "public/tags/기하학/index.html",
+    "public/tags/기하학",
     "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
+    "public/static/6fb75eab4e07db27e99a999159c25605/38eb8/cover.webp",
+    "public/static/6fb75eab4e07db27e99a999159c25605/04210/cover.webp",
+    "public/static/f689f8b3b021090c7d4495f61be56e2f/aa8b2/og-image.webp",
+    "public/static/f689f8b3b021090c7d4495f61be56e2f/7948c/og-image.webp",
+    "public/static/f689f8b3b021090c7d4495f61be56e2f/e818d/og-image.webp",
+    "public/static/f689f8b3b021090c7d4495f61be56e2f/ee21c/og-image.png",
+    "public/static/f689f8b3b021090c7d4495f61be56e2f/5ca6c/og-image.png",
+    "public/static/f689f8b3b021090c7d4495f61be56e2f/5fe58/og-image.png",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
-    "public/static/f566903779599cee1d9c25328b1d3436/21a7f/cover.webp",
-    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9/cover.webp",
-    "public/favicon-32x32.png",
-    "public/icons/icon-512x512.png",
-    "public/icons/icon-384x384.png",
-    "public/icons/icon-256x256.png",
-    "public/icons/icon-192x192.png",
-    "public/icons/icon-144x144.png",
+    "무제.md",
+    "content/paper/Quantized-Side-Tuning/Untitled.md",
     "content/ML/intro-to-nlp-3/Untitled.md",
     "content/ML/intro-to-nlp-2/Untitled.md",
     "content/paper/PoisonedRAG/Untitled.md",
