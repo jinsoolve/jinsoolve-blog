@@ -5,7 +5,9 @@ description:
 thumbnail: 
 categories:
   - PS
-tags: 
+tags:
+  - 다이나믹-프로그래밍
+  - 누적합
 createdAt: 2025/03/28
 updatedAt: 
 featured: false
