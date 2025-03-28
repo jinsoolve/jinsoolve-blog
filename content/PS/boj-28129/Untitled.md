@@ -8,6 +8,7 @@ categories:
 tags:
   - 다이나믹-프로그래밍
   - 누적합
+  - __PURE__
 createdAt: 2025/03/28
 updatedAt: 
 featured: false
