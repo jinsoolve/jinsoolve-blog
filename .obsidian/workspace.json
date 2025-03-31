@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/paper/Quantized-Side-Tuning/Untitled.md",
+                "file": "about/about.mdx",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "about"
             }
           }
         ],
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/paper/Quantized-Side-Tuning/Untitled.md",
+                "file": "about/about.mdx",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Untitled 의 개요"
+              "title": "about 의 개요"
             }
           }
         ],
@@ -203,30 +203,31 @@
   },
   "active": "c9da409b6b07e282",
   "lastOpenFiles": [
-    "content/PS/boj-28129/Untitled.md",
-    "content/ML/intro-to-nlp-3/Untitled.md",
+    "public/page-data/tags/누적합/page-data.json",
+    "public/page-data/tags/누적합",
+    "public/page-data/tags",
     "public/page-data/posts/boj-28129/page-data.json",
     "public/page-data/posts/boj-28129",
-    "public/page-data/posts/intro-to-nlp-2/page-data.json",
-    "public/page-data/posts/intro-to-nlp-2",
-    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
-    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc",
-    "public/page-data/posts/Quantized Side Tuning/page-data.json",
-    "public/page-data/posts/Quantized Side Tuning",
     "public/page-data/posts",
+    "public/page-data/categories/page-data.json",
+    "public/page-data/categories",
+    "public/static/04ca427eedd1d503fe67ee61c1820830/29ddf/CV.jpg",
+    "public/static/04ca427eedd1d503fe67ee61c1820830/29ddf",
+    "public/page-data/portfolio/page-data.json",
+    "public/page-data/portfolio",
+    "public/static/04ca427eedd1d503fe67ee61c1820830/b17f8/CV.jpg",
+    "about/CV.jpg",
+    "public/static/b8cf64ca4692769394c59264ae41bc29/ad53c/CV.jpg",
     "public/static/f566903779599cee1d9c25328b1d3436/21a7f/cover.webp",
-    "public/static/f566903779599cee1d9c25328b1d3436/21a7f",
     "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9/cover.webp",
-    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9",
+    "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
     "public/favicon-32x32.png",
+    "public/icons/icon-512x512.png",
+    "public/icons/icon-384x384.png",
     "content/paper/Quantized-Side-Tuning/Untitled.md",
-    "content/ML/intro-to-nlp-2/cover.png",
+    "content/PS/boj-28129/Untitled.md",
+    "content/ML/intro-to-nlp-3/Untitled.md",
     "content/diary/2024-winter-vacation-plan/Untitled.md",
-    "public/static/6fb75eab4e07db27e99a999159c25605/eb588/cover.webp",
-    "public/static/6fb75eab4e07db27e99a999159c25605/38eb8/cover.webp",
-    "public/static/6fb75eab4e07db27e99a999159c25605/04210/cover.webp",
-    "public/static/f689f8b3b021090c7d4495f61be56e2f/aa8b2/og-image.webp",
-    "public/static/f689f8b3b021090c7d4495f61be56e2f/7948c/og-image.webp",
     "무제.md",
     "content/ML/intro-to-nlp-2/Untitled.md",
     "content/paper/PoisonedRAG/Untitled.md",
