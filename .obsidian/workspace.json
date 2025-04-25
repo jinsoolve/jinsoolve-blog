@@ -8,21 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "9db6a78fc7aacdf8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "content/paper/Quantized Side Tuning/Untitled.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Untitled"
-            }
-          },
-          {
-            "id": "77c4ed1437b9e49a",
+            "id": "c9da409b6b07e282",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -34,23 +20,8 @@
               "icon": "lucide-file",
               "title": "Untitled"
             }
-          },
-          {
-            "id": "c9da409b6b07e282",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "about/about.mdx",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "about"
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -170,13 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "about/about.mdx",
+                "file": "content/ML/intro-to-nlp-2/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "about 의 개요"
+              "title": "Untitled 의 개요"
             }
           }
         ],
@@ -203,33 +174,33 @@
   },
   "active": "c9da409b6b07e282",
   "lastOpenFiles": [
-    "public/page-data/tags/누적합/page-data.json",
-    "public/page-data/tags/누적합",
-    "public/page-data/tags",
-    "public/page-data/posts/boj-28129/page-data.json",
-    "public/page-data/posts/boj-28129",
-    "public/page-data/posts",
-    "public/page-data/categories/page-data.json",
+    "content/ML/intro-to-nlp-3/Untitled.md",
+    "content/ML/intro-to-nlp-3/cover.png",
+    "content/ML/intro-to-nlp-2/Untitled.md",
+    "public/page-data/posts/ml-textbook-8/page-data.json",
+    "public/page-data/posts/ml-textbook-8",
+    "public/page-data/categories/ML/page-data.json",
+    "public/page-data/categories/ML",
     "public/page-data/categories",
-    "public/static/04ca427eedd1d503fe67ee61c1820830/29ddf/CV.jpg",
-    "public/static/04ca427eedd1d503fe67ee61c1820830/29ddf",
-    "public/page-data/portfolio/page-data.json",
-    "public/page-data/portfolio",
-    "public/static/04ca427eedd1d503fe67ee61c1820830/b17f8/CV.jpg",
-    "about/CV.jpg",
-    "public/static/b8cf64ca4692769394c59264ae41bc29/ad53c/CV.jpg",
-    "public/static/f566903779599cee1d9c25328b1d3436/21a7f/cover.webp",
-    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9/cover.webp",
+    "public/static/3984361aed6a71f465c0ae457e7eff24/31f9d/cover.webp",
+    "public/static/3984361aed6a71f465c0ae457e7eff24/31f9d",
+    "public/static/3984361aed6a71f465c0ae457e7eff24",
+    "content/ML/intro-to-nlp-3/Unknown-3",
+    "public/page-data/posts/intro-to-nlp-3/page-data.json",
+    "public/page-data/posts/intro-to-nlp-3",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
+    "content/ML/intro-to-nlp-2/cover.png",
+    "public/static/f566903779599cee1d9c25328b1d3436/21a7f/cover.webp",
+    "public/static/f689f8b3b021090c7d4495f61be56e2f/ee21c/og-image.png",
+    "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9/cover.webp",
+    "content/ML/intro-to-nlp-3/무제.md",
     "public/favicon-32x32.png",
     "public/icons/icon-512x512.png",
     "public/icons/icon-384x384.png",
     "content/paper/Quantized-Side-Tuning/Untitled.md",
     "content/PS/boj-28129/Untitled.md",
-    "content/ML/intro-to-nlp-3/Untitled.md",
     "content/diary/2024-winter-vacation-plan/Untitled.md",
     "무제.md",
-    "content/ML/intro-to-nlp-2/Untitled.md",
     "content/paper/PoisonedRAG/Untitled.md",
     "content/PS/boj-1055/Untitled.md",
     "content/ML/무제.canvas",

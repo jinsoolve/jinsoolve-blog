@@ -12,7 +12,7 @@ tags:
   - smoothing
 createdAt: 2025/03/10
 updatedAt: 
-featured: true
+featured: false
 locale:
 ---
 **언어 모델**이란, 결국에는 **그 다음으로 어떤 단어가 오는 것이 가장 자연스러운지를 확률로 보고 가장 높은 확률의 단어를 선택해서 문장을 구성**하는 방식이다.
