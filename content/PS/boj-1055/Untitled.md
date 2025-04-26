@@ -10,7 +10,7 @@ tags:
   - 재귀
 createdAt: 2025/03/05
 updatedAt: 
-featured: true
+featured: false
 locale:
 ---
 위 포스트는 [백준 1055 - 끝이없음](https://www.acmicpc.net/problem/1055)의 해설입니다.
