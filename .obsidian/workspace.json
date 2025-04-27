@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/PS/boj-1055/Untitled.md",
+                "file": "content/ML/intro-to-nlp-7/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/ML/intro-to-nlp-3/Untitled.md",
+                "file": "content/ML/intro-to-nlp-4/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -155,7 +155,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/PS/boj-1055/Untitled.md",
+                "file": "content/ML/intro-to-nlp-7/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -188,29 +188,34 @@
   },
   "active": "c9da409b6b07e282",
   "lastOpenFiles": [
-    "content/ML/intro-to-nlp-4/Untitled.md",
-    "public/static/85dad8627ae6845b62f5bb965c291b19/8199d/cover.webp",
-    "public/static/85dad8627ae6845b62f5bb965c291b19/8199d",
-    "public/static/85dad8627ae6845b62f5bb965c291b19",
-    "content/ML/intro-to-nlp-4/cover.png",
+    "public/static/076eddc91e0d4685f11210bb0b088b7d/47346/cover.webp",
+    "public/static/076eddc91e0d4685f11210bb0b088b7d/47346",
+    "public/static/076eddc91e0d4685f11210bb0b088b7d",
+    "content/ML/intro-to-nlp-7/cover.png",
+    "public/static/1aa6ffe5aa92c714ffd309ecd31bb080/6c7a5/cover.webp",
+    "public/static/1aa6ffe5aa92c714ffd309ecd31bb080/6c7a5",
+    "public/static/1aa6ffe5aa92c714ffd309ecd31bb080",
+    "content/ML/intro-to-nlp-7/cover.webp",
+    "content/ML/intro-to-nlp-7/Untitled.md",
+    "public/page-data/posts/intro-to-nlp-7/page-data.json",
+    "public/page-data/posts/intro-to-nlp-7",
+    "content/ML/intro-to-nlp-7/cover.png",
     "public/page-data/posts/intro-to-nlp-4/page-data.json",
-    "public/page-data/posts/intro-to-nlp-4",
-    "public/page-data/posts/boj-1055/page-data.json",
-    "public/page-data/posts/boj-1055",
-    "public/page-data/posts/Quantized Side Tuning/page-data.json",
-    "public/page-data/posts/Quantized Side Tuning",
     "public/page-data/posts/intro-to-nlp-3/page-data.json",
+    "public/page-data/posts/intro-to-nlp-4",
     "public/page-data/posts/intro-to-nlp-3",
     "public/static/9379464f2e13cd33a2639502a84c1285/f76dc/profile.webp",
     "public/static/f689f8b3b021090c7d4495f61be56e2f/ee21c/og-image.png",
-    "public/static/3984361aed6a71f465c0ae457e7eff24/31f9d/cover.webp",
+    "public/static/daf40c5fbdca351283eefc5d246af3be/b0011/cover.webp",
+    "public/static/85dad8627ae6845b62f5bb965c291b19/8199d/cover.webp",
     "public/static/f566903779599cee1d9c25328b1d3436/21a7f/cover.webp",
     "public/static/2d55e147de7f0659e6dd23cf3fc2e0d6/ddbc9/cover.webp",
-    "public/favicon-32x32.png",
-    "public/icons/icon-512x512.png",
-    "public/icons/icon-384x384.png",
+    "content/ML/intro-to-nlp-4/Untitled.md",
     "content/ML/intro-to-nlp-3/Untitled.md",
     "무제.md",
+    "content/short/cross-entropy-and-softmax/Untitled.md",
+    "content/short/diff-between-word2vec-and-glove/Untitled.md",
+    "content/PS/boj-1055/Untitled.md",
     "무제 1.md",
     "content/short/why-do-batch-normalization/Untitled.md",
     "content/ML/intro-to-nlp-2/Untitled.md",
@@ -220,7 +225,6 @@
     "content/PS/boj-28129/Untitled.md",
     "content/diary/2024-winter-vacation-plan/Untitled.md",
     "content/paper/PoisonedRAG/Untitled.md",
-    "content/PS/boj-1055/Untitled.md",
     "content/ML/무제.canvas",
     "content/PS/boj-6569/Untitled.md",
     "content/PS/boj-1787/Untitled.md",
@@ -231,8 +235,6 @@
     "content/PS/boj-24979/무제.md",
     "content/PS/boj-1155/Untitled.md",
     "content/short/formula-for-the-third-side-of-a-triangle-given-two-sides-and-the-included-angle/Untitled.md",
-    "content/short/descending-order-binary-search/Untitled.md",
-    "README.md",
     "content/PS/무제.canvas"
   ]
 }
