@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/ML/intro-to-nlp-10/Untitled.md",
+                "file": "content/short/diff-between-word2vec-and-glove/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -155,7 +155,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/ML/intro-to-nlp-10/Untitled.md",
+                "file": "content/short/diff-between-word2vec-and-glove/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -188,6 +188,7 @@
   },
   "active": "c9da409b6b07e282",
   "lastOpenFiles": [
+    "content/ML/intro-to-nlp-10/Untitled.md",
     "content/short/diff-between-word2vec-and-glove/Untitled.md",
     "content/short/descending-order-binary-search/Untitled.md",
     "content/short/cross-entropy-and-softmax/Untitled.md",
@@ -196,7 +197,6 @@
     "content/ML/intro-to-nlp-4/Untitled.md",
     "content/ML/intro-to-nlp-7/Untitled.md",
     "content/ML/intro-to-nlp-8/Untitled.md",
-    "content/ML/intro-to-nlp-10/Untitled.md",
     "content/ML/intro-to-nlp-9/Untitled.md",
     "public/rss.xml",
     "public/posts/boj-28129/index.html",
