@@ -188,7 +188,12 @@
   },
   "active": "c9da409b6b07e282",
   "lastOpenFiles": [
+    "content/ML/intro-to-nlp-8/Untitled.md",
+    "content/ML/intro-to-nlp-8",
+    "content/ML/intro-to-nlp-9/Untitled.md",
+    "content/ML/intro-to-nlp-9",
     "content/ML/intro-to-nlp-10/Untitled.md",
+    "content/ML/intro-to-nlp-10",
     "content/short/diff-between-word2vec-and-glove/Untitled.md",
     "content/short/descending-order-binary-search/Untitled.md",
     "content/short/cross-entropy-and-softmax/Untitled.md",
@@ -196,17 +201,12 @@
     "content/ML/intro-to-nlp-3/Untitled.md",
     "content/ML/intro-to-nlp-4/Untitled.md",
     "content/ML/intro-to-nlp-7/Untitled.md",
-    "content/ML/intro-to-nlp-8/Untitled.md",
-    "content/ML/intro-to-nlp-9/Untitled.md",
     "public/rss.xml",
     "public/posts/boj-28129/index.html",
     "public/posts/boj-28129",
     "public/posts/boj-6569/index.html",
     "public/posts/boj-6569",
     "public/posts/boj-24979/index.html",
-    "public/posts/boj-25315/index.html",
-    "public/posts/boj-25315",
-    "public/posts/boj-24979",
     "public/static/12b3c4faf3563db53ebc414f85f60b9a/84b92/cover.jpg",
     "public/static/12b3c4faf3563db53ebc414f85f60b9a/a4c36/cover.jpg",
     "public/static/12b3c4faf3563db53ebc414f85f60b9a/eecd0/cover.jpg",
@@ -234,7 +234,6 @@
     "content/PS/boj-6569/Untitled.md",
     "content/PS/boj-1787/Untitled.md",
     "content/PS/boj-8872/Untitled.md",
-    "content/PS/boj-24979/Untitled.md",
     "content/PS/무제.canvas"
   ]
 }
