@@ -12,6 +12,10 @@ featured: false
 locale:
 ---
 Seq2Seq에서 RNN을 아예 빼버리고 attention으로 구성해보면 어떨까? → Transformer의 구조
+현재는 seq2seq + attention에서는 하나의 벡터로 요약해서 decoder로 넘겨준다. 이건 여전히 RNN의 방식을 따르고 있다.
+
+
+cross attention은 원본 문장을 참고하면서 번역하는 것이고, self attention은 지금까지 내가 쓴 문장을 참고하면서 다음 단어를 고르는 것이다. 이 2개를 모두 합치는 것이 Transformer이다.
 
 # Self-Attention
 ![](https://i.imgur.com/7Q1srIQ.png)

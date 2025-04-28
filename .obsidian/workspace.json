@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/ML/intro-to-nlp-8/Untitled.md",
+                "file": "content/ML/intro-to-nlp-10/Untitled.md",
                 "mode": "source",
                 "source": false
               },
@@ -155,7 +155,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/ML/intro-to-nlp-8/Untitled.md",
+                "file": "content/ML/intro-to-nlp-10/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -188,9 +188,16 @@
   },
   "active": "c9da409b6b07e282",
   "lastOpenFiles": [
+    "content/short/diff-between-word2vec-and-glove/Untitled.md",
+    "content/short/descending-order-binary-search/Untitled.md",
+    "content/short/cross-entropy-and-softmax/Untitled.md",
+    "content/short/count-bit-in-cpp/Untitled.mdx",
+    "content/ML/intro-to-nlp-3/Untitled.md",
+    "content/ML/intro-to-nlp-4/Untitled.md",
+    "content/ML/intro-to-nlp-7/Untitled.md",
+    "content/ML/intro-to-nlp-8/Untitled.md",
     "content/ML/intro-to-nlp-10/Untitled.md",
     "content/ML/intro-to-nlp-9/Untitled.md",
-    "content/ML/intro-to-nlp-8/Untitled.md",
     "public/rss.xml",
     "public/posts/boj-28129/index.html",
     "public/posts/boj-28129",
@@ -200,7 +207,6 @@
     "public/posts/boj-25315/index.html",
     "public/posts/boj-25315",
     "public/posts/boj-24979",
-    "public/posts/boj-1787/index.html",
     "public/static/12b3c4faf3563db53ebc414f85f60b9a/84b92/cover.jpg",
     "public/static/12b3c4faf3563db53ebc414f85f60b9a/a4c36/cover.jpg",
     "public/static/12b3c4faf3563db53ebc414f85f60b9a/eecd0/cover.jpg",
@@ -213,12 +219,7 @@
     "public/static/6fb75eab4e07db27e99a999159c25605/721a0/cover.png",
     "content/ML/intro-to-nlp-10/무제.md",
     "content/ML/intro-to-nlp-9/무제.md",
-    "content/ML/intro-to-nlp-7/Untitled.md",
-    "content/ML/intro-to-nlp-4/Untitled.md",
-    "content/ML/intro-to-nlp-3/Untitled.md",
     "무제.md",
-    "content/short/cross-entropy-and-softmax/Untitled.md",
-    "content/short/diff-between-word2vec-and-glove/Untitled.md",
     "content/PS/boj-1055/Untitled.md",
     "무제 1.md",
     "content/short/why-do-batch-normalization/Untitled.md",
