@@ -104,6 +104,8 @@ SVD를 이용해서 쪼개버린다면 우리는 적은 수의 dense vector만 �
 
 ![](https://i.imgur.com/xha8lcM.png)
 이런 식으로 표현할 수 있다.
+즉, **단어 벡터들의 내적**이 **log(co-occurrence count)** 와 비슷하도록 만든다.
+등장 빈도 비율을 맞추도록 최적화.
 
 ![](https://i.imgur.com/3ymulNi.png)
 이렇게 loss 함수를 설정하면 Word2Vec과 비교해서 빠르게 훈련이 가능하고 거대한 코퍼스에 대해서도 가능하다.
@@ -132,7 +134,7 @@ $$
 근데 이름 같은 고유명사 같은 경우는 이게 사람 이름인지 지명 이름인지 헷갈릴 때가 존재할 수 있다.
 이건 어떻게 해결해야  할까?
 
-SSimple NER에서는 수작업으로 데이터들을 라벨링해서 supervised learning을 했다고 한다.
+Simple NER에서는 수작업으로 데이터들을 라벨링해서 supervised learning을 했다고 한다.
 binary logistic classifier로 학습했다. (물론 실제로는 multi-class softmax를 쓴다.)
 yes or no로 학습.
 

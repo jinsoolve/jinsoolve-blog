@@ -1,4 +1,12 @@
-import { Box, Center, Grid, GridItem, Heading, useColorModeValue, Icon } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Grid,
+  GridItem,
+  Heading,
+  useColorModeValue,
+  Icon,
+} from "@chakra-ui/react";
 import { Link } from "gatsby";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import PostCard from "./PostCard";
@@ -60,7 +68,9 @@ const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
               title={post.frontmatter?.title!}
               description={post.frontmatter?.description!}
               slug={post.frontmatter?.slug!}
-              thumbnail={post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!}
+              thumbnail={
+                post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!
+              }
               createdAt={post.frontmatter?.createdAt!}
               updatedAt={post.frontmatter?.updatedAt!}
               categories={post.frontmatter?.categories!}
@@ -73,7 +83,9 @@ const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
       {/* 더 보기 링크 */}
       {relatedPostsLength > 6 && (
         <Center mt="20px">
-          <Link to={`/categories/${relatedPosts.nodes[0].frontmatter.categories[0]}`}>
+          <Link
+            to={`/categories/${relatedPosts.nodes[0].frontmatter.categories[0]}`}
+          >
             <Box
               // color={textColor}
               as="button"

@@ -1,4 +1,4 @@
-require('dotenv').config({
+require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 //
@@ -9,7 +9,7 @@ require('dotenv').config({
 // console.log("Algolia Admin Key:", process.env.GATSBY_ALGOLIA_ADMIN_KEY);
 // console.log("Algolia Index Name:", process.env.GATSBY_ALGOLIA_INDEX_NAME);
 
-const queries = require('./src/utils/algolia');
+const queries = require("./src/utils/algolia");
 
 const path = require(`path`);
 
@@ -31,7 +31,7 @@ const wrapESMPlugin = (name) =>
     };
   };
 
-const rehypeCustomSlug = require('./src/utils/rehype-custom-slug.js');
+const rehypeCustomSlug = require("./src/utils/rehype-custom-slug.js");
 
 module.exports = {
   siteMetadata: SITE_METADATA,
@@ -221,7 +221,7 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-algolia',
+      resolve: "gatsby-plugin-algolia",
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
@@ -236,7 +236,7 @@ module.exports = {
         allowList: [
           "GATSBY_ALGOLIA_APP_ID",
           "GATSBY_ALGOLIA_SEARCH_KEY",
-          "GATSBY_ALGOLIA_INDEX_NAME"
+          "GATSBY_ALGOLIA_INDEX_NAME",
         ],
       },
     },

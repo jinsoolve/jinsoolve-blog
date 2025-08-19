@@ -7,9 +7,15 @@ const CategoryPageTemplate = path.resolve(`./src/templates/CategoryPage.tsx`);
 const FeaturedPageTemplate = path.resolve(`./src/templates/FeaturedPage.tsx`);
 const PortfolioPageTemplate = path.resolve(`./src/templates/PortfolioPage.tsx`);
 const AllPostPageTemplate = path.resolve(`./src/templates/AllPostPage.tsx`);
-const AllFeaturedPostPageTemplate = path.resolve(`./src/templates/AllFeaturedPostPage.tsx`);
-const AllCategoryPostPageTemplate = path.resolve(`./src/templates/AllCategoryPostPage.tsx`);
-const AllTagPostPageTemplate = path.resolve(`./src/templates/AllTagPostPage.tsx`);
+const AllFeaturedPostPageTemplate = path.resolve(
+  `./src/templates/AllFeaturedPostPage.tsx`
+);
+const AllCategoryPostPageTemplate = path.resolve(
+  `./src/templates/AllCategoryPostPage.tsx`
+);
+const AllTagPostPageTemplate = path.resolve(
+  `./src/templates/AllTagPostPage.tsx`
+);
 
 const WORDS_PER_MINUTE = 500;
 
@@ -38,6 +44,11 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type Mdx implements Node {
       myTableOfContents: JSON
+    }
+    
+    "frontmatter에 published 필드를 선언해 GraphQL에서 필터 가능하도록 함"
+    type MdxFrontmatter {
+     published: Boolean
     }
   `);
 };
@@ -71,11 +82,15 @@ exports.createResolvers = async ({ createResolvers }) => {
 
     if (node.type === "link" || node.type === "linkReference") {
       // 링크 내부 텍스트 추출 (링크 주소는 무시)
-      return node.children.map((child) => extractTextFromNode(child, katex)).join("");
+      return node.children
+        .map((child) => extractTextFromNode(child, katex))
+        .join("");
     }
 
     if (node.children && Array.isArray(node.children)) {
-      return node.children.map((child) => extractTextFromNode(child, katex)).join("");
+      return node.children
+        .map((child) => extractTextFromNode(child, katex))
+        .join("");
     }
 
     return "";
@@ -123,7 +138,10 @@ exports.createResolvers = async ({ createResolvers }) => {
               const stack = [root];
 
               headers.forEach((header) => {
-                while (stack.length > 1 && stack[stack.length - 1].depth >= header.depth) {
+                while (
+                  stack.length > 1 &&
+                  stack[stack.length - 1].depth >= header.depth
+                ) {
                   stack.pop(); // 현재 header보다 같거나 큰 depth는 스택에서 제거
                 }
 
@@ -178,7 +196,14 @@ exports.createResolvers = async ({ createResolvers }) => {
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const result = await graphql(`
     query {
-      allPosts: allMdx(filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] } } }) {
+      allPosts: allMdx(
+        filter: {
+          frontmatter: {
+            title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }
+            published: { ne: false } # published가 false인 글만 제외
+          }
+        }
+      ) {
         nodes {
           id
           body
@@ -195,7 +220,9 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         }
       }
 
-      allFeaturedPosts: allMdx {
+      allFeaturedPosts: allMdx(
+        filter: { frontmatter: { published: { ne: false } } }
+      ) {
         group(field: { frontmatter: { categories: SELECT } }) {
           category: fieldValue
           nodes {
@@ -204,7 +231,9 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         }
       }
 
-      allCategories: allMdx {
+      allCategories: allMdx(
+        filter: { frontmatter: { published: { ne: false } } }
+      ) {
         group(field: { frontmatter: { categories: SELECT } }) {
           category: fieldValue
           nodes {
@@ -213,7 +242,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         }
       }
 
-      allTags: allMdx {
+      allTags: allMdx(filter: { frontmatter: { published: { ne: false } } }) {
         group(field: { frontmatter: { tags: SELECT } }) {
           tag: fieldValue
           nodes {
@@ -222,7 +251,12 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         }
       }
 
-      portfolio: mdx(frontmatter: { title: { eq: "김진수 포트폴리오" } }) {
+      portfolio: mdx(
+        frontmatter: {
+          title: { eq: "김진수 포트폴리오" }
+          published: { ne: false }
+        }
+      ) {
         id
         body
         frontmatter {
@@ -233,7 +267,12 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         }
       }
 
-      about_me: mdx(frontmatter: { title: { eq: "김진수에 대하여" } }) {
+      about_me: mdx(
+        frontmatter: {
+          title: { eq: "김진수에 대하여" }
+          published: { ne: false }
+        }
+      ) {
         id
         body
         frontmatter {
@@ -321,14 +360,17 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
 
     Array.from({ length: allFeaturedPostsNumPages }).forEach((_, i) => {
       createPage({
-        path: i === 0 ? `/allFeaturedPosts/${category}` : `/allFeaturedPosts/${category}/${i + 1}`,
+        path:
+          i === 0
+            ? `/allFeaturedPosts/${category}`
+            : `/allFeaturedPosts/${category}/${i + 1}`,
         component: FeaturedPageTemplate,
         context: {
           limit: POST_PER_PAGE,
           skip: i * POST_PER_PAGE,
           numPages: allFeaturedPostsNumPages,
           currentPage: i + 1,
-          category, // 수정된 부분
+          category,
         },
       });
     });
@@ -339,10 +381,13 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   categories.forEach(({ category, nodes }) => {
     const allCategoriesNumPages = Math.ceil(nodes.length / POST_PER_PAGE);
 
-    // 각 태그별로 페이지네이션 해줘야 함
+    // 각 카테고리별로 페이지네이션
     Array.from({ length: allCategoriesNumPages }).forEach((_, i) => {
       createPage({
-        path: i === 0 ? `/categories/${category}` : `/categories/${category}/${i + 1}`,
+        path:
+          i === 0
+            ? `/categories/${category}`
+            : `/categories/${category}/${i + 1}`,
         component: CategoryPageTemplate,
         context: {
           limit: POST_PER_PAGE,
@@ -360,7 +405,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   tags.forEach(({ tag, nodes }) => {
     const allTagsNumPages = Math.ceil(nodes.length / POST_PER_PAGE);
 
-    // 각 태그별로 페이지네이션 해줘야 함
+    // 각 태그별로 페이지네이션
     Array.from({ length: allTagsNumPages }).forEach((_, i) => {
       createPage({
         path: i === 0 ? `/tags/${tag}` : `/tags/${tag}/${i + 1}`,
@@ -376,7 +421,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     });
   });
 
-  // 모든 포스트 페이지 생성
+  // 모든 포스트 페이지 생성 (쿼리에서 이미 published: false 제외됨)
   result.data.allPosts.nodes.forEach((node) => {
     const locale = node.frontmatter.locale;
     const path = !locale
@@ -392,7 +437,9 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         slug: node.frontmatter.slug,
         id: node.id,
         myTableOfContents: node.myTableOfContents,
-        readingTime: readingTime(node.body, { wordsPerMinute: WORDS_PER_MINUTE }),
+        readingTime: readingTime(node.body, {
+          wordsPerMinute: WORDS_PER_MINUTE,
+        }),
       },
     });
   });
@@ -406,7 +453,9 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     context: {
       slug: portfolio.frontmatter.slug,
       id: portfolio.id,
-      readingTime: readingTime(result.data.portfolio.body, { wordsPerMinute: WORDS_PER_MINUTE }),
+      readingTime: readingTime(result.data.portfolio.body, {
+        wordsPerMinute: WORDS_PER_MINUTE,
+      }),
     },
   });
 
@@ -419,7 +468,9 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     context: {
       slug: about_me.frontmatter.slug,
       id: about_me.id,
-      readingTime: readingTime(result.data.about_me.body, { wordsPerMinute: WORDS_PER_MINUTE }),
+      readingTime: readingTime(result.data.about_me.body, {
+        wordsPerMinute: WORDS_PER_MINUTE,
+      }),
     },
   });
 };
