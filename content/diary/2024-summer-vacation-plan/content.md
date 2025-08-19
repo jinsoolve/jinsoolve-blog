@@ -8,7 +8,7 @@ categories:
 createdAt: 2024/07/06
 updatedAt:
 featured: false
-published: false
+published: true
 ---
 
 

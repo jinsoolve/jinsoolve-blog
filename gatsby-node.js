@@ -200,7 +200,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
         filter: {
           frontmatter: {
             title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }
-            published: { ne: false } # published가 false인 글만 제외
+            
           }
         }
       ) {

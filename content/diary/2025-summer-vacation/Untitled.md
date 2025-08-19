@@ -8,7 +8,6 @@ categories:
 tags:
   - 2025-여름방학-일기
   - 공부-계획
-  - 학부연구생
 createdAt: 2025/08/19
 updatedAt:
 featured: false
