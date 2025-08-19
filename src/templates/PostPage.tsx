@@ -45,7 +45,7 @@ export const query = graphql`
       }
     }
     relatedPosts: allMdx(
-      filter: { frontmatter: { categories: { in: $categories }, locale: { eq: null } }, id: { ne: $id } }
+      filter: { frontmatter: { categories: { in: $categories }, published: { ne: false }, locale: { eq: null } }, id: { ne: $id } }
       sort: { frontmatter: { createdAt: DESC } }
     ) {
       nodes {

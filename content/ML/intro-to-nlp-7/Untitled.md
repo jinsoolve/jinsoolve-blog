@@ -1,17 +1,17 @@
 ---
 slug: intro-to-nlp-7
 title: RNN
-description: 
+description:
 thumbnail: cover.png
 categories:
   - ML
-tags: 
+tags:
 createdAt: 2025/04/27
-updatedAt: 
-featured: true
+updatedAt:
+featured: false
 locale:
 ---
-# Language Model(LM)이란?
+성# Language Model(LM)이란?
 언어 모델이라는 건, 사실 **다음에 올 단어를 확률로 예측**하는 것이다.
 
 이러한 언어 모델들을 어떻게 발전시켜왔는 지 살펴보자.

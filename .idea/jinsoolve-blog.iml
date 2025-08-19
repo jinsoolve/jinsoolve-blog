@@ -9,6 +9,8 @@
       <excludeFolder url="file://$MODULE_DIR$/.vscode" />
       <excludeFolder url="file://$MODULE_DIR$/src/__generated__" />
       <excludeFolder url="file://$MODULE_DIR$/content/ML/intro-to-nlp-3" />
+      <excludeFolder url="file://$MODULE_DIR$/content/.obsidian" />
+      <excludeFolder url="file://$MODULE_DIR$/content/templates" />
       <excludeFolder url="file://$MODULE_DIR$/public" />
     </content>
     <orderEntry type="inheritedJdk" />

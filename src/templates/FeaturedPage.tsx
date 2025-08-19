@@ -16,7 +16,7 @@ export const query = graphql`
   query CategoryPageTemplate($category: String!, $limit: Int, $skip: Int) {
     allMdx(
       sort: { frontmatter: { createdAt: DESC } }
-      filter: { frontmatter: { categories: { in: [$category] }, locale: { eq: null } } }
+      filter: { frontmatter: { categories: { in: [$category] }, published: { ne: false }, locale: { eq: null } } }
       limit: $limit
       skip: $skip
     ) {
@@ -56,6 +56,7 @@ export const query = graphql`
       filter: { 
         frontmatter: { 
           categories: { in: [$category] },
+          published: { ne: false }, 
           locale: { eq: null }
         }
       },
@@ -76,7 +77,7 @@ export const query = graphql`
     }
 
     featuredPosts: allMdx(
-      filter: { frontmatter: { categories: { in: [$category] }, featured: { eq: true }, locale: { eq: null } } }
+      filter: { frontmatter: { categories: { in: [$category] }, published: { ne: false }, featured: { eq: true }, locale: { eq: null } } }
       sort: { frontmatter: { createdAt: DESC } }
     ) {
       nodes {

@@ -1,14 +1,14 @@
 ---
 slug: intro-to-nlp-4
 title: Word2Vec
-description: 
+description:
 thumbnail: cover.png
 categories:
   - ML
-tags: 
+tags:
 createdAt: 2025/04/26
-updatedAt: 
-featured: true
+updatedAt:
+featured: false
 locale:
 ---
 저번에 [word vector](https://www.jinsoolve.com/posts/intro-to-nlp-3/)에 대해서 알아봤는데, 이번에는 word vector의 프레임워크인 Word2Vec에 대해서 좀 더 알아보자.

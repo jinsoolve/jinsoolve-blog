@@ -13,7 +13,7 @@ export const query = graphql`
   query CategoryPageTemplate($category: String!, $limit: Int, $skip: Int) {
     allMdx(
       sort: { frontmatter: { createdAt: DESC } }
-      filter: { frontmatter: { categories: { in: [$category] }, locale: { eq: null } } }
+      filter: { frontmatter: { categories: { in: [$category] }, published: { ne: false }, locale: { eq: null } } }
       limit: $limit
       skip: $skip
     ) {

@@ -1,15 +1,6 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
-//
-// console.log(".env.production Path:", `.env.${process.env.NODE_ENV}`);
-// console.log("NODE_ENV:", process.env.NODE_ENV);
-//
-// console.log("Algolia App ID:", process.env.GATSBY_ALGOLIA_APP_ID);
-// console.log("Algolia Admin Key:", process.env.GATSBY_ALGOLIA_ADMIN_KEY);
-// console.log("Algolia Index Name:", process.env.GATSBY_ALGOLIA_INDEX_NAME);
-
-const queries = require("./src/utils/algolia");
 
 const path = require(`path`);
 
@@ -46,9 +37,7 @@ module.exports = {
       options: {
         extensions: [".mdx", ".md"],
         gatsbyRemarkPlugins: [
-          {
-            resolve: "gatsby-remark-gifs",
-          },
+          { resolve: "gatsby-remark-gifs" },
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -59,18 +48,16 @@ module.exports = {
           },
           {
             resolve: `gatsby-remark-katex`,
-            options: {
-              strict: "ignore",
-            },
+            options: { strict: "ignore" },
           },
         ],
         mdxOptions: {
           remarkPlugins: [
             [require(`remark-gfm`), { singleTilde: false }],
-            wrapESMPlugin(`remark-breaks`), // wrapESMPlugin으로 ESM 모듈 처리
+            wrapESMPlugin(`remark-breaks`),
           ],
           rehypePlugins: [
-            rehypeCustomSlug, // 직접 불러온 rehypeCustomSlug 사용
+            rehypeCustomSlug,
             [
               wrapESMPlugin(`rehype-autolink-headings`),
               {
@@ -79,12 +66,7 @@ module.exports = {
                   type: `element`,
                   tagName: `span`,
                   properties: { className: `heading-anchor-icon` },
-                  children: [
-                    {
-                      type: `text`,
-                      value: `#`,
-                    },
-                  ],
+                  children: [{ type: `text`, value: `#` }],
                 },
               },
             ],
@@ -93,6 +75,8 @@ module.exports = {
       },
     },
     "gatsby-plugin-mdx-frontmatter",
+
+    // --- 여기부터 파일 소스 ---
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -112,6 +96,8 @@ module.exports = {
       options: {
         name: `content`,
         path: path.resolve(__dirname, "./content"),
+        // ✅ content/templates 이하 전부 무시
+        ignore: [`**/templates/**`],
       },
     },
     {
@@ -119,8 +105,12 @@ module.exports = {
       options: {
         name: `categories`,
         path: path.resolve(__dirname, "./content/"),
+        // ✅ 동일하게 무시 (두 소스 모두 content를 바라보므로)
+        ignore: [`**/templates/**`],
       },
     },
+    // --- 파일 소스 끝 ---
+
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
@@ -135,9 +125,7 @@ module.exports = {
     },
     {
       resolve: "@chakra-ui/gatsby-plugin",
-      options: {
-        resetCSS: true,
-      },
+      options: { resetCSS: true },
     },
     {
       resolve: "gatsby-plugin-web-font-loader",
@@ -167,18 +155,16 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.nodes.map((node) => {
-                return Object.assign({}, node.frontmatter, {
-                  title: node.frontmatter.title,
-                  description: node.frontmatter.description,
-                  date: new Date(node.frontmatter.createdAt),
-                  url: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
-                  guid: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
-                  custom_elements: [{ "content:encoded": node.body }],
-                });
-              });
-            },
+            serialize: ({ query: { site, allMdx } }) =>
+              allMdx.nodes.map((node) => ({
+                ...node.frontmatter,
+                title: node.frontmatter.title,
+                description: node.frontmatter.description,
+                date: new Date(node.frontmatter.createdAt),
+                url: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
+                guid: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
+                custom_elements: [{ "content:encoded": node.body }],
+              })),
             query: `
               {
                 allMdx(sort: {frontmatter: {createdAt: DESC}}) {
@@ -202,23 +188,15 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-gtag`,
-      options: {
-        trackingId: "G-6P098S0HE9",
-        head: true,
-      },
+      options: { trackingId: "G-6P098S0HE9", head: true },
     },
     {
       resolve: `gatsby-plugin-clarity`,
-      options: {
-        clarity_project_id: "guzda4dk44",
-        enable_on_dev_env: false,
-      },
+      options: { clarity_project_id: "guzda4dk44", enable_on_dev_env: false },
     },
     {
       resolve: "gatsby-plugin-manifest",
-      options: {
-        icon: "src/assets/favicon.png",
-      },
+      options: { icon: "src/assets/favicon.png" },
     },
     {
       resolve: `gatsby-plugin-env-variables`,

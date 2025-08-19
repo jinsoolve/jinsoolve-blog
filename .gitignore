@@ -2,6 +2,9 @@ node_modules/
 .cache/
 public/
 
+content/templates/
+content/.obsidian/
+
 /.yarn/*
 !/.yarn/patches
 !/.yarn/plugins

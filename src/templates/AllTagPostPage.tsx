@@ -37,7 +37,7 @@ export const query = graphql`
       filter: {
         frontmatter: {
           title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }
-         published: { ne: false }
+          published: { ne: false }
           locale: { eq: null }
         }
       }
@@ -66,7 +66,7 @@ export const query = graphql`
 
     # locale은 null인것만 가져옴 (ko)
     shortPosts: allMdx(
-      filter: { frontmatter: { categories: { in: "short" }, locale: { eq: null } } }
+      filter: { frontmatter: { categories: { in: "short" }, published: { ne: false }, locale: { eq: null } } }
       sort: { frontmatter: { createdAt: DESC } }
       limit: 15
     ) {
@@ -83,7 +83,7 @@ export const query = graphql`
 
     # locale은 null인것만 가져옴 (ko)
     featuredPosts: allMdx(
-      filter: { frontmatter: { featured: { eq: true }, locale: { eq: null } } }
+      filter: { frontmatter: { featured: { eq: true }, published: { ne: false }, locale: { eq: null } } }
       sort: { frontmatter: { createdAt: DESC } }
     ) {
       nodes {

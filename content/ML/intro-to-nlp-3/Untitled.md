@@ -1,14 +1,14 @@
 ---
 slug: intro-to-nlp-3
 title: Word Vectors
-description: 
+description:
 thumbnail: cover.png
 categories:
   - ML
-tags: 
+tags:
 createdAt: 2025/04/25
-updatedAt: 
-featured: true
+updatedAt:
+featured: false
 locale:
 ---
 

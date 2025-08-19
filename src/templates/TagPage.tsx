@@ -13,7 +13,7 @@ export const query = graphql`
   query TagPageTemplate($tag: String!, $limit: Int, $skip: Int) {
     allMdx(
       sort: { frontmatter: { createdAt: DESC } }
-      filter: { frontmatter: { tags: { in: [$tag] }, locale: { eq: null } } }
+      filter: { frontmatter: { tags: { in: [$tag] }, published: { ne: false }, locale: { eq: null } } }
       limit: $limit
       skip: $skip
     ) {
