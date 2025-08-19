@@ -2,7 +2,7 @@ const crypto = require("crypto");
 
 const mdxQuery = `
   query {
-    allPosts: allMdx(filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] } } }) {
+    allPosts: allMdx(filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }, published: { ne: false } } }) {
       nodes {
         id
         body

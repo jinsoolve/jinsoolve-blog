@@ -9,9 +9,10 @@ tags:
   - 2025-겨울방학-계획
   - 학부연구생
 createdAt: 2025/01/13
-updatedAt: 
+updatedAt:
 featured: false
 locale:
+published: false
 ---
 # 서론
 벌써 겨울방학이 시작된지 거의 3주가 지나버렸다.  

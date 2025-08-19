@@ -6,8 +6,9 @@ thumbnail: ./cover.jpg
 categories:
   - diary
 createdAt: 2024/07/06
-updatedAt: 
+updatedAt:
 featured: false
+published: false
 ---
 
 

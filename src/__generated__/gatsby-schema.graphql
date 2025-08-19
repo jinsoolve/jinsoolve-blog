@@ -1334,12 +1334,14 @@ input MdxFilterListInput {
   elemMatch: MdxFilterInput
 }
 
+"""frontmatter에 published 필드를 선언해 GraphQL에서 필터 가능하도록 함"""
 type MdxFrontmatter {
   categories: [String]
   createdAt: String
   description: String
   featured: Boolean
   locale: String
+  published: Boolean
   slug: String
   tags: [String]
   thumbnail: File
@@ -1353,6 +1355,7 @@ input MdxFrontmatterFieldSelector {
   description: FieldSelectorEnum
   featured: FieldSelectorEnum
   locale: FieldSelectorEnum
+  published: FieldSelectorEnum
   slug: FieldSelectorEnum
   tags: FieldSelectorEnum
   thumbnail: FileFieldSelector
@@ -1366,6 +1369,7 @@ input MdxFrontmatterFilterInput {
   description: StringQueryOperatorInput
   featured: BooleanQueryOperatorInput
   locale: StringQueryOperatorInput
+  published: BooleanQueryOperatorInput
   slug: StringQueryOperatorInput
   tags: StringQueryOperatorInput
   thumbnail: FileFilterInput
@@ -1379,6 +1383,7 @@ input MdxFrontmatterSortInput {
   description: SortOrderEnum
   featured: SortOrderEnum
   locale: SortOrderEnum
+  published: SortOrderEnum
   slug: SortOrderEnum
   tags: SortOrderEnum
   thumbnail: FileSortInput

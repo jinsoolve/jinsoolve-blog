@@ -4,6 +4,7 @@
     "cssclasses": "multitext",
     "tags": "tags",
     "createdAt": "text",
-    "featured": "checkbox"
+    "featured": "checkbox",
+    "published": "checkbox"
   }
 }

@@ -37,6 +37,7 @@ export const query = graphql`
       filter: {
         frontmatter: {
           title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }
+          published: { ne: false }
           categories: { nin: "short" }
           locale: { eq: null }
         }

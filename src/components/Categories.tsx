@@ -13,7 +13,7 @@ export default function categories({ currentCategory }: CategoriesProps) {
   const data = useStaticQuery(graphql`
     query categories {
       allMdx(
-        filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }, locale: { eq: null } } }
+        filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }, published: { ne: false }, locale: { eq: null } } }
       ) {
         group(field: { frontmatter: { categories: SELECT } }) {
           categoryPostCount: totalCount

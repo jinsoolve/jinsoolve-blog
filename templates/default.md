@@ -1,14 +1,15 @@
 ---
 slug: <% tp.file.path().split("/").slice(0,-1).pop() %>
-title: 
-description: 
-thumbnail: 
+title:
+description:
+thumbnail:
 categories:
   - <% tp.file.path().split("/").slice(0, -2).pop() %>
-tags: 
+tags:
 createdAt: <% new Date().toISOString().split('T')[0].replace(/-/g, '/') %>
-updatedAt: 
+updatedAt:
 featured: false
+published: true
 locale:
 ---
 <%* 
