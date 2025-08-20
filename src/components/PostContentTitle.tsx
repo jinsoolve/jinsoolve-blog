@@ -166,10 +166,13 @@ const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostConte
           overflow="hidden"
           boxShadow={boxShadowColor}
           marginTop="20px"
+          alignSelf="center"   // ✅ Flex 컨테이너 안에서 가운데 정렬
+          width="fit-content"  // ✅ 필요 시 너비를 이미지에 맞게 줄이기
         >
           <GatsbyImage
             image={post.frontmatter.thumbnail.childImageSharp.gatsbyImageData}
             alt={post.frontmatter.title || "Post Thumbnail"}
+            style={{ margin: "0 auto" }} // ✅ 백업용 (이미지 자체 가운데 정렬)
           />
         </Box>
       )}
