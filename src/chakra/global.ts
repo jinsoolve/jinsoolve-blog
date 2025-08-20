@@ -109,4 +109,37 @@ export default {
   //   backgroundColor: "#f4f4f4",
   //   fontWeight: "bold",
   // },
+
+  // ✅ 체크박스 리스트 전용 스타일
+  "ul.contains-task-list, ol.contains-task-list": {
+    listStyle: "none",   // 기본 점 제거
+    paddingLeft: "0",    // 들여쓰기 제거
+    marginLeft: "0",
+  },
+  ".task-list-item": {
+    listStyle: "none",   // 개별 li 점 제거
+    marginLeft: "0",
+  },
+  ".task-list-item::marker": {
+    content: "none",     // ::marker 완전히 제거
+  },
+  ".task-list-item > input[type='checkbox']": {
+    marginRight: "8px",
+    verticalAlign: "middle",
+  },
+
+  // ✅ 체크된 항목만 흐리게 + 취소선
+  ".task-list-item:has(> input[type='checkbox']:checked)": {
+    opacity: 0.7,
+    textDecoration: "line-through",
+    textDecorationThickness: "1.5px",
+    textUnderlineOffset: "2px",
+    _light: { color: "gray.600" },
+    _dark:  { color: "gray.400" },
+  },
+
+  // (선택) 체크된 항목 내부 링크도 같이 흐리게
+  ".task-list-item:has(> input[type='checkbox']:checked) a": {
+    textDecoration: "line-through",
+  },
 };
