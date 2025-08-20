@@ -40,13 +40,16 @@ module.exports = {
       options: {
         extensions: [".mdx", ".md"],
         gatsbyRemarkPlugins: [
-          { resolve: "gatsby-remark-gifs" },
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 800,
-              wrapperStyle: `margin: 25px auto; z-index: 0; display: block;`,
+              maxWidth: 800, // 생성할 최대 폭
               showCaptions: true,
+              withWebp: true, // webp만 유지
+              withAvif: false, // AVIF 비활성 (메모리/시간 절약)
+              linkImagesToOriginal: false, // 원본 링크 비활성
+              backgroundColor: "transparent",
+              quality: 70,
             },
           },
           { resolve: `gatsby-remark-katex`, options: { strict: "ignore" } },
@@ -79,7 +82,10 @@ module.exports = {
     // --- 파일 소스 ---
     {
       resolve: `gatsby-source-filesystem`,
-      options: { name: `portfolio`, path: path.resolve(__dirname, "./portfolio") },
+      options: {
+        name: `portfolio`,
+        path: path.resolve(__dirname, "./portfolio"),
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
@@ -91,14 +97,6 @@ module.exports = {
         name: `content`,
         path: path.resolve(__dirname, "./content"),
         ignore: [`**/templates/**`], // content/templates 무시
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `categories`,
-        path: path.resolve(__dirname, "./content/"),
-        ignore: [`**/templates/**`],
       },
     },
     // --- 파일 소스 끝 ---
@@ -186,9 +184,18 @@ module.exports = {
       },
     },
 
-    { resolve: `gatsby-plugin-gtag`, options: { trackingId: "G-6P098S0HE9", head: true } },
-    { resolve: `gatsby-plugin-clarity`, options: { clarity_project_id: "guzda4dk44", enable_on_dev_env: false } },
-    { resolve: "gatsby-plugin-manifest", options: { icon: "src/assets/favicon.png" } },
+    {
+      resolve: `gatsby-plugin-gtag`,
+      options: { trackingId: "G-6P098S0HE9", head: true },
+    },
+    {
+      resolve: `gatsby-plugin-clarity`,
+      options: { clarity_project_id: "guzda4dk44", enable_on_dev_env: false },
+    },
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: { icon: "src/assets/favicon.png" },
+    },
 
     // 브라우저에서 필요(노출 OK)한 키만 allowList
     {
@@ -208,7 +215,8 @@ module.exports = {
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         // Admin Key는 브라우저 노출 금지 → GATSBY_ 접두사 쓰지 않는 환경변수 권장
-        apiKey: process.env.ALGOLIA_ADMIN_KEY || process.env.GATSBY_ALGOLIA_ADMIN_KEY,
+        apiKey:
+          process.env.ALGOLIA_ADMIN_KEY || process.env.GATSBY_ALGOLIA_ADMIN_KEY,
         indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
         queries, // ./src/utils/algolia의 쿼리 사용 (published != false && /posts/** 만)
         chunkSize: 10000,
