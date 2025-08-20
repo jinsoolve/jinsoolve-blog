@@ -9,8 +9,6 @@ const mdxQuery = `
           published: { ne: false }
           title: { nin: ["김진수 포트폴리오", "김진수에 대하여"] }
         }
-        # MDX에서는 fileAbsolutePath 대신 internal.contentFilePath 사용
-        internal: { contentFilePath: { regex: "/posts/" } }
       }
       sort: { frontmatter: { createdAt: DESC } }
     ) {
