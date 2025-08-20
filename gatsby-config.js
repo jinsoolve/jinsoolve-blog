@@ -112,7 +112,23 @@ module.exports = {
     // --- 파일 소스 끝 ---
 
     "gatsby-plugin-image",
-    "gatsby-plugin-sharp",
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        // 품질 낮추고 파생 사이즈/포맷 최소화
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`,
+          quality: 70,
+          // 생성할 responsive breakpoints를 과감히 축소
+          breakpoints: [640, 960, 1280],
+          backgroundColor: `transparent`,
+        },
+        // 에러로 전체 빌드 중단 방지(메모리 부족 시도 포함)
+        failOn: `none`,
+        stripMetadata: true,
+      },
+    },
     "gatsby-transformer-sharp",
     {
       resolve: "gatsby-plugin-typegen",
