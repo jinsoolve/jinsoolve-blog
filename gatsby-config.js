@@ -214,9 +214,7 @@ module.exports = {
       resolve: `gatsby-plugin-algolia`,
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
-        // Admin Key는 브라우저 노출 금지 → GATSBY_ 접두사 쓰지 않는 환경변수 권장
-        apiKey:
-          process.env.ALGOLIA_ADMIN_KEY || process.env.GATSBY_ALGOLIA_ADMIN_KEY,
+        apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
         indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
         queries, // ./src/utils/algolia의 쿼리 사용 (published != false && /posts/** 만)
         chunkSize: 10000,
