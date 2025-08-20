@@ -22,6 +22,6 @@ gatsby-types.d.ts
 gatsby-schema.graphql
 .env.production
 .env.development
-/src/__generated__
+/src/__generated__/
 /.obsidian
 src/__generated__/gatsby-types.d.ts

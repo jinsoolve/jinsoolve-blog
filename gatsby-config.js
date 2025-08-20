@@ -1,8 +1,12 @@
+// gatsby-config.js
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const path = require(`path`);
+const path = require("path");
+
+// Algolia 쿼리 파일 (네가 만든 파일 경로와 맞춰줘)
+const queries = require("./src/utils/algolia");
 
 const SITE_METADATA = Object.freeze({
   title: "Jinsoolve 블로그",
@@ -28,9 +32,8 @@ module.exports = {
   siteMetadata: SITE_METADATA,
   graphqlTypegen: true,
   trailingSlash: `always`,
-  flags: {
-    DEV_SSR: false,
-  },
+  flags: { DEV_SSR: false },
+
   plugins: [
     {
       resolve: "gatsby-plugin-mdx",
@@ -46,10 +49,7 @@ module.exports = {
               showCaptions: true,
             },
           },
-          {
-            resolve: `gatsby-remark-katex`,
-            options: { strict: "ignore" },
-          },
+          { resolve: `gatsby-remark-katex`, options: { strict: "ignore" } },
         ],
         mdxOptions: {
           remarkPlugins: [
@@ -76,28 +76,21 @@ module.exports = {
     },
     "gatsby-plugin-mdx-frontmatter",
 
-    // --- 여기부터 파일 소스 ---
+    // --- 파일 소스 ---
     {
       resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `portfolio`,
-        path: path.resolve(__dirname, "./portfolio"),
-      },
+      options: { name: `portfolio`, path: path.resolve(__dirname, "./portfolio") },
     },
     {
       resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `about-me`,
-        path: path.resolve(__dirname, "./about"),
-      },
+      options: { name: `about-me`, path: path.resolve(__dirname, "./about") },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `content`,
         path: path.resolve(__dirname, "./content"),
-        // ✅ content/templates 이하 전부 무시
-        ignore: [`**/templates/**`],
+        ignore: [`**/templates/**`], // content/templates 무시
       },
     },
     {
@@ -105,7 +98,6 @@ module.exports = {
       options: {
         name: `categories`,
         path: path.resolve(__dirname, "./content/"),
-        // ✅ 동일하게 무시 (두 소스 모두 content를 바라보므로)
         ignore: [`**/templates/**`],
       },
     },
@@ -115,34 +107,29 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sharp`,
       options: {
-        // 품질 낮추고 파생 사이즈/포맷 최소화
         defaults: {
           formats: [`auto`, `webp`],
           placeholder: `dominantColor`,
           quality: 70,
-          // 생성할 responsive breakpoints를 과감히 축소
           breakpoints: [640, 960, 1280],
           backgroundColor: `transparent`,
         },
-        // 에러로 전체 빌드 중단 방지(메모리 부족 시도 포함)
         failOn: `none`,
         stripMetadata: true,
       },
     },
     "gatsby-transformer-sharp",
+
     {
       resolve: "gatsby-plugin-typegen",
       options: {
         outputPath: `src/__generated__/gatsby-types.d.ts`,
-        emitSchema: {
-          "src/__generated__/gatsby-schema.graphql": true,
-        },
+        emitSchema: { "src/__generated__/gatsby-schema.graphql": true },
       },
     },
-    {
-      resolve: "@chakra-ui/gatsby-plugin",
-      options: { resetCSS: true },
-    },
+
+    { resolve: "@chakra-ui/gatsby-plugin", options: { resetCSS: true } },
+
     {
       resolve: "gatsby-plugin-web-font-loader",
       options: {
@@ -154,6 +141,7 @@ module.exports = {
         },
       },
     },
+
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -182,38 +170,27 @@ module.exports = {
                 custom_elements: [{ "content:encoded": node.body }],
               })),
             query: `
-              {
-                allMdx(sort: {frontmatter: {createdAt: DESC}}) {
-                  nodes {
-                    frontmatter {
-                      title
-                      createdAt
-                      description
-                      slug
-                    }
-                    body
-                  }
-                }
-              }
-            `,
+{
+  allMdx(sort: {frontmatter: {createdAt: DESC}}) {
+  nodes {
+    frontmatter { title createdAt description slug }
+    body
+  }
+}
+}
+`,
             output: "/rss.xml",
             title: "jinsoolve blog's RSS Feed",
           },
         ],
       },
     },
-    {
-      resolve: `gatsby-plugin-gtag`,
-      options: { trackingId: "G-6P098S0HE9", head: true },
-    },
-    {
-      resolve: `gatsby-plugin-clarity`,
-      options: { clarity_project_id: "guzda4dk44", enable_on_dev_env: false },
-    },
-    {
-      resolve: "gatsby-plugin-manifest",
-      options: { icon: "src/assets/favicon.png" },
-    },
+
+    { resolve: `gatsby-plugin-gtag`, options: { trackingId: "G-6P098S0HE9", head: true } },
+    { resolve: `gatsby-plugin-clarity`, options: { clarity_project_id: "guzda4dk44", enable_on_dev_env: false } },
+    { resolve: "gatsby-plugin-manifest", options: { icon: "src/assets/favicon.png" } },
+
+    // 브라우저에서 필요(노출 OK)한 키만 allowList
     {
       resolve: `gatsby-plugin-env-variables`,
       options: {
@@ -222,6 +199,24 @@ module.exports = {
           "GATSBY_ALGOLIA_SEARCH_KEY",
           "GATSBY_ALGOLIA_INDEX_NAME",
         ],
+      },
+    },
+
+    // ✅ Algolia 인덱싱 (빌드 시 자동 실행)
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        // Admin Key는 브라우저 노출 금지 → GATSBY_ 접두사 쓰지 않는 환경변수 권장
+        apiKey: process.env.ALGOLIA_ADMIN_KEY || process.env.GATSBY_ALGOLIA_ADMIN_KEY,
+        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
+        queries, // ./src/utils/algolia의 쿼리 사용 (published != false && /posts/** 만)
+        chunkSize: 10000,
+        concurrentQueries: true,
+        enablePartialUpdates: true,
+        matchFields: ["internal.contentDigest"],
+        // 프로덕션에서만 인덱싱
+        skipIndexing: process.env.NODE_ENV !== "production",
       },
     },
   ],
