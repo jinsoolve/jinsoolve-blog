@@ -142,4 +142,15 @@ export default {
   ".task-list-item:has(> input[type='checkbox']:checked) a": {
     textDecoration: "line-through",
   },
+
+  ".badges-inline": {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: "8px",
+    textAlign: "left",
+  },
+  ".badges-inline img": {
+    margin: "0 !important",      // 전역 img 마진 무효화
+  }
 };
