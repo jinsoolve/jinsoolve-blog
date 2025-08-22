@@ -7,9 +7,10 @@ export default {
     transition: "background-color 0.2s ease, color 0.2s ease",
   },
 
-  "h1:hover .heading-anchor-icon, h2:hover .heading-anchor-icon, h3:hover .heading-anchor-icon": {
-    opacity: 1,
-  },
+  "h1:hover .heading-anchor-icon, h2:hover .heading-anchor-icon, h3:hover .heading-anchor-icon":
+    {
+      opacity: 1,
+    },
 
   blockquote: {
     p: {
@@ -112,16 +113,16 @@ export default {
 
   // ✅ 체크박스 리스트 전용 스타일
   "ul.contains-task-list, ol.contains-task-list": {
-    listStyle: "none",   // 기본 점 제거
-    paddingLeft: "0",    // 들여쓰기 제거
+    listStyle: "none", // 기본 점 제거
+    paddingLeft: "0", // 들여쓰기 제거
     marginLeft: "0",
   },
   ".task-list-item": {
-    listStyle: "none",   // 개별 li 점 제거
+    listStyle: "none", // 개별 li 점 제거
     marginLeft: "0",
   },
   ".task-list-item::marker": {
-    content: "none",     // ::marker 완전히 제거
+    content: "none", // ::marker 완전히 제거
   },
   ".task-list-item > input[type='checkbox']": {
     marginRight: "8px",
@@ -135,7 +136,7 @@ export default {
     textDecorationThickness: "1.5px",
     textUnderlineOffset: "2px",
     _light: { color: "gray.600" },
-    _dark:  { color: "gray.400" },
+    _dark: { color: "gray.400" },
   },
 
   // (선택) 체크된 항목 내부 링크도 같이 흐리게
@@ -145,12 +146,22 @@ export default {
 
   ".badges-inline": {
     display: "flex",
+    flexWrap: "wrap", // ✅ 줄바꿈 허용
     justifyContent: "flex-start",
     alignItems: "center",
     gap: "8px",
     textAlign: "left",
   },
+
   ".badges-inline img": {
-    margin: "0 !important",      // 전역 img 마진 무효화
-  }
+    margin: "0 !important", // 전역 img 마진 무효화
+  },
+
+  ".scroll-x-container": {
+    // width: "300px",        // 원하는 크기
+    overflowX: "auto",     // 가로 스크롤 가능
+    overflowY: "hidden",   // 세로 스크롤 숨김
+    whiteSpace: "nowrap",  // 이미지가 줄바꿈 되지 않도록
+    border: "1px solid #ccc", // 선택사항: 테두리
+  },
 };
