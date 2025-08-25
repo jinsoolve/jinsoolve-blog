@@ -19,7 +19,7 @@ import Search from "./Search";
 const Header = () => {
     const [isSticky, setIsSticky] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(true);
 
     // 화면 너비 감지
     useEffect(() => {
