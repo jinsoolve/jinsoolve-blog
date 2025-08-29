@@ -1,8 +1,22 @@
 [build]
-  command = "NODE_OPTIONS=--max-old-space-size=4096 yarn build"
+  # 커맨드는 최대 단순화: 환경변수는 아래 environment 블록에서 주입
+  command = "yarn build"
+  publish = "public"
+
+  # ⬇️ 메모리 절약 & 병렬도 축소 & 힙 증가
+  [build.environment]
+    NODE_OPTIONS = "--max-old-space-size=6144"   # 4096 → 6144 (필요 시 7168로 올려보세요)
+    GATSBY_EXCLUDE_SOURCE_MAPS = "true"          # 소스맵 끄기(효과 큼)
+    GATSBY_CPU_COUNT = "2"                       # Gatsby 병렬도 축소
+    SHARP_CONCURRENCY = "2"                      # 이미지 처리 병렬도 축소
+    GATSBY_TELEMETRY_DISABLED = "1"              # 사소하지만 깔끔하게
 
 [[redirects]]
-  from = "https://jinsoolve.netlify.app/*"  # 리디렉션할 URL 패턴
-  to = "https://jinsoolve.com/:splat"       # 리디렉션 대상 URL
-  status = 301                              # HTTP 301 영구 리디렉션
-  force = true                              # 강제 적용
+  from = "https://jinsoolve.netlify.app/*"
+  to = "https://jinsoolve.com/:splat"
+  status = 301
+  force = true
+
+# (선택) Gatsby 캐시 최적화 플러그인
+[[plugins]]
+  package = "@netlify/plugin-gatsby"
