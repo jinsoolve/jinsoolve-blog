@@ -188,17 +188,17 @@ const CodeBlock = (props: any) => {
 
 const customComponents = {
   h1: (props: HeadingProps) => <Heading as="h1" fontSize={36} mt="80px" {...props} />,
-  h2: (props: HeadingProps) => <Heading as="h2" fontSize={32} mt="60px" mb="30px" {...props} />,
-  h3: (props: HeadingProps) => <Heading as="h3" fontSize={24} mt="60px" mb="20px" {...props} />,
-  h4: (props: HeadingProps) => <Heading as="h4" fontSize={20} mt="40px" mb="20px" {...props} />,
-  p: (props: TextProps) => <Text fontSize={16} mt="20px" lineHeight="1.8" {...props} />,
+  h2: (props: HeadingProps) => <Heading as="h2" fontSize={30} mt="60px" mb="0px" {...props} />,
+  h3: (props: HeadingProps) => <Heading as="h3" fontSize={24} mt="60px" mb="0px" {...props} />,
+  h4: (props: HeadingProps) => <Heading as="h4" fontSize={18} mt="40px" mb="0px" {...props} />,
+  p: (props: TextProps) => <Text fontSize={16} m="10px 0px" lineHeight="1.8" {...props} />,
   li: (props: BoxProps) => (
     <Box
       as="li"
       sx={{
         wordBreak: "break-word", // 텍스트가 너무 길 경우 줄바꿈
         marginLeft: "24px",
-        lineHeight: "1.8",
+        lineHeight: "1.4",
       }}
       m={"4px 0"}
       fontSize={16}
@@ -212,6 +212,8 @@ const customComponents = {
         listStylePosition: "inside", // 숫자 위치를 텍스트와 맞춤
         listStyleType: "decimal", // 숫자 리스트 스타일
         textIndent: "-1.2em", // 첫 줄의 들여쓰기 제거
+        marginTop: "13px",
+        marginBottom: "13px",
         "* > ol": {
           margin: 0,
         },
