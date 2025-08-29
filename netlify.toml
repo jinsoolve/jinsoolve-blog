@@ -1,15 +1,17 @@
 [build]
-  # 커맨드는 최대 단순화: 환경변수는 아래 environment 블록에서 주입
   command = "yarn build"
   publish = "public"
 
-  # ⬇️ 메모리 절약 & 병렬도 축소 & 힙 증가
   [build.environment]
-    NODE_OPTIONS = "--max-old-space-size=6144"   # 4096 → 6144 (필요 시 7168로 올려보세요)
-    GATSBY_EXCLUDE_SOURCE_MAPS = "true"          # 소스맵 끄기(효과 큼)
-    GATSBY_CPU_COUNT = "2"                       # Gatsby 병렬도 축소
-    SHARP_CONCURRENCY = "2"                      # 이미지 처리 병렬도 축소
-    GATSBY_TELEMETRY_DISABLED = "1"              # 사소하지만 깔끔하게
+    # 빌드 안정화(메모리 절감용): 필요 시 유지
+    NODE_OPTIONS = "--max-old-space-size=6144"
+    GATSBY_EXCLUDE_SOURCE_MAPS = "true"
+    GATSBY_CPU_COUNT = "2"
+    SHARP_CONCURRENCY = "2"
+    GATSBY_TELEMETRY_DISABLED = "1"
+
+    # 🔑 핵심: Gatsby Functions/SSR/DSG 생성을 전부 스킵
+    NETLIFY_SKIP_GATSBY_FUNCTIONS = "true"
 
 [[redirects]]
   from = "https://jinsoolve.netlify.app/*"

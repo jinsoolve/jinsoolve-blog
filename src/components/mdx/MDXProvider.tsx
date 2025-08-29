@@ -198,7 +198,7 @@ const customComponents = {
       sx={{
         wordBreak: "break-word", // 텍스트가 너무 길 경우 줄바꿈
         marginLeft: "24px",
-        lineHeight: "1.4",
+        lineHeight: "1.6",
       }}
       m={"4px 0"}
       fontSize={16}
