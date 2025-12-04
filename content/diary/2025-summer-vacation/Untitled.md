@@ -11,7 +11,7 @@ tags:
 createdAt: 2025/08/20
 updatedAt:
 featured: true
-published: true
+published: false
 locale:
 ---
 # 글을 시작하며...

@@ -80,11 +80,16 @@ public:
     // sccSize[scc_x] := scc_x번의 scc의 집합 크기  
     vector<int> scc, sccSize;  
   
+    // scc_nodes[scc_num] := scc_num에 속해 있는 노드 번호들  
+    vector<vector<int>> scc_nodes;  
+  
     // g := 기존 그래프  
     // scc_g := scc 끼리의 그래프  
     vector<vector<int>> g, scc_g;  
   
-    SCC(int _N) : N(_N), _id(1), _scc(1), id(N+1, -1), scc(N+1, -1), sccSize(N+1,0), g(N+1) {}  
+    SCC() = default;  
+    SCC(int _N) : N(_N), _id(1), _scc(1), id(_N+1, -1), scc(_N+1, -1), sccSize(_N+1,0), g(_N+1), scc_nodes(_N+1) {}  
+    ~SCC() = default;  
   
     void add_edge(int u, int v) { g[u].emplace_back(v); }  
     void find_scc() {  
@@ -92,6 +97,7 @@ public:
             if(id[i] == -1) dfs(i);  
         scc_g.resize(_scc);  
         for(int u=1; u<=N; u++) {  
+            scc_nodes[scc[u]].emplace_back(u);  
             for(int v : g[u]) {  
                 if(scc[u] != scc[v]) scc_g[scc[u]].emplace_back(scc[v]);  
             }  
