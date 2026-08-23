@@ -2,65 +2,21 @@ import { Box, Flex, Heading, Text, useColorMode, useBreakpointValue, useColorMod
 import { Link } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { koreanTagNames } from "../constants";
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 
 interface PostContentTitleProps {
   readingTime: string;
-  post: GatsbyTypes.PostPageQuery["post"];
+  post: Queries.PostPageQuery["post"];
   showThumbnail?: boolean; // ✅ 추가: 썸네일 표시 여부를 제어하는 prop
 }
 
-const ResponsiveBox = ({ title }: { title: string }) => {
-  const [fontSize, setFontSize] = useState(40);
-  const boxRef = useRef<HTMLDivElement | null>(null);
-  const [height, setHeight] = useState<number | undefined>();
-
-  useEffect(() => {
-    const resizeBox = () => {
-      if (boxRef.current) {
-        const { width } = boxRef.current.getBoundingClientRect();
-        const newHeight = width * 0.95; // 16:9 비율
-        setHeight(newHeight);
-        const adjustedFontSize = Math.min((width / title.length) * 1.75, newHeight / 1.5);
-        setFontSize(Math.max(20, Math.min(adjustedFontSize, 60)));
-      }
-    };
-
-    resizeBox();
-    window.addEventListener("resize", resizeBox);
-    return () => window.removeEventListener("resize", resizeBox);
-  }, [title]);
-
-  return (
-    <Box
-      ref={boxRef}
-      backgroundColor="white"
-      display="flex"
-      alignItems="start"
-      justifyContent="center"
-      width="100%"
-      borderRadius="20px"
-      height={height ? `${height}px` : "auto"}
-      padding="10% 7%"
-    >
-      <Box height="100%" width="100%" display="flex" alignItems="start">
-        <Heading
-          style={{ fontSize: `${fontSize}px` }}
-          fontWeight="700"
-          color="black"
-          fontFamily="SBAggro"
-          lineHeight="1.5"
-        >
-          {title}
-        </Heading>
-      </Box>
-    </Box>
-  );
-};
-
 const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostContentTitleProps) => {
   const { colorMode } = useColorMode();
-  const flexDirection = useBreakpointValue({ base: "column", "1.75xl": "column" });
+  const flexDirection =
+    useBreakpointValue<"column" | "row">({
+      base: "column",
+      "1.75xl": "column",
+    }) ?? "column";
   const boxShadowColor = useColorModeValue(
     "lg",
     "dark-lg"
@@ -146,7 +102,7 @@ const PostContentTitle = ({ post, readingTime, showThumbnail = true }: PostConte
         <Text fontSize={15} fontWeight={400} mt={1}>
           {post?.frontmatter?.updatedAt
             ? `Updated At: ${post.frontmatter.updatedAt}`
-            : `Created At: ${post.frontmatter.createdAt}`}
+            : `Created At: ${post?.frontmatter?.createdAt ?? ""}`}
         </Text>
         <Text fontSize="15px">
           {readingTime}

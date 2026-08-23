@@ -5,7 +5,7 @@ import { fadeInFromLeft } from "../framer-motions";
 import PostCard from "./PostCard";
 
 interface PostGridProps {
-  posts: GatsbyTypes.AllPostPageTemplateQuery["allMdx"]["nodes"];
+  posts: Queries.AllPostPageTemplateQuery["allMdx"]["nodes"];
 }
 
 const PostGrid = ({ posts }: PostGridProps) => {
@@ -28,7 +28,6 @@ const PostGrid = ({ posts }: PostGridProps) => {
             thumbnail: posts.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!,
             createdAt: posts.frontmatter?.createdAt!,
             updatedAt: posts.frontmatter?.updatedAt!,
-            categories: posts.frontmatter?.categories!,
             excerpt: posts.excerpt!,
           };
 

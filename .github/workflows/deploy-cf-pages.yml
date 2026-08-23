@@ -11,46 +11,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18.12.1'
+          node-version-file: ".nvmrc"
           cache: yarn
       
       - name: Install Dependencies
-        run: yarn install --immutable
+        run: yarn install --frozen-lockfile
+
+      - name: Test content metadata
+        run: yarn test
+
+      - name: Typecheck
+        run: yarn typecheck
 
       - name: Cache Gatsby `.cache` Folder
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: gatsby-cache-folder
         with:
           path: .cache
-          key: ${{ runner.os }}-cache-gatsby
+          key: ${{ runner.os }}-gatsby-${{ hashFiles('yarn.lock', 'gatsby-config.js', 'gatsby-node.js', 'gatsby/**', 'src/**') }}
           restore-keys: |
-            ${{ runner.os }}-cache-gatsby
-      
-      - if: steps.gatsby-cache-folder.outputs.cache-hit == 'true'
-        run: echo 'gatsby-cache-folder cache hit!'
-
-      - name: Cache Gatsby `public` Folder
-        uses: actions/cache@v3
-        id: gatsby-public-folder
-        with:
-          path: public
-          key: ${{ runner.os }}-public-gatsby
-          restore-keys: |
-            ${{ runner.os }}-public-gatsby
-      
-      - if: steps.gatsby-public-folder.outputs.cache-hit == 'true'
-        run: echo 'gatsby-public-folder cache hit!'
+            ${{ runner.os }}-gatsby-
 
       - name: Build Gatsby Project
-        run: |
-          yarn build
+        run: yarn build
         env:
-          # incremental builds
-          # https://www.gatsbyjs.org/docs/page-build-optimizations-for-incremental-data-changes/
+          NODE_OPTIONS: --max-old-space-size=4096
+          GATSBY_CPU_COUNT: 2
+          GATSBY_TELEMETRY_DISABLED: "1"
           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
       
       - name: 서비스를 Cloudflare pages에 배포해요

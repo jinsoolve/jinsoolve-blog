@@ -1,14 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import type { BoxProps, ComponentDefaultProps, HeadingProps, TextProps } from "@chakra-ui/react";
 import { Box, Heading, Text, useColorMode, Tooltip, IconButton } from "@chakra-ui/react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight, oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { FiCopy, FiCheck } from "react-icons/fi";
+import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
+import { PrismLight } from "react-syntax-highlighter";
+import cpp from "react-syntax-highlighter/dist/cjs/languages/prism/cpp";
+import python from "react-syntax-highlighter/dist/cjs/languages/prism/python";
+import oneDark from "react-syntax-highlighter/dist/cjs/styles/prism/one-dark";
+import oneLight from "react-syntax-highlighter/dist/cjs/styles/prism/one-light";
 import { MDXProvider } from "@mdx-js/react";
-import type { AnchorHTMLAttributes, PropsWithChildren } from "react";
+import type {
+  AnchorHTMLAttributes,
+  ImgHTMLAttributes,
+  PropsWithChildren,
+} from "react";
 import Callout from "./Callout";
 import { InternalLink } from "./InternalLink";
-import YouTubePlayer from "./YouTubePlayer";
+
+PrismLight.registerLanguage("cpp", cpp);
+PrismLight.registerLanguage("python", python);
+PrismLight.registerLanguage("py", python);
+
+const SyntaxHighlighter = PrismLight as unknown as React.ComponentType<any>;
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
@@ -27,7 +39,7 @@ const CopyButton = ({ text }: { text: string }) => {
   return (
     <Tooltip label={copied ? "Copied!" : "Copy"} hasArrow placement="top">
       <IconButton
-        icon={copied ? <FiCheck /> : <FiCopy />}
+        icon={copied ? <CheckIcon /> : <CopyIcon />}
         onClick={handleCopy}
         size="md"
         position="absolute"
@@ -71,34 +83,32 @@ const InlineCode = ({ children }: { children: string }) => {
   );
 };
 
+const MdxImage = ({
+  loading,
+  decoding,
+  fetchPriority,
+  ...props
+}: ImgHTMLAttributes<HTMLImageElement>) => {
+  const isAboutHero =
+    props.alt === "header" &&
+    props.src?.startsWith("https://capsule-render.vercel.app/");
+
+  return (
+    <img
+      {...props}
+      loading={isAboutHero ? "eager" : loading ?? "lazy"}
+      decoding={decoding ?? "async"}
+      fetchPriority={isAboutHero ? "high" : fetchPriority}
+    />
+  );
+};
+
 const CodeBlock = (props: any) => {
   const { className, children } = props;
   const match = /language-(\w+)/.exec(className || "");
   const { colorMode } = useColorMode();
   const theme = colorMode === "dark" ? oneDark : oneLight;
   const language = match ? match[1] : "text"; // 언어가 없을 경우 기본값 "text"
-  const [fontSize, setFontSize] = useState(14);
-
-  useEffect(() => {
-    const updateFontSize = () => {
-      const width = window.innerWidth;
-
-      if (width < 768) {
-        setFontSize(13);
-      } else if (width < 1024) {
-        setFontSize(14);
-      } else {
-        setFontSize(15);
-      }
-    };
-
-    updateFontSize();
-    window.addEventListener("resize", updateFontSize);
-
-    return () => {
-      window.removeEventListener("resize", updateFontSize);
-    };
-  }, []);
 
   if (!match) {
     // 인라인 코드일 경우 InlineCode 컴포넌트 사용
@@ -120,7 +130,11 @@ const CodeBlock = (props: any) => {
     >
       {/* 상단 바 */}
       <Box
-        bg={theme['code[class*="language-"]']?.background || "inherit"}
+        style={{
+          background: String(
+            theme['code[class*="language-"]']?.background || "inherit",
+          ),
+        }}
         height="40px"
         px="10px"
         display="flex"
@@ -166,14 +180,14 @@ const CodeBlock = (props: any) => {
             margin: "0px",
             borderRadius: "0px 0px 10px 10px",
             fontFamily: "Fira Code, monospace",
-            fontSize: `${fontSize}px`,
+            fontSize: "clamp(13px, calc(11px + 0.4vw), 15px)",
           }}
           showLineNumbers
           lineNumberStyle={{
             width: "42px",
             textAlign: "right",
             paddingRight: "18px",
-            fontSize: `${fontSize - 2}px`,
+            fontSize: "clamp(11px, calc(9px + 0.4vw), 13px)",
           }}
           PreTag="div"
           language={language}
@@ -266,15 +280,19 @@ const customComponents = {
       </Box>
     );
   },
+  img: MdxImage,
   blockquote: (props: ComponentDefaultProps) => {
     const children = props.children;
     return <Callout>{children}</Callout>;
   },
   code: CodeBlock,
   Callout,
-  YouTubePlayer,
 };
 
 export default function ({ children }: PropsWithChildren) {
-  return <MDXProvider components={customComponents as any}>{children}</MDXProvider>;
+  return (
+    <MDXProvider components={customComponents as any}>
+      {children as any}
+    </MDXProvider>
+  );
 }

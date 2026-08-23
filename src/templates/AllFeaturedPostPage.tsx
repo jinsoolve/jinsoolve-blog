@@ -1,7 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
-import { getSrc } from "gatsby-plugin-image";
 
 import FeaturedPostSection from "../components/FeaturedPostSection";
 import MainLayout from "../components/MainLayout";
@@ -13,11 +12,18 @@ import Categories from "../components/DefaultCategories";
 import { ALL_POSTS_NAME, DOMAIN } from "../constants";
 
 export const query = graphql`
-  fragment MdxContent on Mdx {
+  fragment AllFeaturedMdxContent on Mdx {
     frontmatter {
       thumbnail {
         childImageSharp {
-          gatsbyImageData
+          gatsbyImageData(
+            width: 290
+            height: 171
+            layout: CONSTRAINED
+            sizes: "(max-width: 660px) 80vw, 290px"
+            outputPixelDensities: [1, 2]
+            transformOptions: { fit: COVER }
+          )
         }
       }
       title
@@ -25,13 +31,11 @@ export const query = graphql`
       createdAt
       description
       slug
-      categories
-      tags
     }
     excerpt(pruneLength: 100)
   }
 
-  query AllPostPageTemplate($limit: Int, $skip: Int) {
+  query AllFeaturedPostPageTemplate($limit: Int, $skip: Int) {
     # locale은 null인것만 가져옴 (ko)
     allMdx(
       filter: {
@@ -46,9 +50,8 @@ export const query = graphql`
       limit: $limit
       skip: $skip
     ) {
-      totalCount
       nodes {
-        ...MdxContent
+        ...AllFeaturedMdxContent
       }
 
       pageInfo {
@@ -57,12 +60,8 @@ export const query = graphql`
       }
     }
 
-    ogimage: imageSharp(fluid: { originalName: { eq: "og-image.png" } }) {
-      gatsbyImageData
-    }
-
-    profileImage: imageSharp(fluid: { originalName: { eq: "profile.png" } }) {
-      gatsbyImageData
+    ogimage: file(relativePath: { eq: "og-image.png" }) {
+      publicURL
     }
 
     # locale은 null인것만 가져옴 (ko)
@@ -74,10 +73,8 @@ export const query = graphql`
       nodes {
         frontmatter {
           title
-          updatedAt
           createdAt
           slug
-          tags
         }
       }
     }
@@ -88,14 +85,14 @@ export const query = graphql`
       sort: { frontmatter: { createdAt: DESC } }
     ) {
       nodes {
-        ...MdxContent
+        ...AllFeaturedMdxContent
       }
     }
   }
 `;
 
 interface AllPostPageTemplateProps {
-  data: GatsbyTypes.AllPostPageTemplateQuery;
+  data: Queries.AllFeaturedPostPageTemplateQuery;
 }
 
 export default function AllPostPageTemplate({ data }: AllPostPageTemplateProps) {
@@ -128,8 +125,8 @@ export default function AllPostPageTemplate({ data }: AllPostPageTemplateProps) 
   );
 }
 
-export const Head: HeadFC<Queries.AllPostPageTemplateQuery> = ({ data }) => {
-  const ogimage = data.ogimage?.gatsbyImageData!;
+export const Head: HeadFC<Queries.AllFeaturedPostPageTemplateQuery> = ({ data }) => {
+  const ogimage = data.ogimage?.publicURL ?? undefined;
   const description = "머신러닝과 알고리즘을 공부하는 김진수 입니다.";
   const title = "Jinsoolve 블로그";
 
@@ -145,14 +142,14 @@ export const Head: HeadFC<Queries.AllPostPageTemplateQuery> = ({ data }) => {
       <meta property="og:site_name" content={title} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={getSrc(ogimage)} />
+      <meta property="og:image" content={ogimage} />
       {/*  Twitter Meta categories  */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="jinsoolve.netlify.app" />
       <meta property="twitter:url" content={DOMAIN} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={getSrc(ogimage)} />
+      <meta name="twitter:image" content={ogimage} />
       <meta name="twitter:label1" content="Category" />
       <meta name="twitter:data1" content="개발" />
     </>

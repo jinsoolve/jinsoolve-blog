@@ -1,6 +1,5 @@
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
-import { getSrc } from "gatsby-plugin-image";
 
 import MainLayout from "../components/MainLayout";
 import Pagenation from "../components/Pagenation";
@@ -17,12 +16,18 @@ export const query = graphql`
       limit: $limit
       skip: $skip
     ) {
-      totalCount
       nodes {
         frontmatter {
           thumbnail {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(
+                width: 290
+                height: 171
+                layout: CONSTRAINED
+                sizes: "(max-width: 660px) 80vw, 290px"
+                outputPixelDensities: [1, 2]
+                transformOptions: { fit: COVER }
+              )
             }
           }
           title
@@ -30,7 +35,6 @@ export const query = graphql`
           createdAt
           description
           slug
-          tags
         }
         excerpt(pruneLength: 100)
       }
@@ -40,12 +44,8 @@ export const query = graphql`
         pageCount
       }
     }
-    ogimage: imageSharp(fluid: { originalName: { eq: "og-image.png" } }) {
-      gatsbyImageData
-    }
-
-    profileImage: imageSharp(fluid: { originalName: { eq: "profile.jpg" } }) {
-      gatsbyImageData
+    ogimage: file(relativePath: { eq: "og-image.png" }) {
+      publicURL
     }
   }
 `;
@@ -54,7 +54,7 @@ interface TagsProps {
   pageContext: {
     tag: string;
   };
-  data: GatsbyTypes.TagPageTemplateQuery;
+  data: Queries.TagPageTemplateQuery;
 }
 
 export default function TagsTemplate({ pageContext, data }: TagsProps) {
@@ -76,7 +76,7 @@ export const Head: HeadFC<Queries.TagPageTemplateQuery, TagsProps["pageContext"]
   data,
   pageContext,
 }) => {
-  const ogimage = data.ogimage?.gatsbyImageData!;
+  const ogimage = data.ogimage?.publicURL ?? undefined;
   const description = "머신러닝과 알고리즘을 공부하는 김진수입니다.";
   const title = "Jinsoolve 블로그";
   const tag = pageContext.tag;
@@ -95,14 +95,14 @@ export const Head: HeadFC<Queries.TagPageTemplateQuery, TagsProps["pageContext"]
       <meta property="og:site_name" content={title} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={getSrc(ogimage)} />
+      <meta property="og:image" content={ogimage} />
       {/*  Twitter Meta tags  */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:domain" content="jinsoolve.netlify.app" />
       <meta property="twitter:url" content={DOMAIN} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={getSrc(ogimage)} />
+      <meta name="twitter:image" content={ogimage} />
       <meta name="twitter:label1" content="Category" />
       <meta name="twitter:data1" content="개발" />
     </>

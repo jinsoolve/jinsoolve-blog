@@ -4,6 +4,7 @@ require("dotenv").config({
 });
 
 const path = require("path");
+const { getPostPath, publicPostFilter } = require("./gatsby/content-policy");
 
 // Algolia 쿼리 파일 (네가 만든 파일 경로와 맞춰줘)
 const queries = require("./src/utils/algolia");
@@ -16,6 +17,14 @@ const SITE_METADATA = Object.freeze({
   algoliaSearchKey: process.env.GATSBY_ALGOLIA_SEARCH_KEY,
   algoliaIndexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
 });
+
+const shouldIndexAlgolia =
+  process.env.NODE_ENV === "production" &&
+  Boolean(
+    process.env.GATSBY_ALGOLIA_APP_ID &&
+      process.env.GATSBY_ALGOLIA_ADMIN_KEY &&
+      process.env.GATSBY_ALGOLIA_INDEX_NAME,
+  );
 
 const wrapESMPlugin = (name) =>
   function wrapESM(opts) {
@@ -77,8 +86,6 @@ module.exports = {
         },
       },
     },
-    "gatsby-plugin-mdx-frontmatter",
-
     // --- 파일 소스 ---
     {
       resolve: `gatsby-source-filesystem`,
@@ -118,27 +125,7 @@ module.exports = {
     },
     "gatsby-transformer-sharp",
 
-    {
-      resolve: "gatsby-plugin-typegen",
-      options: {
-        outputPath: `src/__generated__/gatsby-types.d.ts`,
-        emitSchema: { "src/__generated__/gatsby-schema.graphql": true },
-      },
-    },
-
     { resolve: "@chakra-ui/gatsby-plugin", options: { resetCSS: true } },
-
-    {
-      resolve: "gatsby-plugin-web-font-loader",
-      options: {
-        custom: {
-          families: ["Pretendard"],
-          urls: [
-            "https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css",
-          ],
-        },
-      },
-    },
 
     {
       resolve: `gatsby-plugin-feed`,
@@ -158,20 +145,27 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.nodes.map((node) => ({
-                ...node.frontmatter,
-                title: node.frontmatter.title,
-                description: node.frontmatter.description,
-                date: new Date(node.frontmatter.createdAt),
-                url: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
-                guid: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
-                custom_elements: [{ "content:encoded": node.body }],
-              })),
+              allMdx.nodes.map((node) => {
+                const url = `${site.siteMetadata.siteUrl}${getPostPath(node.frontmatter)}`;
+
+                return {
+                  ...node.frontmatter,
+                  title: node.frontmatter.title,
+                  description: node.frontmatter.description,
+                  date: new Date(node.frontmatter.createdAt),
+                  url,
+                  guid: url,
+                  custom_elements: [{ "content:encoded": node.body }],
+                };
+              }),
             query: `
 {
-  allMdx(sort: {frontmatter: {createdAt: DESC}}) {
+  allMdx(
+    filter: { ${publicPostFilter} }
+    sort: {frontmatter: {createdAt: DESC}}
+  ) {
   nodes {
-    frontmatter { title createdAt description slug }
+    frontmatter { title createdAt description slug locale }
     body
   }
 }
@@ -221,8 +215,8 @@ module.exports = {
         concurrentQueries: true,
         enablePartialUpdates: true,
         matchFields: ["internal.contentDigest"],
-        // 프로덕션에서만 인덱싱
-        skipIndexing: process.env.NODE_ENV !== "production",
+        // 로컬 검증은 자격 증명이 없으면 성공시키고, 배포 환경에서는 실패를 노출한다.
+        continueOnFailure: !shouldIndexAlgolia,
       },
     },
   ],

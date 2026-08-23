@@ -23,9 +23,12 @@ const Header = () => {
   // 스크롤 시 헤더 상태 변경
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.scrollY > 0);
+      const nextIsSticky = window.scrollY > 0;
+      setIsSticky((current) =>
+        current === nextIsSticky ? current : nextIsSticky,
+      );
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

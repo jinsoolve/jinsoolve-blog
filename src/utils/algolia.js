@@ -1,15 +1,11 @@
 // src/utils/algolia-queries.js
 const crypto = require("crypto");
+const { getPostPath, publicPostFilter } = require("../../gatsby/content-policy");
 
 const mdxQuery = `
   query {
     allPosts: allMdx(
-      filter: {
-        frontmatter: {
-          published: { ne: false }
-          title: { nin: ["김진수 포트폴리오", "About Me"] }
-        }
-      }
+      filter: { ${publicPostFilter} }
       sort: { frontmatter: { createdAt: DESC } }
     ) {
       nodes {
@@ -22,6 +18,7 @@ const mdxQuery = `
           description
           categories
           tags
+          locale
         }
         internal { contentFilePath }
       }
@@ -48,12 +45,13 @@ const unnestFrontmatter = (node) => {
     description: frontmatter.description,
     categories: frontmatter.categories ?? [],
     tags: frontmatter.tags ?? [],
+    locale: frontmatter.locale ?? null,
 
     // 본문은 excerpt로 — 필요하면 길이/필드 조정 가능
     body: excerpt,
 
     // 라우팅/구분
-    url: `/posts/${frontmatter.slug}`,
+    url: getPostPath(frontmatter),
     section: "posts",
 
     // 내부 필드(부분 업데이트 매칭)

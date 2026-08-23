@@ -1,7 +1,6 @@
 import { ChakraProvider, extendTheme, useColorMode, ColorModeScript } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import theme from "./chakra/theme";
-import MousePointerContainer from "./components/MousePointer";
 
 interface RootProps {
   children: React.ReactNode;
@@ -29,7 +28,6 @@ const Root: React.FC<RootProps> = ({ children }) => {
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
         <SetSystemColorMode /> {/* 시스템 컬러 모드 설정 */}
-        <MousePointerContainer />
         {children}
       </ChakraProvider>
     </>

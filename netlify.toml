@@ -4,10 +4,8 @@
 
   [build.environment]
     # 빌드 안정화(메모리 절감용): 필요 시 유지
-    NODE_OPTIONS = "--max-old-space-size=6144"
-    GATSBY_EXCLUDE_SOURCE_MAPS = "true"
+    NODE_OPTIONS = "--max-old-space-size=4096"
     GATSBY_CPU_COUNT = "2"
-    SHARP_CONCURRENCY = "2"
     GATSBY_TELEMETRY_DISABLED = "1"
 
     # 🔑 핵심: Gatsby Functions/SSR/DSG 생성을 전부 스킵
