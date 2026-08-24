@@ -1,12 +1,22 @@
-import { Box, Flex, IconButton, useBreakpointValue, Icon, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  useBreakpointValue,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import type { HeadFC } from "gatsby";
 import { graphql } from "gatsby";
 import { getSrc } from "gatsby-plugin-image";
 import React from "react";
-import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloseIcon,
+  HamburgerIcon,
+} from "@chakra-ui/icons";
 import { motion } from "framer-motion";
-import { MdList, MdOutlineMenu } from "react-icons/md";
 
 import Giscus from "../components/Giscus";
 import Locales from "../components/Locales";
@@ -14,7 +24,9 @@ import PostContentTitle from "../components/PostContentTitle";
 import PostLayout from "../components/PostLayout";
 import Profile from "../components/Profile";
 import RelatedPosts from "../components/RelatedPosts";
-import TableOfContents from "../components/TableOfContents";
+import TableOfContents, {
+  type TableOfContentsType,
+} from "../components/TableOfContents";
 import { DOMAIN } from "../constants";
 
 export const query = graphql`
@@ -31,11 +43,21 @@ export const query = graphql`
         updatedAt
         thumbnail {
           childImageSharp {
-            gatsbyImageData
+            gatsbyImageData(
+              width: 800
+              layout: CONSTRAINED
+              sizes: "(max-width: 800px) 100vw, 800px"
+              outputPixelDensities: [0.5, 1]
+            )
           }
         }
       }
-      myTableOfContents
+      contentMetadata {
+        readingTime {
+          text
+        }
+        tableOfContents
+      }
     }
     otherLocalePost: allMdx(filter: { frontmatter: { slug: { eq: $slug } } }) {
       nodes {
@@ -47,19 +69,26 @@ export const query = graphql`
     relatedPosts: allMdx(
       filter: { frontmatter: { categories: { in: $categories }, published: { ne: false }, locale: { eq: null } }, id: { ne: $id } }
       sort: { frontmatter: { createdAt: DESC } }
+      limit: 4
     ) {
+      totalCount
       nodes {
         frontmatter {
           slug
           title
           description
-          categories
-          tags
           createdAt
           updatedAt
           thumbnail {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(
+                width: 290
+                height: 171
+                layout: CONSTRAINED
+                sizes: "(max-width: 660px) 80vw, 290px"
+                outputPixelDensities: [1, 2]
+                transformOptions: { fit: COVER }
+              )
             }
           }
         }
@@ -71,48 +100,23 @@ export const query = graphql`
 
 interface PostTemplateProps {
   children: React.ReactNode;
-  data: GatsbyTypes.PostPageQuery;
-  pageContext: {
-    readingTime: {
-      minutes: number;
-      text: string;
-      time: number;
-      words: number;
-    };
-  };
+  data: Queries.PostPageQuery;
 }
 
-const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext }) => {
+const PostTemplate: React.FC<PostTemplateProps> = ({ children, data }) => {
   const locales = data.otherLocalePost.nodes.map((node) => node.frontmatter?.locale || "ko");
-  const [isMobile, setIsMobile] = useState(false);
+  const tableOfContents = data.post?.contentMetadata?.tableOfContents as
+    | TableOfContentsType
+    | undefined;
+  const readingTime = data.post?.contentMetadata?.readingTime.text || "";
+  const [isMobile] = useMediaQuery("(max-width: 629px)");
   const buttonRef = useRef<HTMLButtonElement>(null); // 아이콘 버튼을 참조
   const currentLocale = data.post?.frontmatter?.locale || "ko";
   const currentSlug = data.post?.frontmatter?.slug!;
   const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
-  const iconSize = useBreakpointValue({ base: "6", md: "8" }); // base에서는 6px, md에서는 8px
 
   const [isTOCOpen, setIsTOCOpen] = useState(false);
   const tocRef = useRef<HTMLDivElement>(null);
-  const [TOC_MAX_WIDTH, setTocMaxWidth] = useState(300); // 기본값
-
-  const {colorMode} = useColorMode();
-
-  // 화면 너비 감지
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 630); // 580px 이하에서 모바일 메뉴로 전환
-    };
-
-    // 초기 상태 설정
-    handleResize();
-
-    // 윈도우 크기 변경 이벤트 리스너 추가
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   // 외부 클릭 감지
   useEffect(() => {
@@ -136,70 +140,14 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
     };
   }, [isTOCOpen]);
 
-  useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      if (!tocRef.current) return;
-
-      const toc = tocRef.current;
-      const isInsideTOC = toc.contains(event.target as Node);
-
-      if (isInsideTOC) {
-        const isAtTop = toc.scrollTop === 0;
-        const isAtBottom =
-          Math.ceil(toc.scrollTop + toc.clientHeight) >= toc.scrollHeight;
-
-        if ((isAtTop && event.deltaY < 0) || (isAtBottom && event.deltaY > 0)) {
-          // TOC가 스크롤 한계에 도달하면 스크롤 이벤트를 body로 전달하지 않음
-          event.preventDefault();
-        }
-      } else {
-        // TOC 외부에서의 스크롤은 정상 동작
-        return;
-      }
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      if (!tocRef.current) return;
-
-      const toc = tocRef.current;
-      const isInsideTOC = toc.contains(event.target as Node);
-
-      if (isInsideTOC) {
-        const isAtTop = toc.scrollTop === 0;
-        const isAtBottom =
-          Math.ceil(toc.scrollTop + toc.clientHeight) >= toc.scrollHeight;
-
-        if ((isAtTop && event.touches[0].clientY > 0) || (isAtBottom && event.touches[0].clientY < 0)) {
-          // TOC가 스크롤 한계에 도달하면 터치 이벤트를 body로 전달하지 않음
-          event.preventDefault();
-        }
-      } else {
-        // TOC 외부에서의 터치 이벤트는 정상 동작
-        return;
-      }
-    };
-
-    if (isTOCOpen) {
-      // TOC가 열렸을 때 wheel 이벤트와 touchmove 이벤트 리스너 추가
-      document.addEventListener("wheel", handleWheel, { passive: false });
-      document.addEventListener("touchmove", handleTouchMove, { passive: false });
-    }
-
-    return () => {
-      // TOC가 닫히면 wheel 이벤트와 touchmove 이벤트 리스너 제거
-      document.removeEventListener("wheel", handleWheel);
-      document.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [isTOCOpen]);
-
   return (
-    <PostLayout tableOfContents={isLargeScreen ? data.post?.myTableOfContents : undefined}>
+    <PostLayout tableOfContents={isLargeScreen ? tableOfContents : undefined}>
       <Flex direction="column" width="100%">
         {/* ContentTitle */}
-        <PostContentTitle readingTime={pageContext.readingTime.text} post={data.post} />
+        <PostContentTitle readingTime={readingTime} post={data.post} />
 
         {/* 작은 화면에서 TOC 버튼과 Collapse */}
-        {!isLargeScreen && data.post?.myTableOfContents && (
+        {!isLargeScreen && tableOfContents && (
           <>
             {/* TOC 버튼 */}
             <motion.div
@@ -229,12 +177,12 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                     {isTOCOpen ? (
                       <>
                         <ChevronRightIcon boxSize="20px" ml={-1} />
-                        <Icon as={MdOutlineMenu} boxSize="24px" ml={-1} /> {/* React Icons의 List 아이콘 사용 */}
+                        <HamburgerIcon boxSize="24px" ml={-1} />
                       </>
                     ) : (
                       <>
                         <ChevronLeftIcon boxSize="20px" ml={-1} />
-                        <Icon as={MdOutlineMenu} boxSize="24px" ml={-1} /> {/* React Icons의 List 아이콘 사용 */}
+                        <HamburgerIcon boxSize="24px" ml={-1} />
                       </>
                     )}
                   </Flex>
@@ -257,6 +205,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                 zIndex: 10,
                 overflowY: "auto", // 세로 스크롤 활성화
                 overflowX: "hidden", // 가로 스크롤 숨김
+                overscrollBehavior: "contain",
               }}
             >
               <Box
@@ -294,7 +243,7 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
                     backgroundColor: "gray.800",
                   }}
                 >
-                  <TableOfContents tableOfContents={data.post.myTableOfContents} />
+                  <TableOfContents tableOfContents={tableOfContents} />
                 </Box>
               </Box>
             </motion.div>
@@ -319,7 +268,10 @@ const PostTemplate: React.FC<PostTemplateProps> = ({ children, data, pageContext
         </Box>
 
         {/* 관련 글, 프로필, 댓글 */}
-        <RelatedPosts relatedPosts={data.relatedPosts} />
+        <RelatedPosts
+          relatedPosts={data.relatedPosts}
+          category={data.post?.frontmatter?.categories?.[0]}
+        />
         <Profile />
         <Giscus />
       </Flex>

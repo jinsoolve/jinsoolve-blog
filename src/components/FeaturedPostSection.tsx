@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import FeaturedPostCard from "./FeaturedPostCard";
 
 interface FeaturedPostSectionProps {
-  posts: GatsbyTypes.AllPostPageTemplateQuery["featuredPosts"]["nodes"];
+  posts: Queries.AllPostPageTemplateQuery["featuredPosts"]["nodes"];
   isLarge?: boolean; // boolean prop 추가 (optional)
 }
 
@@ -102,7 +102,6 @@ const FeaturedPostSection = ({ posts, isLarge = false }: FeaturedPostSectionProp
               title={post.frontmatter?.title!}
               slug={post.frontmatter?.slug!}
               updatedAt={post.frontmatter?.updatedAt!}
-              categories={post.frontmatter?.categories!}
               thumbnail={
                 post.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!
               }

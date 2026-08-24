@@ -4,17 +4,12 @@ require("dotenv").config({
 });
 
 const path = require("path");
-
-// Algolia 쿼리 파일 (네가 만든 파일 경로와 맞춰줘)
-const queries = require("./src/utils/algolia");
+const { getPostPath, publicPostFilter } = require("./gatsby/content-policy");
 
 const SITE_METADATA = Object.freeze({
   title: "Jinsoolve 블로그",
   description: "머신러닝과 알고리즘을 공부하는 김진수 입니다.",
   siteUrl: "https://jinsoolve.netlify.app",
-  algoliaAppId: process.env.GATSBY_ALGOLIA_APP_ID,
-  algoliaSearchKey: process.env.GATSBY_ALGOLIA_SEARCH_KEY,
-  algoliaIndexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
 });
 
 const wrapESMPlugin = (name) =>
@@ -77,8 +72,6 @@ module.exports = {
         },
       },
     },
-    "gatsby-plugin-mdx-frontmatter",
-
     // --- 파일 소스 ---
     {
       resolve: `gatsby-source-filesystem`,
@@ -118,27 +111,7 @@ module.exports = {
     },
     "gatsby-transformer-sharp",
 
-    {
-      resolve: "gatsby-plugin-typegen",
-      options: {
-        outputPath: `src/__generated__/gatsby-types.d.ts`,
-        emitSchema: { "src/__generated__/gatsby-schema.graphql": true },
-      },
-    },
-
     { resolve: "@chakra-ui/gatsby-plugin", options: { resetCSS: true } },
-
-    {
-      resolve: "gatsby-plugin-web-font-loader",
-      options: {
-        custom: {
-          families: ["Pretendard"],
-          urls: [
-            "https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css",
-          ],
-        },
-      },
-    },
 
     {
       resolve: `gatsby-plugin-feed`,
@@ -158,20 +131,27 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.nodes.map((node) => ({
-                ...node.frontmatter,
-                title: node.frontmatter.title,
-                description: node.frontmatter.description,
-                date: new Date(node.frontmatter.createdAt),
-                url: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
-                guid: `${site.siteMetadata.siteUrl}/posts/${node.frontmatter.slug}`,
-                custom_elements: [{ "content:encoded": node.body }],
-              })),
+              allMdx.nodes.map((node) => {
+                const url = `${site.siteMetadata.siteUrl}${getPostPath(node.frontmatter)}`;
+
+                return {
+                  ...node.frontmatter,
+                  title: node.frontmatter.title,
+                  description: node.frontmatter.description,
+                  date: new Date(node.frontmatter.createdAt),
+                  url,
+                  guid: url,
+                  custom_elements: [{ "content:encoded": node.body }],
+                };
+              }),
             query: `
 {
-  allMdx(sort: {frontmatter: {createdAt: DESC}}) {
+  allMdx(
+    filter: { ${publicPostFilter} }
+    sort: {frontmatter: {createdAt: DESC}}
+  ) {
   nodes {
-    frontmatter { title createdAt description slug }
+    frontmatter { title createdAt description slug locale }
     body
   }
 }
@@ -195,35 +175,6 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: { icon: "src/assets/favicon.png" },
-    },
-
-    // 브라우저에서 필요(노출 OK)한 키만 allowList
-    {
-      resolve: `gatsby-plugin-env-variables`,
-      options: {
-        allowList: [
-          "GATSBY_ALGOLIA_APP_ID",
-          "GATSBY_ALGOLIA_SEARCH_KEY",
-          "GATSBY_ALGOLIA_INDEX_NAME",
-        ],
-      },
-    },
-
-    // ✅ Algolia 인덱싱 (빌드 시 자동 실행)
-    {
-      resolve: `gatsby-plugin-algolia`,
-      options: {
-        appId: process.env.GATSBY_ALGOLIA_APP_ID,
-        apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
-        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
-        queries, // ./src/utils/algolia의 쿼리 사용 (published != false && /posts/** 만)
-        chunkSize: 10000,
-        concurrentQueries: true,
-        enablePartialUpdates: true,
-        matchFields: ["internal.contentDigest"],
-        // 프로덕션에서만 인덱싱
-        skipIndexing: process.env.NODE_ENV !== "production",
-      },
     },
   ],
 };

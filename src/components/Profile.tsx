@@ -42,13 +42,15 @@ const IconBox = ({ children, isManaged = false }: IconBoxProps) => {
 const Profile = () => {
   const data = useStaticQuery(graphql`
     query ProfileQuery {
-      profileImage: imageSharp(fluid: { originalName: { eq: "profile.jpg" } }) {
-        gatsbyImageData
+      profileImage: file(relativePath: { eq: "profile.jpg" }) {
+        childImageSharp {
+          gatsbyImageData(width: 100, layout: FIXED, placeholder: DOMINANT_COLOR)
+        }
       }
     }
   `);
 
-  const profileImage = data.profileImage.gatsbyImageData;
+  const profileImage = data.profileImage.childImageSharp.gatsbyImageData;
 
   return (
       // <motion.div

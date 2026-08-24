@@ -1,11 +1,8 @@
-import { Box, Center, Flex, Heading, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import { Link } from "gatsby";
 import type { IGatsbyImageData } from "gatsby-plugin-image";
 import { GatsbyImage } from "gatsby-plugin-image";
-import React, { useMemo, useState, useEffect, useRef } from "react";
-import defaultThumbnailImage from "../assets/default-thumbnail.jpg"; // 기본 이미지 경로
-
-import { koreanTagNames } from "../constants";
+import { useMemo } from "react";
 
 interface FeaturedPostCardProps {
   title: string;
@@ -13,7 +10,6 @@ interface FeaturedPostCardProps {
   slug: string;
   createdAt: string;
   updatedAt: string;
-  categories: readonly (string | null)[];
   thumbnail?: IGatsbyImageData;
   excerpt: string;
 }
@@ -22,7 +18,6 @@ const FeaturedPostCard = ({
                             createdAt,
                             description,
                             slug,
-                            categories,
                             thumbnail,
                             title,
                             updatedAt,
@@ -30,13 +25,6 @@ const FeaturedPostCard = ({
                           }: FeaturedPostCardProps) => {
   const diffMs = useMemo(() => new Date().getTime() - new Date(createdAt).getTime(), [createdAt]);
   const isNewPost = useMemo(() => Math.floor(diffMs / (1000 * 60 * 60 * 24)) <= 10, [diffMs]);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const boxShadowColor = useColorModeValue(
-    "0 4px 6px rgba(0, 0, 0, 0.3)",
-    "0 4px 6px rgba(255, 255, 255, 0.3)"
-  );
-
   const borderColor = useColorModeValue("gray.50", "#444548");
 
   return (
@@ -74,28 +62,7 @@ const FeaturedPostCard = ({
             alt={`${slug} cover image`}
           />
         ) : (
-          <GatsbyImage
-            objectFit="cover"
-            style={{
-              maxHeight: "171px",
-              height: "45%",
-              width: "100%"
-            }}
-            image={thumbnail}
-            alt={`${slug} cover image`}
-          />
-          // <Box
-          //   height="45%"
-          //   width="100%"
-          //   backgroundColor="gray.200"
-          //   display="flex"
-          //   alignItems="center"
-          //   justifyContent="center"
-          // >
-          //   <Text color="gray.500" fontSize="16px">
-          //     No Thumbnail
-          //   </Text>
-          // </Box>
+          <Box height="171px" width="100%" backgroundColor="gray.200" />
         )}
 
         {/* 메타 정보와 제목 */}

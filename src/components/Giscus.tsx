@@ -1,10 +1,36 @@
 import { Box, useColorMode } from "@chakra-ui/react";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const COMMENTS_ID = "comments-container";
 
 const Giscus = (): JSX.Element => {
   const { colorMode } = useColorMode();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasLoaded = useRef(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   const loadComments = useCallback(() => {
     // 기존 Giscus 위젯 제거
@@ -29,13 +55,38 @@ const Giscus = (): JSX.Element => {
     script.async = true;
 
     if (comments) comments.appendChild(script);
+    hasLoaded.current = true;
   }, [colorMode]);
 
   useEffect(() => {
-    loadComments();
-  }, [loadComments]);
+    if (shouldLoad && !hasLoaded.current) loadComments();
+  }, [loadComments, shouldLoad]);
 
-  return <Box mt="100px" className="giscus" id={COMMENTS_ID} />;
+  useEffect(() => {
+    if (!hasLoaded.current) return;
+
+    const frame = document.querySelector<HTMLIFrameElement>(".giscus-frame");
+    frame?.contentWindow?.postMessage(
+      {
+        giscus: {
+          setConfig: {
+            theme: colorMode === "dark" ? "dark_protanopia" : "light_protanopia",
+          },
+        },
+      },
+      "https://giscus.app",
+    );
+  }, [colorMode]);
+
+  return (
+    <Box
+      ref={containerRef}
+      mt="100px"
+      minHeight="120px"
+      className="giscus"
+      id={COMMENTS_ID}
+    />
+  );
 };
 
 export default Giscus;

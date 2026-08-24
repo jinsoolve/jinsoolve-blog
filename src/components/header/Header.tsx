@@ -1,20 +1,14 @@
-import {
-  Box,
-  Spacer,
-  IconButton,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { Box, IconButton, Spacer, useDisclosure, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import ThemeToggler from "../theme-toggle/ThemeToggler";
 import About from "./About";
+import Categories from "./Categories";
 import Logo from "./Logo";
 import Portfolio from "./Portfolio";
-import Tags from "./Tags";
-import Categories from "./Categories";
 import Search from "./Search";
+import Tags from "./Tags";
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -23,9 +17,10 @@ const Header = () => {
   // 스크롤 시 헤더 상태 변경
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.scrollY > 0);
+      const nextIsSticky = window.scrollY > 0;
+      setIsSticky((current) => (current === nextIsSticky ? current : nextIsSticky));
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -56,7 +51,7 @@ const Header = () => {
         <Tags />
         <Portfolio />
         <About />
-        <Search />
+        <Search variant="icon" enableShortcut />
         <ThemeToggler />
       </Box>
 
@@ -90,7 +85,7 @@ const Header = () => {
         >
           <VStack align="stretch" spacing={0}>
             <Box>
-              <Search />
+              <Search variant="field" onNavigate={onClose} />
             </Box>
             <Box ml={5}>
               <Box mt={16}>

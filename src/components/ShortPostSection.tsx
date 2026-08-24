@@ -2,7 +2,7 @@ import { Flex, Heading, Text } from "@chakra-ui/react";
 import { Link } from "gatsby";
 
 interface ShortPostSectionProps {
-  posts: GatsbyTypes.AllPostPageTemplateQuery["shortPosts"]["nodes"];
+  posts: Queries.AllPostPageTemplateQuery["shortPosts"]["nodes"];
   isLarge?: boolean; // boolean prop 추가 (optional)
 }
 

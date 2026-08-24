@@ -11,7 +11,7 @@ interface CategoriesProps {
 
 export default function categories({ currentCategory }: CategoriesProps) {
   const data = useStaticQuery(graphql`
-    query categories {
+    query DefaultCategoriesQuery {
       allMdx(
         filter: { frontmatter: { title: { nin: ["김진수 포트폴리오", "About Me"] }, published: { ne: false }, locale: { eq: null } } }
       ) {

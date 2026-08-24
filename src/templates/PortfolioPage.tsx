@@ -9,7 +9,9 @@ import Giscus from "../components/Giscus";
 import PostContentTitle from "../components/PostContentTitle";
 import PostLayout from "../components/PostLayout";
 import Profile from "../components/Profile";
-import TableOfContents from "../components/TableOfContents";
+import TableOfContents, {
+  type TableOfContentsType,
+} from "../components/TableOfContents";
 import { DOMAIN } from "../constants";
 import { fadeInFromLeft } from "../framer-motions";
 
@@ -23,49 +25,56 @@ export const query = graphql`
         createdAt
         updatedAt
         categories
+        tags
         locale
         thumbnail {
           childImageSharp {
-            gatsbyImageData
+            gatsbyImageData(
+              width: 800
+              layout: CONSTRAINED
+              sizes: "(max-width: 800px) 100vw, 800px"
+              outputPixelDensities: [0.5, 1]
+            )
           }
         }
       }
-      tableOfContents
+      contentMetadata {
+        readingTime {
+          text
+        }
+        tableOfContents
+      }
     }
   }
 `;
 
 interface PortfolioTemplateProps {
   children: React.ReactNode;
-  data: GatsbyTypes.PortfolioPageQuery;
-  pageContext: {
-    readingTime: {
-      minutes: number;
-      text: string;
-      time: number;
-      words: number;
-    };
-  };
+  data: Queries.PortfolioPageQuery;
 }
 
-const PortfolioTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, pageContext }) => {
+const PortfolioTemplate: React.FC<PortfolioTemplateProps> = ({ children, data }) => {
   const isLargeScreen = useBreakpointValue({ base: false, "1.75xl": true });
+  const tableOfContents = data.post?.contentMetadata?.tableOfContents as
+    | TableOfContentsType
+    | undefined;
+  const readingTime = data.post?.contentMetadata?.readingTime.text || "";
 
   return (
-    <PostLayout tableOfContents={isLargeScreen ? data.post?.tableOfContents : undefined}>
+    <PostLayout tableOfContents={isLargeScreen ? tableOfContents : undefined}>
       <motion.article style={{ width: "100%" }} {...fadeInFromLeft}>
         <Flex direction="column" width="100%">
           {/* 제목 */}
           <PostContentTitle
-            readingTime={pageContext.readingTime.text}
+            readingTime={readingTime}
             post={data.post}
             showThumbnail={false}
           />
 
           {/* 작은 화면에서 ContentTitle 아래 TOC 표시 */}
-          {!isLargeScreen && data.post?.tableOfContents && (
+          {!isLargeScreen && tableOfContents && (
             <Box as="nav" marginTop="40px">
-              <TableOfContents tableOfContents={data.post.tableOfContents} />
+              <TableOfContents tableOfContents={tableOfContents} />
             </Box>
           )}
 
@@ -90,7 +99,7 @@ const PortfolioTemplate: React.FC<PortfolioTemplateProps> = ({ children, data, p
   );
 };
 
-export const Head: HeadFC<GatsbyTypes.PortfolioPageQuery> = ({ data }) => {
+export const Head: HeadFC<Queries.PortfolioPageQuery> = ({ data }) => {
   const title = `${data.post?.frontmatter?.title!} - Jinsoolve 블로그`;
   const description = data.post?.frontmatter?.description!;
   const ogimage = data.post?.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData!;

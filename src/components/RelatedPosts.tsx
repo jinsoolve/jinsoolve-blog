@@ -12,12 +12,13 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 import PostCard from "./PostCard";
 
 interface RelatedPostsProps {
-  relatedPosts: GatsbyTypes.PostPageQuery["relatedPosts"];
+  relatedPosts: Queries.PostPageQuery["relatedPosts"];
+  category?: string | null;
 }
 
-const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
-  const relatedPostsLength = relatedPosts?.nodes.length;
-  const postsToDisplay = relatedPosts?.nodes.slice(0, 4); // 6개만 표시
+const RelatedPosts = ({ relatedPosts, category }: RelatedPostsProps) => {
+  const relatedPostsLength = relatedPosts?.totalCount ?? 0;
+  const postsToDisplay = relatedPosts?.nodes;
 
   const textColor = useColorModeValue("white", "black");
   const borderColor = useColorModeValue("gray.50", "#444548");
@@ -73,7 +74,6 @@ const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
               }
               createdAt={post.frontmatter?.createdAt!}
               updatedAt={post.frontmatter?.updatedAt!}
-              categories={post.frontmatter?.categories!}
               excerpt={post.excerpt!}
             />
           </GridItem>
@@ -81,10 +81,10 @@ const RelatedPosts = ({ relatedPosts }: RelatedPostsProps) => {
       </Grid>
 
       {/* 더 보기 링크 */}
-      {relatedPostsLength > 6 && (
+      {relatedPostsLength > 4 && relatedPosts.nodes.length > 0 && category && (
         <Center mt="20px">
           <Link
-            to={`/categories/${relatedPosts.nodes[0].frontmatter.categories[0]}`}
+            to={`/categories/${category}`}
           >
             <Box
               // color={textColor}

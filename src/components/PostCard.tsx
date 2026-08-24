@@ -12,7 +12,6 @@ interface PostCardProps {
   slug: string;
   createdAt: string;
   updatedAt?: string;
-  categories: readonly (string | null)[];
   thumbnail?: IGatsbyImageData;
   excerpt?: string;
 }
@@ -37,10 +36,6 @@ const PostCard = ({
 
   const borderColor = useColorModeValue("gray.50", "#444548");
   const hoverBorderColor = useColorModeValue("blue.500", "blue.400");
-  const boxShadowColor = useColorModeValue(
-    "0 4px 6px rgba(0, 0, 0, 0.3)",
-    "0 4px 6px rgba(255, 255, 255, 0.3)"
-  );
   const cardHeight = useMemo(() => {
     if (!thumbnail) {
       return { base: "190px", sm_md: "380px" };
@@ -71,16 +66,18 @@ const PostCard = ({
         }}
       >
         {/* 썸네일 */}
-        <GatsbyImage
-          objectFit="cover"
-          style={{
-            maxHeight: "171px",
-            height: "45%",
-            width: "100%"
-          }}
-          image={thumbnail}
-          alt={`${slug} cover image`}
-        />
+        {thumbnail && (
+          <GatsbyImage
+            objectFit="cover"
+            style={{
+              maxHeight: "171px",
+              height: "45%",
+              width: "100%"
+            }}
+            image={thumbnail}
+            alt={`${slug} cover image`}
+          />
+        )}
 
         {/* 메타 정보와 제목 */}
         <Flex
