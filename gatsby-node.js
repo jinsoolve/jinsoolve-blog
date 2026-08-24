@@ -1,10 +1,7 @@
 const path = require("path");
 const { createContentMetadata } = require("./gatsby/content-metadata");
-const {
-  getPostPath,
-  publicKoPostFilter,
-  publicPostFilter,
-} = require("./gatsby/content-policy");
+const { getPostPath, publicKoPostFilter, publicPostFilter } = require("./gatsby/content-policy");
+const { generateSearchIndex } = require("./gatsby/search-index");
 
 const PostPageTemplate = path.resolve(`./src/templates/PostPage.tsx`);
 const TagPageTemplate = path.resolve(`./src/templates/TagPage.tsx`);
@@ -12,15 +9,9 @@ const CategoryPageTemplate = path.resolve(`./src/templates/CategoryPage.tsx`);
 const FeaturedPageTemplate = path.resolve(`./src/templates/FeaturedPage.tsx`);
 const PortfolioPageTemplate = path.resolve(`./src/templates/PortfolioPage.tsx`);
 const AllPostPageTemplate = path.resolve(`./src/templates/AllPostPage.tsx`);
-const AllFeaturedPostPageTemplate = path.resolve(
-  `./src/templates/AllFeaturedPostPage.tsx`
-);
-const AllCategoryPostPageTemplate = path.resolve(
-  `./src/templates/AllCategoryPostPage.tsx`
-);
-const AllTagPostPageTemplate = path.resolve(
-  `./src/templates/AllTagPostPage.tsx`
-);
+const AllFeaturedPostPageTemplate = path.resolve(`./src/templates/AllFeaturedPostPage.tsx`);
+const AllCategoryPostPageTemplate = path.resolve(`./src/templates/AllCategoryPostPage.tsx`);
+const AllTagPostPageTemplate = path.resolve(`./src/templates/AllTagPostPage.tsx`);
 
 const contentMetadataCache = new Map();
 
@@ -94,7 +85,11 @@ exports.createResolvers = ({ createResolvers }) => {
   });
 };
 
-exports.createPages = async ({ graphql, actions: { createPage } }) => {
+exports.createPages = async ({ graphql, actions: { createPage }, reporter }) => {
+  if (process.env.NODE_ENV !== "production") {
+    await generateSearchIndex({ graphql, reporter });
+  }
+
   const result = await graphql(`
     query {
       allPosts: allMdx(
@@ -178,14 +173,10 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const posts = result.data.allPosts.nodes;
   // ko로 작성된 혹은 locale이 없는 포스트만 뽑아서 페이지네이션 해줘야 함
   const koPosts = posts.filter((post) => !post.frontmatter.locale);
-  const standardKoPosts = koPosts.filter(
-    (post) => !post.frontmatter.categories?.includes("short")
-  );
+  const standardKoPosts = koPosts.filter((post) => !post.frontmatter.categories?.includes("short"));
 
   const allPostsNumPages = Math.ceil(koPosts.length / POST_PER_PAGE);
-  const standardPostsNumPages = Math.ceil(
-    standardKoPosts.length / POST_PER_PAGE
-  );
+  const standardPostsNumPages = Math.ceil(standardKoPosts.length / POST_PER_PAGE);
 
   Array.from({ length: standardPostsNumPages }).forEach((_, i) => {
     createPage({
@@ -241,10 +232,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
 
     Array.from({ length: allFeaturedPostsNumPages }).forEach((_, i) => {
       createPage({
-        path:
-          i === 0
-            ? `/allFeaturedPosts/${category}`
-            : `/allFeaturedPosts/${category}/${i + 1}`,
+        path: i === 0 ? `/allFeaturedPosts/${category}` : `/allFeaturedPosts/${category}/${i + 1}`,
         component: FeaturedPageTemplate,
         context: {
           limit: POST_PER_PAGE,
@@ -263,10 +251,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     // 각 카테고리별로 페이지네이션
     Array.from({ length: allCategoriesNumPages }).forEach((_, i) => {
       createPage({
-        path:
-          i === 0
-            ? `/categories/${category}`
-            : `/categories/${category}/${i + 1}`,
+        path: i === 0 ? `/categories/${category}` : `/categories/${category}/${i + 1}`,
         component: CategoryPageTemplate,
         context: {
           limit: POST_PER_PAGE,
@@ -334,4 +319,8 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
       id: about_me.id,
     },
   });
+};
+
+exports.onPostBuild = async ({ graphql, reporter }) => {
+  await generateSearchIndex({ graphql, reporter });
 };

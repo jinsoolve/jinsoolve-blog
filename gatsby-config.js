@@ -6,25 +6,11 @@ require("dotenv").config({
 const path = require("path");
 const { getPostPath, publicPostFilter } = require("./gatsby/content-policy");
 
-// Algolia 쿼리 파일 (네가 만든 파일 경로와 맞춰줘)
-const queries = require("./src/utils/algolia");
-
 const SITE_METADATA = Object.freeze({
   title: "Jinsoolve 블로그",
   description: "머신러닝과 알고리즘을 공부하는 김진수 입니다.",
   siteUrl: "https://jinsoolve.netlify.app",
-  algoliaAppId: process.env.GATSBY_ALGOLIA_APP_ID,
-  algoliaSearchKey: process.env.GATSBY_ALGOLIA_SEARCH_KEY,
-  algoliaIndexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
 });
-
-const shouldIndexAlgolia =
-  process.env.NODE_ENV === "production" &&
-  Boolean(
-    process.env.GATSBY_ALGOLIA_APP_ID &&
-      process.env.GATSBY_ALGOLIA_ADMIN_KEY &&
-      process.env.GATSBY_ALGOLIA_INDEX_NAME,
-  );
 
 const wrapESMPlugin = (name) =>
   function wrapESM(opts) {
@@ -189,35 +175,6 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: { icon: "src/assets/favicon.png" },
-    },
-
-    // 브라우저에서 필요(노출 OK)한 키만 allowList
-    {
-      resolve: `gatsby-plugin-env-variables`,
-      options: {
-        allowList: [
-          "GATSBY_ALGOLIA_APP_ID",
-          "GATSBY_ALGOLIA_SEARCH_KEY",
-          "GATSBY_ALGOLIA_INDEX_NAME",
-        ],
-      },
-    },
-
-    // ✅ Algolia 인덱싱 (빌드 시 자동 실행)
-    {
-      resolve: `gatsby-plugin-algolia`,
-      options: {
-        appId: process.env.GATSBY_ALGOLIA_APP_ID,
-        apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
-        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
-        queries, // ./src/utils/algolia의 쿼리 사용 (published != false && /posts/** 만)
-        chunkSize: 10000,
-        concurrentQueries: true,
-        enablePartialUpdates: true,
-        matchFields: ["internal.contentDigest"],
-        // 로컬 검증은 자격 증명이 없으면 성공시키고, 배포 환경에서는 실패를 노출한다.
-        continueOnFailure: !shouldIndexAlgolia,
-      },
     },
   ],
 };
