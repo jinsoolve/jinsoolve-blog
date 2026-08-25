@@ -109,6 +109,12 @@ const CodeBlock = (props: any) => {
   const { colorMode } = useColorMode();
   const theme = colorMode === "dark" ? oneDark : oneLight;
   const language = match ? match[1] : "text"; // 언어가 없을 경우 기본값 "text"
+  const code = String(children).replace(/\n$/, "");
+  const codeFontSize = "clamp(13px, calc(11px + 0.4vw), 15px)";
+  const codeBackground = String(
+    theme['code[class*="language-"]']?.background || "inherit",
+  );
+  const lineNumbers = code.split("\n").map((_, index) => index + 1);
 
   if (!match) {
     // 인라인 코드일 경우 InlineCode 컴포넌트 사용
@@ -131,9 +137,7 @@ const CodeBlock = (props: any) => {
       {/* 상단 바 */}
       <Box
         style={{
-          background: String(
-            theme['code[class*="language-"]']?.background || "inherit",
-          ),
+          background: codeBackground,
         }}
         height="40px"
         px="10px"
@@ -169,32 +173,57 @@ const CodeBlock = (props: any) => {
         </Box>
 
         {/* 복사 버튼 */}
-        <CopyButton text={String(children).replace(/\n$/, "")} />
+        <CopyButton text={code} />
       </Box>
 
       {/* 코드 영역 */}
-      <Box>
-        <SyntaxHighlighter
-          style={theme}
-          customStyle={{
-            margin: "0px",
-            borderRadius: "0px 0px 10px 10px",
-            fontFamily: "Fira Code, monospace",
-            fontSize: "clamp(13px, calc(11px + 0.4vw), 15px)",
-          }}
-          showLineNumbers
-          lineNumberStyle={{
-            width: "42px",
-            textAlign: "right",
-            paddingRight: "18px",
-            fontSize: "clamp(11px, calc(9px + 0.4vw), 13px)",
-          }}
-          PreTag="div"
-          language={language}
-          {...props}
+      <Box display="flex" alignItems="stretch" background={codeBackground}>
+        <Box
+          as="div"
+          aria-hidden="true"
+          flexShrink={0}
+          background={codeBackground}
+          color={colorMode === "dark" ? "gray.500" : "gray.500"}
+          px={{ base: "6px", md: "8px" }}
+          py="1em"
+          fontFamily="Fira Code, monospace"
+          fontSize={codeFontSize}
+          lineHeight="1.5"
+          textAlign="right"
+          userSelect="none"
+          pointerEvents="none"
         >
-          {String(children).replace(/\n$/, "")}
-        </SyntaxHighlighter>
+          {lineNumbers.map((lineNumber) => (
+            <Box key={lineNumber} height="1.5em" lineHeight="1.5em" whiteSpace="nowrap">
+              <Box as="span" fontSize="0.85em" fontStyle="italic">
+                {lineNumber}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+
+        <Box minWidth={0} flex="1" overflowX="auto" overflowY="hidden">
+          <SyntaxHighlighter
+            style={theme}
+            customStyle={{
+              boxSizing: "border-box",
+              margin: "0px",
+              minWidth: "100%",
+              width: "max-content",
+              overflow: "visible",
+              padding: "1em 1em 1em 8px",
+              borderRadius: "0px 0px 10px 0px",
+              fontFamily: "Fira Code, monospace",
+              fontSize: codeFontSize,
+              lineHeight: "1.5",
+            }}
+            PreTag="div"
+            language={language}
+            {...props}
+          >
+            {code}
+          </SyntaxHighlighter>
+        </Box>
       </Box>
     </Box>
   );
@@ -211,10 +240,13 @@ const customComponents = {
       as="li"
       sx={{
         wordBreak: "break-word", // 텍스트가 너무 길 경우 줄바꿈
-        marginLeft: "24px",
         lineHeight: "1.6",
+        "& > p:first-of-type": {
+          display: "inline",
+          margin: 0,
+        },
       }}
-      m={"4px 0"}
+      my="4px"
       fontSize={16}
       {...props}
     />
@@ -223,9 +255,9 @@ const customComponents = {
     <Box
       as="ol"
       sx={{
-        listStylePosition: "inside", // 숫자 위치를 텍스트와 맞춤
+        listStylePosition: "outside", // 마커와 첫 문단을 같은 줄에 배치
         listStyleType: "decimal", // 숫자 리스트 스타일
-        textIndent: "-1.2em", // 첫 줄의 들여쓰기 제거
+        paddingLeft: "1.5em",
         marginTop: "13px",
         marginBottom: "13px",
         "* > ol": {
@@ -239,13 +271,11 @@ const customComponents = {
     <Box
       as="ul"
       sx={{
-        listStylePosition: "inside", // 숫자 위치를 텍스트와 맞춤
+        listStylePosition: "outside", // 마커와 첫 문단을 같은 줄에 배치
         listStyleType: "disc", // 기본 bullet 스타일
-        // marginLeft: "0px",
-        textIndent: "-1.2em", // 첫 줄의 들여쓰기 제거
+        paddingLeft: "1.5em",
         "* > ul": {
           margin: 0,
-          // padding: 0,
         },
       }}
       {...props}

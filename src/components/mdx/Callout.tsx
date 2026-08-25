@@ -23,6 +23,8 @@ const Callout = (props: CalloutProps) => {
         <Flex
           style={commonFlexStyles}
           as="blockquote"
+          direction={{ base: "column", md: "row" }}
+          rowGap="12px"
           color="#003B59"
           bg="#009CEB1a"
           _dark={{
@@ -36,7 +38,7 @@ const Callout = (props: CalloutProps) => {
           }}
           {...props}
         >
-          <Center>
+          <Center alignSelf={{ base: "flex-start", md: "center" }} flexShrink={0}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -50,7 +52,7 @@ const Callout = (props: CalloutProps) => {
               />
             </svg>
           </Center>
-          <Flex>
+          <Flex minWidth={0}>
             <p>
               {props.title && <span style={{ fontWeight: "bold" }}>{props.title}</span>}
               {props.children}
@@ -64,6 +66,8 @@ const Callout = (props: CalloutProps) => {
         <Flex
           style={commonFlexStyles}
           as="blockquote"
+          direction={{ base: "column", md: "row" }}
+          rowGap="12px"
           color="#4D361A"
           bg="#F7BE6824"
           _dark={{
@@ -77,7 +81,7 @@ const Callout = (props: CalloutProps) => {
           }}
           {...props}
         >
-          <Center>
+          <Center alignSelf={{ base: "flex-start", md: "center" }} flexShrink={0}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -91,7 +95,7 @@ const Callout = (props: CalloutProps) => {
               />
             </svg>
           </Center>
-          <Flex>
+          <Flex minWidth={0}>
             <p>
               {props.title && <span style={{ fontWeight: "bold" }}>{props.title}</span>}
               {props.children}
@@ -105,6 +109,8 @@ const Callout = (props: CalloutProps) => {
         <Flex
           style={commonFlexStyles}
           as="blockquote"
+          direction={{ base: "column", md: "row" }}
+          rowGap="12px"
           color="#821006"
           bg="#FF41331a"
           _dark={{
@@ -118,7 +124,7 @@ const Callout = (props: CalloutProps) => {
           }}
           {...props}
         >
-          <Center>
+          <Center alignSelf={{ base: "flex-start", md: "center" }} flexShrink={0}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -132,7 +138,7 @@ const Callout = (props: CalloutProps) => {
               />
             </svg>
           </Center>
-          <Flex>
+          <Flex minWidth={0}>
             <p>
               {props.title && <span style={{ fontWeight: "bold" }}>{props.title}</span>}
               {props.children}
@@ -146,6 +152,8 @@ const Callout = (props: CalloutProps) => {
         <Flex
           style={commonFlexStyles}
           as="blockquote"
+          direction={{ base: "column", md: "row" }}
+          rowGap="12px"
           color="#212124"
           bg="#f2f3f6"
           _dark={{
@@ -159,7 +167,7 @@ const Callout = (props: CalloutProps) => {
           }}
           {...props}
         >
-          <Center>
+          <Center alignSelf={{ base: "flex-start", md: "center" }} flexShrink={0}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -173,7 +181,7 @@ const Callout = (props: CalloutProps) => {
               />
             </svg>
           </Center>
-          <Flex>
+          <Flex minWidth={0}>
             <p>
               {props.title && <span style={{ fontWeight: "bold" }}>{props.title}</span>}
               {props.children}

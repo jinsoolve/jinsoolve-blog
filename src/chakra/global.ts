@@ -43,13 +43,6 @@ export default {
     margin: "auto !important",
   },
 
-  // react-syntax-highlighter 줄 번호 스타일
-  ".react-syntax-highlighter-line-number": {
-    minWidth: "35px !important",
-    userSelect: "none",
-    pointerEvents: "none",
-  },
-
   "@font-face": {
     fontFamily: "SBAggro",
     src: "url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroM.woff') format('woff')",

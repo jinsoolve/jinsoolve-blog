@@ -19,7 +19,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { navigate, withPrefix } from "gatsby";
+import { navigate, prefetchPathname, withPrefix } from "gatsby";
 import type { RefObject } from "react";
 import React, { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 
@@ -115,6 +115,7 @@ const formatDate = (value: string | null) => (value ? value.replaceAll("/", ".")
 
 interface SearchResultItemProps {
   active: boolean;
+  disabled: boolean;
   index: number;
   query: string;
   result: LocalSearchResult;
@@ -124,6 +125,7 @@ interface SearchResultItemProps {
 
 const SearchResultItem = ({
   active,
+  disabled,
   index,
   query,
   result,
@@ -139,6 +141,7 @@ const SearchResultItem = ({
       role="option"
       aria-selected={active}
       type="button"
+      disabled={disabled}
       width="100%"
       textAlign="left"
       px={{ base: 4, md: 5 }}
@@ -149,7 +152,11 @@ const SearchResultItem = ({
       borderLeftColor={active ? "blue.400" : "transparent"}
       transition="background-color 120ms ease, border-color 120ms ease"
       _hover={{ bg: "blackAlpha.100", _dark: { bg: "whiteAlpha.100" } }}
-      onMouseEnter={() => onSelect(index)}
+      onMouseEnter={() => {
+        onSelect(index);
+        prefetchPathname(result.resultUrl);
+      }}
+      onFocus={() => prefetchPathname(result.resultUrl)}
       onClick={() => onNavigate(result)}
     >
       <Flex align="start" justify="space-between" gap="4">
@@ -225,6 +232,7 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
   const panelColor = useColorModeValue("gray.900", "gray.50");
   const panelBorderColor = useColorModeValue("blackAlpha.200", "whiteAlpha.200");
   const sectionBorderColor = useColorModeValue("blackAlpha.100", "whiteAlpha.100");
+  const navigationOverlayBackground = useColorModeValue("whiteAlpha.900", "blackAlpha.800");
   const inputRef = useRef<HTMLInputElement>(null);
   const isComposing = useRef(false);
   const wasOpen = useRef(false);
@@ -235,6 +243,7 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const loadIndex = useCallback(async () => {
     setStatus("loading");
@@ -283,19 +292,49 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
       ?.scrollIntoView({ block: "nearest" });
   }, [activeIndex, isOpen, results.length]);
 
+  useEffect(() => {
+    if (!isOpen || status !== "ready") return undefined;
+
+    const activeResult = results[activeIndex];
+    if (!activeResult) return undefined;
+
+    const prefetchTimer = window.setTimeout(() => {
+      prefetchPathname(activeResult.resultUrl);
+    }, 150);
+
+    return () => window.clearTimeout(prefetchTimer);
+  }, [activeIndex, isOpen, results, status]);
+
   const selectTerm = (term: string) => {
     setInputValue(term);
     setQuery(term);
     inputRef.current?.focus();
   };
 
-  const handleNavigate = (result: LocalSearchResult) => {
-    onClose();
-    onNavigate?.();
-    void navigate(result.resultUrl);
+  const handleNavigate = async (result: LocalSearchResult) => {
+    if (isNavigating) return;
+
+    setIsNavigating(true);
+
+    try {
+      // 로딩 화면이 먼저 그려진 다음 Gatsby 라우팅을 시작한다.
+      await new Promise<void>((resolve) => {
+        window.requestAnimationFrame(() => resolve());
+      });
+      await navigate(result.resultUrl);
+      onNavigate?.();
+      onClose();
+    } finally {
+      setIsNavigating(false);
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isNavigating) {
+      event.preventDefault();
+      return;
+    }
+
     if (isComposing.current || (event.nativeEvent as KeyboardEvent).isComposing) return;
 
     if (event.key === "ArrowDown" && results.length > 0) {
@@ -339,13 +378,15 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={isNavigating ? () => undefined : onClose}
       initialFocusRef={inputRef}
       finalFocusRef={finalFocusRef}
       scrollBehavior="inside"
       size="xl"
       isCentered={false}
       preserveScrollBarGap
+      closeOnEsc={!isNavigating}
+      closeOnOverlayClick={!isNavigating}
     >
       <ModalOverlay bg="blackAlpha.700" backdropFilter="blur(8px)" />
       <ModalContent
@@ -362,6 +403,8 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
         borderWidth={{ base: 0, md: "1px" }}
         borderColor={panelBorderColor}
         boxShadow="2xl"
+        position="relative"
+        aria-busy={isNavigating}
       >
         <Flex align="center" px={{ base: 4, md: 6 }} minH={{ base: "68px", md: "76px" }}>
           <Search2Icon boxSize="5" color="blue.400" flexShrink="0" />
@@ -395,7 +438,12 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
           <Kbd display={{ base: "none", md: "inline-flex" }} color="gray.500" mr="3">
             ESC
           </Kbd>
-          <CloseButton aria-label="검색 닫기" onClick={onClose} flexShrink="0" />
+          <CloseButton
+            aria-label="검색 닫기"
+            onClick={onClose}
+            flexShrink="0"
+            isDisabled={isNavigating}
+          />
         </Flex>
 
         <Divider borderColor={sectionBorderColor} />
@@ -488,6 +536,7 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
                       query={deferredQuery}
                       index={index}
                       active={index === activeIndex}
+                      disabled={isNavigating}
                       onSelect={setActiveIndex}
                       onNavigate={handleNavigate}
                     />
@@ -529,6 +578,27 @@ const SearchRuntime = ({ finalFocusRef, isOpen, onClose, onNavigate }: SearchRun
           </HStack>
           <Text>로컬 검색 · 외부 전송 없음</Text>
         </ModalFooter>
+
+        {isNavigating && (
+          <Flex
+            position="absolute"
+            inset="0"
+            zIndex="2"
+            direction="column"
+            align="center"
+            justify="center"
+            gap="4"
+            bg={navigationOverlayBackground}
+            backdropFilter="blur(3px)"
+            role="status"
+            aria-live="assertive"
+          >
+            <Spinner size="xl" color="blue.400" thickness="4px" />
+            <Text fontWeight="800" fontSize="lg">
+              페이지로 이동 중입니다…
+            </Text>
+          </Flex>
+        )}
       </ModalContent>
     </Modal>
   );
