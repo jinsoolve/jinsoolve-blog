@@ -42,3 +42,12 @@ test("검색 모달은 포털에서도 현재 색상 모드의 배경을 명시�
   assert.match(runtime, /color=\{panelColor\}/);
   assert.match(runtime, /borderColor=\{panelBorderColor\}/);
 });
+
+test("검색 결과는 이동할 페이지를 미리 준비하고 전환 상태를 알린다", () => {
+  const runtime = readSource("src/components/header/SearchRuntime.tsx");
+
+  assert.match(runtime, /prefetchPathname\(result\.resultUrl\)/);
+  assert.match(runtime, /await navigate\(result\.resultUrl\)/);
+  assert.match(runtime, /aria-busy=\{isNavigating\}/);
+  assert.match(runtime, /페이지로 이동 중입니다/);
+});
